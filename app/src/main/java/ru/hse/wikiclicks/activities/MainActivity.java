@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private class WikiWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            System.out.println(url + " " + MainController.isCorrectWikipediaLink(url));
             if (!MainController.isCorrectWikipediaLink(url)) {
-                return false;
+                return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
         }
