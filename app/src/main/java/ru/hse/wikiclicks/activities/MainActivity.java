@@ -12,7 +12,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.MainController;
 
 public class MainActivity extends AppCompatActivity {
-    private int stepsCount = -2; // magic
+    private int stepsCount = -3; // magic
     private TextView stepsTextView;
     private WebView webView;
 
