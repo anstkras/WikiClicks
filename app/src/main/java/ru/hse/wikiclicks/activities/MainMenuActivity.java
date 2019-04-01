@@ -28,6 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         setUpExitButton();
+        setUpSettingButton();
     }
 
     private void setUpExitButton() {
@@ -52,6 +53,17 @@ public class MainMenuActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+    }
+
+    private void setUpSettingButton() {
+        Button settingsButton = findViewById(R.id.SettingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settingsIntent = new Intent(MainMenuActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
             }
         });
     }
