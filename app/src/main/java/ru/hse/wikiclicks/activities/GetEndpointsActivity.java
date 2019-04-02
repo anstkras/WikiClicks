@@ -18,6 +18,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.WikiPage;
 
+/** Activity responsible for choosing the starting and finishing Wikipedia pages. */
 public class GetEndpointsActivity extends AppCompatActivity {
     private final WikiPage startPage = new WikiPage();
     private final WikiPage finishPage = new WikiPage();
@@ -37,18 +38,19 @@ public class GetEndpointsActivity extends AppCompatActivity {
         createStartButton();
     }
 
+    /** Creates button that starts game if both start and finish are initialized. */
     private void createStartButton() {
         Button startButton = findViewById(R.id.ok_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (startPage.getId() == null) {
+                if (startPage.getId() == null) { // start does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
                     toast.show();
-                } else if (finishPage.getId() == null) {
+                } else if (finishPage.getId() == null) { // finish does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
                     toast.show();
-                } else {
+                } else { // game can be started
                     Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
                     Bundle pagesInfo = new Bundle();
                     pagesInfo.putString(START_ID_KEY, startPage.getId());
@@ -61,6 +63,11 @@ public class GetEndpointsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Creates button that sets a random start and end page and prints them to the given views.
+     * @param startView view that will show start page title.
+     * @param finishView view that will show end page title.
+     */
     private void createRandomButton(final SearchView startView, final SearchView finishView) {
         Button randomButton = findViewById(R.id.random_button);
         randomButton.setOnClickListener(new View.OnClickListener() {
@@ -74,18 +81,24 @@ public class GetEndpointsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Initializes a SearchView that searches for the chosen WikiPage.
+     * @param pageSearch the SearchView that will search for Wikipedia pages.
+     * @param chosenPage a WikiPage that will store the corresponding page for the current search result.
+     */
     private void createSearch(final SearchView pageSearch, final WikiPage chosenPage) {
-        pageSearch.setIconifiedByDefault(false);
+        pageSearch.setIconifiedByDefault(false); // search starts immediately, without view being pressed
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.suggestion_layout, null,
                 new String[]{"title"}, new int[]{R.id.title}, 0);
-        pageSearch.setSuggestionsAdapter(adapter);
+        pageSearch.setSuggestionsAdapter(adapter); // adapter that gets search results
         pageSearch.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
                 return true;
             }
 
+            /** Method that sets the text in the pageSearch to the clicked suggestion page title and updates the chosenPage. */
             @Override
             public boolean onSuggestionClick(int position) {
                 System.out.println(position);
@@ -103,20 +116,21 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 return true;
             }
 
+            /** Method that gets the Wikipedia page suggestions for the new text and passes them to the adapter. */
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.equals(chosenPage.getTitle())) { // correct suggestion
+                if (newText.equals(chosenPage.getTitle())) { // this is the title of a suggestion, no action needed
                     adapter.swapCursor(new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"}));
                     return true;
                 }
-                chosenPage.clear();
+                chosenPage.clear(); // the title has been modified and the correct page no longer exists
                 List<WikiPage> suggestions = WikiController.getSearchSuggestions(newText);
                 MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
                 int id = 0;
                 for (WikiPage page : suggestions) {
                     cursor.newRow().add(id++).add(page.getTitle()).add(page.getId());
                 }
-                adapter.swapCursor(cursor);
+                adapter.swapCursor(cursor); // change cursor to the new one
                 return true;
             }
         });
