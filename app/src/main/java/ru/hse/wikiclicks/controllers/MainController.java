@@ -11,15 +11,11 @@ import java.util.List;
 
 
 public class MainController {
-    public static String getRandomPageLink() {
-        return "https://en.m.wikipedia.org/wiki/Special:Random";
-    }
 
     public static WikiPage getRandomPage() {
         String query = "https://en.wikipedia.org/w/api.php?action=query&list=random&format=json&rnnamespace=0&rnlimit=1";
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            System.out.println(searchResult);
             JSONObject json = new JSONObject(searchResult);
             JSONObject result = json.getJSONObject("query").getJSONArray("random").getJSONObject(0);
             return new WikiPage(result.getString("title"), result.getString("id"));
@@ -45,7 +41,6 @@ public class MainController {
         String query = "https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&prop=info&inprop=url&utf8=&format=json&origin=*&pslimit=15&pssearch=" + prefix;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            System.out.println(searchResult);
             JSONObject json = new JSONObject(searchResult);
             JSONArray results = json.getJSONObject("query").getJSONArray("prefixsearch");
             ArrayList<WikiPage> suggestions = new ArrayList<>();
@@ -95,7 +90,7 @@ public class MainController {
             System.out.println("JSON failed");
             e.printStackTrace();
         }
-        return "";
+        return id;
     }
   
     public static String getExtract(String id) {
