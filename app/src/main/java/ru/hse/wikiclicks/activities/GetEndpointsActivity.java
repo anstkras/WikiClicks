@@ -33,18 +33,11 @@ public class GetEndpointsActivity extends AppCompatActivity {
         final SearchView finishPoint = findViewById(R.id.choose_finish_point);
         createSearch(startPoint, startPage);
         createSearch(finishPoint, finishPage);
+        createRandomButton(startPoint, finishPoint);
+        createStartButton();
+    }
 
-        Button randomButton = findViewById(R.id.random_button);
-        randomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startPage.set(WikiController.getRandomPage());
-                startPoint.setQuery(startPage.getTitle(), true);
-                finishPage.set(WikiController.getRandomPage());
-                finishPoint.setQuery(finishPage.getTitle(), true);
-            }
-        });
-
+    private void createStartButton() {
         Button startButton = findViewById(R.id.ok_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +57,19 @@ public class GetEndpointsActivity extends AppCompatActivity {
                     startGame.putExtras(pagesInfo);
                     startActivity(startGame);
                 }
+            }
+        });
+    }
+
+    private void createRandomButton(final SearchView startView, final SearchView finishView) {
+        Button randomButton = findViewById(R.id.random_button);
+        randomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPage.set(WikiController.getRandomPage());
+                startView.setQuery(startPage.getTitle(), true);
+                finishPage.set(WikiController.getRandomPage());
+                finishView.setQuery(finishPage.getTitle(), true);
             }
         });
     }
