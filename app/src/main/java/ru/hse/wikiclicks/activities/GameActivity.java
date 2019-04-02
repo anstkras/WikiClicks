@@ -20,35 +20,24 @@ import android.widget.Toast;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.MainController;
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
     private int stepsCount = -1;
     private String finishId;
+    private String startId;
     private String finishTitle;
     private TextView stepsTextView;
     private WebView webView;
     private Chronometer chronometer;
     private SharedPreferences sharedPreferences;
     private String finishURL;
-    private static final String FINISH_TITLE_KEY = "finish_title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        webView = findViewById(R.id.webview);
-        webView.setWebViewClient(new WikiWebViewClient());
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            webView.loadUrl(MainController.getRandomPageLink());
-        } else {
-            finishId = extras.getString("finishid");
-            finishTitle = extras.getString(FINISH_TITLE_KEY);
-            finishURL = MainController.getURLForId(finishId);
-            System.out.println(extras.getString("startid"));
-            System.out.println(finishId);
-            webView.loadUrl(MainController.getPageLinkById(extras.getString("startid")));
-        }
+        setContentView(R.layout.activity_game);
 
+        readExtras();
+        setUpWebView();
         setUpToolBar();
         initializeSharedPreferences();
         setUpStepsCounter(stepsModeEnabled());
@@ -81,20 +70,20 @@ public class MainActivity extends AppCompatActivity {
             stepsTextView.setText("Steps: " + stepsCount);
             if (url.equals(finishURL)) {
                 chronometer.stop();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                 builder.setTitle("You win!");
                 builder.setMessage("Do you want to start a new game?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent getStartIntent = new Intent(MainActivity.this, GetStartActivity.class);
+                        Intent getStartIntent = new Intent(GameActivity.this, GetStartActivity.class);
                         startActivity(getStartIntent);
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent mainMenuIntent = new Intent(MainActivity.this, MainMenuActivity.class);
+                        Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
                         startActivity(mainMenuIntent);
                     }
                 });
@@ -102,6 +91,20 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         }
+    }
+
+    private void setUpWebView() {
+        webView = findViewById(R.id.webview);
+        webView.setWebViewClient(new WikiWebViewClient());
+        webView.loadUrl(MainController.getPageLinkById(startId));
+    }
+
+    private void readExtras() {
+        Bundle extras = getIntent().getExtras();
+        finishId = extras.getString(GetStartActivity.FINISH_ID_KEY);
+        finishTitle = extras.getString(GetStartActivity.FINISH_TITLE_KEY);
+        finishURL = MainController.getURLForId(finishId);
+        startId = extras.getString(GetStartActivity.START_ID_KEY);
     }
 
     private void setUpToolBar() {

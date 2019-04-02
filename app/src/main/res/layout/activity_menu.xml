@@ -7,7 +7,7 @@
     tools:context=".activities.MainMenuActivity">
 
     <Button
-        android:id="@+id/StartGameButton"
+        android:id="@+id/start_game_button"
 
         android:layout_width="258dp"
         android:layout_height="47dp"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/SettingsButton"
+        android:id="@+id/settings_button"
 
         android:layout_width="258dp"
         android:layout_height="0dp"
@@ -40,7 +40,7 @@
 
 
     <Button
-        android:id="@+id/ExitButton"
+        android:id="@+id/exit_button"
 
         android:layout_width="258dp"
         android:layout_height="43dp"
@@ -57,7 +57,7 @@
 
 
     <TextView
-        android:id="@+id/AppNameText"
+        android:id="@+id/app_name_text"
         android:layout_width="303dp"
         android:layout_height="83dp"
         android:layout_marginTop="24dp"
