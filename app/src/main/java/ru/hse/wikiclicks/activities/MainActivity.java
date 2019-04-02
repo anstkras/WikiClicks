@@ -1,10 +1,13 @@
 package ru.hse.wikiclicks.activities;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Chronometer;
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView stepsTextView;
     private WebView webView;
     private Chronometer chronometer;
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         }
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        stepsTextView = findViewById(R.id.tv_steps);
 
-        setUpChronometer();
+        initializeSharedPreferences();
+        setUpStepsCounter(stepsModeEnabled());
+        setUpChronometer(timeModeEnabled());
     }
 
     @Override
@@ -67,9 +73,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpChronometer() {
+    private void initializeSharedPreferences() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private void setUpStepsCounter(boolean enabled) {
+        stepsTextView = findViewById(R.id.tv_steps);
+        if (!enabled) {
+            stepsTextView.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setUpChronometer(boolean enabled) {
         chronometer = findViewById(R.id.chronometer);
+        if (!enabled) {
+            chronometer.setVisibility(View.INVISIBLE);
+        }
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
+    }
+
+    private boolean timeModeEnabled() {
+        return sharedPreferences.getBoolean("pref_time_mode", true);
+    }
+
+    private boolean stepsModeEnabled() {
+        return sharedPreferences.getBoolean("pref_steps_mode", true);
     }
 }
