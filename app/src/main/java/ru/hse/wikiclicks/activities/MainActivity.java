@@ -12,7 +12,8 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.MainController;
 
 public class MainActivity extends AppCompatActivity {
-    private int stepsCount = -3; // magic
+    private int stepsCount = -1; // magic
+    private String finishId;
     private TextView stepsTextView;
     private WebView webView;
 
@@ -22,7 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WikiWebViewClient());
-        webView.loadUrl(MainController.getRandomPageLink());
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            webView.loadUrl(MainController.getRandomPageLink());
+        } else {
+            finishId = extras.getString("finishid");
+            System.out.println(extras.getString("startid"));
+            System.out.println(finishId);
+            webView.loadUrl(MainController.getPageLinkById(extras.getString("startid")));
+        }
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         stepsTextView = findViewById(R.id.stepsTextView);
@@ -40,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private class WikiWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            System.out.println(url + " " + MainController.isCorrectWikipediaLink(url));
             if (!MainController.isCorrectWikipediaLink(url)) {
                 return true;
             }
