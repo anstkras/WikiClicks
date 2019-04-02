@@ -19,11 +19,12 @@ import ru.hse.wikiclicks.controllers.MainController;
 public class MainActivity extends AppCompatActivity {
     private int stepsCount = -1; // magic
     private String finishId;
+    private String finishTitle;
     private TextView stepsTextView;
     private WebView webView;
     private Chronometer chronometer;
     private SharedPreferences sharedPreferences;
-
+    private static final String FINISH_TITLE_KEY = "finish_title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
             webView.loadUrl(MainController.getRandomPageLink());
         } else {
             finishId = extras.getString("finishid");
+            finishTitle = extras.getString(FINISH_TITLE_KEY);
             System.out.println(extras.getString("startid"));
             System.out.println(finishId);
             webView.loadUrl(MainController.getPageLinkById(extras.getString("startid")));
         }
-        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 
+        setUpToolBar();
         initializeSharedPreferences();
         setUpStepsCounter(stepsModeEnabled());
         setUpChronometer(timeModeEnabled());
@@ -73,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setUpToolBar() {
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        TextView finishTitleTextView = findViewById(R.id.tv_finish);
+        finishTitleTextView.setText("Goal: " + finishTitle);
+    }
+
     private void initializeSharedPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
@@ -89,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         if (!enabled) {
             chronometer.setVisibility(View.INVISIBLE);
         }
+        chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }
