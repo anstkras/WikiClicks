@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
-            stepsTextView.setText("Steps: " + stepsCount);
+            stepsTextView.setText(getString(R.string.steps, stepsCount));
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
@@ -110,7 +110,7 @@ public class GameActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         TextView finishTitleTextView = findViewById(R.id.tv_finish);
-        finishTitleTextView.setText("Target: " + finishTitle);
+        finishTitleTextView.setText(getString(R.string.target, finishTitle));
     }
 
     private void initializeSharedPreferences() {
