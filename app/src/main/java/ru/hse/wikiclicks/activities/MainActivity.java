@@ -17,7 +17,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.MainController;
 
 public class MainActivity extends AppCompatActivity {
-    private int stepsCount = -1; // magic
+    private int stepsCount = -1;
     private String finishId;
     private String finishTitle;
     private TextView stepsTextView;
