@@ -14,6 +14,7 @@ public class WikiController {
 
     /** Method that returns a random WikiPage or the Avatar (band) page if the request for a random page failed. */
     public static WikiPage getRandomPage() {
+        // requests list of one random page in json format without namespaces
         String query = "https://en.wikipedia.org/w/api.php?action=query&list=random&format=json&rnnamespace=0&rnlimit=1";
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
@@ -50,7 +51,8 @@ public class WikiController {
      * @return A List of WikiPages of length no more than 15.
      */
     public static List<WikiPage> getSearchSuggestions(String prefix) {
-        String query = "https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&prop=info&inprop=url&utf8=&format=json&origin=*&pslimit=15&pssearch=" + prefix;
+        // requests list of prefixsearch results of length no more than 15
+        String query = "https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&prop=info&format=json&origin=*&pslimit=15&pssearch=" + prefix;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
@@ -79,6 +81,7 @@ public class WikiController {
      */
     public static WikiPage getPageFromUrl(String url) {
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
+        // requests basic info of page with given title, processing redirects
         String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&titles=" + title;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
@@ -96,6 +99,7 @@ public class WikiController {
 
     /** Returns the id of the page that the page with given id redirects to. */
     public static String getRedirectedId(String id) {
+        // requests basic info of page with given id, processing redirects
         String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&pageids=" + id;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
@@ -113,7 +117,8 @@ public class WikiController {
 
     /**  Method that returns a short extract from the Wikipedia page with the given id. */
     public static String getExtract(String id) {
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&continue=&explaintext=1&format=json&formatversion=2&pageids=" + id;
+        // requests 1 extract from page with given id no more than 3 sentences long, formatted to show strange symbols
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
