@@ -18,7 +18,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.WikiPage;
 
-public class GetStartActivity extends AppCompatActivity {
+public class GetEndpointsActivity extends AppCompatActivity {
     private final WikiPage startPage = new WikiPage();
     private final WikiPage finishPage = new WikiPage();
     static final String FINISH_TITLE_KEY = "finish_title";
@@ -28,7 +28,7 @@ public class GetStartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startpoint);
+        setContentView(R.layout.activity_endpoints);
         final SearchView startPoint = findViewById(R.id.choose_start_point);
         final SearchView finishPoint = findViewById(R.id.choose_finish_point);
         createSearch(startPoint, startPage);
@@ -56,7 +56,7 @@ public class GetStartActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    Intent startGame = new Intent(GetStartActivity.this, GameActivity.class);
+                    Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
                     Bundle pagesInfo = new Bundle();
                     pagesInfo.putString(START_ID_KEY, startPage.getId());
                     pagesInfo.putString(FINISH_ID_KEY, finishPage.getId());

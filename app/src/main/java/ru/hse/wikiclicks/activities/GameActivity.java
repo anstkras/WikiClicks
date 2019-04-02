@@ -75,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent getStartIntent = new Intent(GameActivity.this, GetStartActivity.class);
+                        Intent getStartIntent = new Intent(GameActivity.this, GetEndpointsActivity.class);
                         startActivity(getStartIntent);
                     }
                 });
@@ -100,10 +100,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void readExtras() {
         Bundle extras = getIntent().getExtras();
-        finishId = extras.getString(GetStartActivity.FINISH_ID_KEY);
-        finishTitle = extras.getString(GetStartActivity.FINISH_TITLE_KEY);
+        finishId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
+        finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
-        startId = extras.getString(GetStartActivity.START_ID_KEY);
+        startId = extras.getString(GetEndpointsActivity.START_ID_KEY);
     }
 
     private void setUpToolBar() {

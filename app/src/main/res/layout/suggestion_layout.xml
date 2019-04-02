@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/suggestions"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.GetStartActivity">
+    tools:context=".activities.GetEndpointsActivity">
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
