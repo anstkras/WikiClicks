@@ -1,9 +1,12 @@
 package ru.hse.wikiclicks.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private Chronometer chronometer;
     private SharedPreferences sharedPreferences;
+    private String finishURL;
     private static final String FINISH_TITLE_KEY = "finish_title";
 
     @Override
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             finishId = extras.getString("finishid");
             finishTitle = extras.getString(FINISH_TITLE_KEY);
+            finishURL = MainController.getURLForId(finishId);
             System.out.println(extras.getString("startid"));
             System.out.println(finishId);
             webView.loadUrl(MainController.getPageLinkById(extras.getString("startid")));
@@ -74,6 +79,28 @@ public class MainActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
             stepsTextView.setText("Steps: " + stepsCount);
+            if (url.equals(finishURL)) {
+                chronometer.stop();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("You win!");
+                builder.setMessage("Do you want to start a new game?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent getStartIntent = new Intent(MainActivity.this, GetStartActivity.class);
+                        startActivity(getStartIntent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent mainMenuIntent = new Intent(MainActivity.this, MainMenuActivity.class);
+                        startActivity(mainMenuIntent);
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
         }
     }
 

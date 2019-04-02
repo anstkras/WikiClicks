@@ -66,4 +66,22 @@ public class MainController {
         }
         return new ArrayList<>();
     }
+
+    public static String getURLForId(String id) {
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=" + id;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            System.out.println(searchResult);
+            JSONObject json = new JSONObject(searchResult);
+            String desktopURL = json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getString("canonicalurl");
+            return desktopURL.replace("en.wikipedia", "en.m.wikipedia");
+        } catch (IOException e) {
+            System.out.println("Internet connection failed.");
+            e.printStackTrace();
+        } catch (JSONException e) {
+            System.out.println("JSON failed");
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
