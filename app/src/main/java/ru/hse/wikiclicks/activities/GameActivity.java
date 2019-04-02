@@ -29,7 +29,6 @@ public class GameActivity extends AppCompatActivity {
     private WebView webView;
     private Chronometer chronometer;
     private SharedPreferences sharedPreferences;
-    private String finishURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
             stepsTextView.setText("Steps: " + stepsCount);
-            if (url.equals(finishURL)) {
+            if (finishId.equals(MainController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                 builder.setTitle("You win!");
@@ -103,7 +102,7 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         finishId = extras.getString(GetStartActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetStartActivity.FINISH_TITLE_KEY);
-        finishURL = MainController.getURLForId(finishId);
+        finishId = MainController.getRedirectedId(finishId);
         startId = extras.getString(GetStartActivity.START_ID_KEY);
     }
 
