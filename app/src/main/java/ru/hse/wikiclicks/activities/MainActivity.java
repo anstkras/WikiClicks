@@ -1,11 +1,13 @@
 package ru.hse.wikiclicks.activities;
 
 import android.graphics.Bitmap;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 import ru.hse.wikiclicks.R;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private String finishId;
     private TextView stepsTextView;
     private WebView webView;
+    private Chronometer chronometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         }
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        stepsTextView = findViewById(R.id.stepsTextView);
+        stepsTextView = findViewById(R.id.tv_steps);
+
+        setUpChronometer();
     }
 
     @Override
@@ -60,5 +65,11 @@ public class MainActivity extends AppCompatActivity {
             stepsCount++;
             stepsTextView.setText("Steps: " + stepsCount);
         }
+    }
+
+    private void setUpChronometer() {
+        chronometer = findViewById(R.id.chronometer);
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.start();
     }
 }
