@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (!MainController.isCorrectWikipediaLink(url)) {
-                Toast toast = Toast.makeText(getApplicationContext(), "URL should lead to wikipedia", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), "URL should lead to english wiki page", Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
             }
