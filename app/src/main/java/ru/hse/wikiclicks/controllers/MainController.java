@@ -2,9 +2,7 @@ package ru.hse.wikiclicks.controllers;
 
 import android.net.Uri;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -67,14 +65,29 @@ public class MainController {
         return new ArrayList<>();
     }
 
-    public static String getURLForId(String id) {
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=" + id;
+    public static WikiPage getPageFromUrl(String url) {
+        String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
+        String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&titles=" + title;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            System.out.println(searchResult);
             JSONObject json = new JSONObject(searchResult);
-            String desktopURL = json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getString("canonicalurl");
-            return desktopURL.replace("en.wikipedia", "en.m.wikipedia");
+            return new WikiPage(title, json.getJSONObject("query").getJSONObject("pages").names().getString(0));
+        } catch (IOException e) {
+            System.out.println("Internet connection failed.");
+            e.printStackTrace();
+        } catch (JSONException e) {
+            System.out.println("JSON failed");
+            e.printStackTrace();
+        }
+        return new WikiPage();
+    }
+
+    public static String getRedirectedId(String id) {
+        String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&pageids=" + id;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            return json.getJSONObject("query").getJSONObject("pages").names().getString(0);
         } catch (IOException e) {
             System.out.println("Internet connection failed.");
             e.printStackTrace();
