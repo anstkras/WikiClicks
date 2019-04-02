@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-
 import ru.hse.wikiclicks.R;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -22,7 +21,13 @@ public class MainMenuActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Button startGameButton = findViewById(R.id.StartGameButton);
+        setUpStartGameButton();
+        setUpExitButton();
+        setUpSettingButton();
+    }
+
+    private void setUpStartGameButton() {
+        Button startGameButton = findViewById(R.id.start_game_button);
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -30,13 +35,10 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(startGame);
             }
         });
-
-        setUpExitButton();
-        setUpSettingButton();
     }
 
     private void setUpExitButton() {
-        Button exitButton = findViewById(R.id.ExitButton);
+        Button exitButton = findViewById(R.id.exit_button);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +64,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void setUpSettingButton() {
-        Button settingsButton = findViewById(R.id.SettingsButton);
+        Button settingsButton = findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

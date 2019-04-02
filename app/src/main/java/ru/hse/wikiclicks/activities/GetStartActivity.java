@@ -21,18 +21,20 @@ import ru.hse.wikiclicks.controllers.WikiPage;
 public class GetStartActivity extends AppCompatActivity {
     private final WikiPage startPage = new WikiPage();
     private final WikiPage finishPage = new WikiPage();
+    static final String FINISH_TITLE_KEY = "finish_title";
+    static final String FINISH_ID_KEY = "finish_id";
+    static final String START_ID_KEY = "start_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startpoint);
-        final SearchView startPoint = findViewById(R.id.ChooseStartPoint);
-        final SearchView finishPoint = findViewById(R.id.ChooseFinishPoint);
+        final SearchView startPoint = findViewById(R.id.choose_start_point);
+        final SearchView finishPoint = findViewById(R.id.choose_finish_point);
         createSearch(startPoint, startPage);
         createSearch(finishPoint, finishPage);
 
-
-        Button randomButton = findViewById(R.id.RandomButton);
+        Button randomButton = findViewById(R.id.random_button);
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +45,7 @@ public class GetStartActivity extends AppCompatActivity {
             }
         });
 
-        Button startButton = findViewById(R.id.OKButton);
+        Button startButton = findViewById(R.id.ok_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,12 +56,12 @@ public class GetStartActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
-                    Intent startGame = new Intent(GetStartActivity.this, MainActivity.class);
-                    Bundle pageIds = new Bundle(); // TODO refactor name
-                    pageIds.putString("startid", startPage.getId());
-                    pageIds.putString("finishid", finishPage.getId());
-                    pageIds.putString("finish_title", finishPage.getTitle());
-                    startGame.putExtras(pageIds);
+                    Intent startGame = new Intent(GetStartActivity.this, GameActivity.class);
+                    Bundle pagesInfo = new Bundle();
+                    pagesInfo.putString(START_ID_KEY, startPage.getId());
+                    pagesInfo.putString(FINISH_ID_KEY, finishPage.getId());
+                    pagesInfo.putString(FINISH_TITLE_KEY, finishPage.getTitle());
+                    startGame.putExtras(pagesInfo);
                     startActivity(startGame);
                 }
             }
