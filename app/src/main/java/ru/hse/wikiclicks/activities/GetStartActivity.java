@@ -1,6 +1,7 @@
 package ru.hse.wikiclicks.activities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -17,33 +18,53 @@ import ru.hse.wikiclicks.controllers.MainController;
 import ru.hse.wikiclicks.controllers.WikiPage;
 
 public class GetStartActivity extends AppCompatActivity {
+    private final WikiPage startPage = new WikiPage();
+    private final WikiPage finishPage = new WikiPage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startpoint);
-        createSearch();
-        createRandomButton();
-    }
+        final SearchView startPoint = findViewById(R.id.ChooseStartPoint);
+        final SearchView finishPoint = findViewById(R.id.ChooseFinishPoint);
+        createSearch(startPoint, startPage);
+        createSearch(finishPoint, finishPage);
 
-    private void createRandomButton() {
+
         Button randomButton = findViewById(R.id.RandomButton);
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent startGame = new Intent(GetStartActivity.this, MainActivity.class);
-                startActivity(startGame);
+                startPage.set(MainController.getRandomPage());
+                startPoint.setQuery(startPage.getTitle(), true);
+                finishPage.set(MainController.getRandomPage());
+                finishPoint.setQuery(finishPage.getTitle(), true);
+            }
+        });
+
+        Button startButton = findViewById(R.id.OKButton);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (startPage.getId() != null && finishPage.getId() != null) {
+                    Intent startGame = new Intent(GetStartActivity.this, MainActivity.class);
+                    Bundle pageIds = new Bundle();
+                    pageIds.putString("startid", startPage.getId());
+                    pageIds.putString("finishid", finishPage.getId());
+                    startGame.putExtras(pageIds);
+                    startActivity(startGame);
+                }
             }
         });
     }
 
-    private void createSearch() {
-        final SearchView startPoint = findViewById(R.id.ChooseStartPoint);
+    private void createSearch(final SearchView pageSearch, final WikiPage chosenPage) {
+        pageSearch.setIconifiedByDefault(false);
         final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 R.layout.suggestion_layout, null,
                 new String[]{"title"}, new int[]{R.id.title}, 0);
-        startPoint.setSuggestionsAdapter(adapter);
-        startPoint.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
+        pageSearch.setSuggestionsAdapter(adapter);
+        pageSearch.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
                 return true;
@@ -52,16 +73,15 @@ public class GetStartActivity extends AppCompatActivity {
             @Override
             public boolean onSuggestionClick(int position) {
                 System.out.println(position);
-                String pageId = startPoint.getSuggestionsAdapter().getCursor().getString(2);
-                Intent chooseStart = new Intent(GetStartActivity.this, MainActivity.class);
-                Bundle startPageId = new Bundle();
-                startPageId.putString("id", pageId);
-                chooseStart.putExtras(startPageId);
-                startActivity(chooseStart);
+                Cursor suggestions = pageSearch.getSuggestionsAdapter().getCursor();
+                String title = suggestions.getString(1);
+                String pageId = suggestions.getString(2);
+                chosenPage.set(new WikiPage(title, pageId));
+                pageSearch.setQuery(suggestions.getString(1), true);
                 return true;
             }
         });
-        startPoint.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        pageSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return true;
@@ -69,6 +89,11 @@ public class GetStartActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.equals(chosenPage.getTitle())) { // correct suggestion
+                    adapter.swapCursor(new MatrixCursor(new String[] {BaseColumns._ID, "title", "id"}));
+                    return true;
+                }
+                chosenPage.clear();
                 List<WikiPage> suggestions = MainController.getSearchSuggestions(newText);
                 MatrixCursor cursor = new MatrixCursor(new String[] {BaseColumns._ID, "title", "id"});
                 int id = 0;

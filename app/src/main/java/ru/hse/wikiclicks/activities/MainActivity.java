@@ -13,6 +13,7 @@ import ru.hse.wikiclicks.controllers.MainController;
 
 public class MainActivity extends AppCompatActivity {
     private int stepsCount = -1; // magic
+    private String finishId;
     private TextView stepsTextView;
     private WebView webView;
 
@@ -22,11 +23,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WikiWebViewClient());
-        Bundle startPage = getIntent().getExtras();
-        if (startPage == null) {
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
             webView.loadUrl(MainController.getRandomPageLink());
         } else {
-            webView.loadUrl(MainController.getPageLinkById(startPage.getString("id")));
+            finishId = extras.getString("finishid");
+            System.out.println(extras.getString("startid"));
+            System.out.println(finishId);
+            webView.loadUrl(MainController.getPageLinkById(extras.getString("startid")));
         }
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
