@@ -84,7 +84,7 @@ public class MainController {
         }
         return "";
     }
-
+  
     public static String getExtract(String id) {
         String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&continue=&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {

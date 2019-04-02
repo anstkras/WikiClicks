@@ -55,9 +55,10 @@ public class GetStartActivity extends AppCompatActivity {
                     toast.show();
                 } else {
                     Intent startGame = new Intent(GetStartActivity.this, MainActivity.class);
-                    Bundle pageIds = new Bundle();
+                    Bundle pageIds = new Bundle(); // TODO refactor name
                     pageIds.putString("startid", startPage.getId());
                     pageIds.putString("finishid", finishPage.getId());
+                    pageIds.putString("finish_title", finishPage.getTitle());
                     startGame.putExtras(pageIds);
                     startActivity(startGame);
                 }
@@ -97,12 +98,12 @@ public class GetStartActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.equals(chosenPage.getTitle())) { // correct suggestion
-                    adapter.swapCursor(new MatrixCursor(new String[] {BaseColumns._ID, "title", "id"}));
+                    adapter.swapCursor(new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"}));
                     return true;
                 }
                 chosenPage.clear();
                 List<WikiPage> suggestions = MainController.getSearchSuggestions(newText);
-                MatrixCursor cursor = new MatrixCursor(new String[] {BaseColumns._ID, "title", "id"});
+                MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
                 int id = 0;
                 for (WikiPage page : suggestions) {
                     cursor.newRow().add(id++).add(page.getTitle()).add(page.getId());
