@@ -9,9 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/** Class responsible for queries to Wikipedia and interacting with its API. */
 public class WikiController {
 
+    /** Method that returns a random WikiPage or the Avatar (band) page if the request for a random page failed. */
     public static WikiPage getRandomPage() {
         String query = "https://en.wikipedia.org/w/api.php?action=query&list=random&format=json&rnnamespace=0&rnlimit=1";
         try {
@@ -29,14 +30,25 @@ public class WikiController {
         return new WikiPage("Avatar (band)","26296973");
     }
 
+    /**
+     * Method that checks whether the given link is correct, i.e. an acceptable move in the game.
+     * @param url a given url.
+     * @return currently returns true if the url's host is the mobile english wikipedia, will be improved.
+     */
     public static boolean isCorrectWikipediaLink(String url) {
         return "en.m.wikipedia.org".equals(Uri.parse(url).getHost());
     }
 
+    /** Method that returns an url for the given page id. */
     public static String getPageLinkById(String id) {
         return "https://en.m.wikipedia.org/?curid=" + id;
     }
 
+    /**
+     * Gets a list of suggestions for a page prefix, based on the Wikipedia search.
+     * @param prefix the already inputted prefix.
+     * @return A List of WikiPages of length no more than 15.
+     */
     public static List<WikiPage> getSearchSuggestions(String prefix) {
         String query = "https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&prop=info&inprop=url&utf8=&format=json&origin=*&pslimit=15&pssearch=" + prefix;
         try {
@@ -60,6 +72,11 @@ public class WikiController {
         return new ArrayList<>();
     }
 
+    /**
+     * Creates a WikiPage from the given url.
+     * @param url a correct Wikipedia url.
+     * @return the WikiPage that the given URL will redirect to, empty WikiPage if failed.
+     */
     public static WikiPage getPageFromUrl(String url) {
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
         String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&titles=" + title;
@@ -77,6 +94,7 @@ public class WikiController {
         return new WikiPage();
     }
 
+    /** Returns the id of the page that the page with given id redirects to. */
     public static String getRedirectedId(String id) {
         String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&pageids=" + id;
         try {
@@ -92,7 +110,8 @@ public class WikiController {
         }
         return id;
     }
-  
+
+    /**  Method that returns a short extract from the Wikipedia page with the given id. */
     public static String getExtract(String id) {
         String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&continue=&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {
