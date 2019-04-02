@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.MainController;
+import ru.hse.wikiclicks.controllers.WikiController;
 
 public class GameActivity extends AppCompatActivity {
     private int stepsCount = -1;
@@ -55,7 +55,7 @@ public class GameActivity extends AppCompatActivity {
     private class WikiWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (!MainController.isCorrectWikipediaLink(url)) {
+            if (!WikiController.isCorrectWikipediaLink(url)) {
                 Toast toast = Toast.makeText(getApplicationContext(), "URL should lead to english wiki page", Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
@@ -67,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
             stepsTextView.setText("Steps: " + stepsCount);
-            if (finishId.equals(MainController.getPageFromUrl(url).getId())) {
+            if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
                 final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
                 builder.setTitle("You win!");
@@ -95,14 +95,14 @@ public class GameActivity extends AppCompatActivity {
     private void setUpWebView() {
         webView = findViewById(R.id.webview);
         webView.setWebViewClient(new WikiWebViewClient());
-        webView.loadUrl(MainController.getPageLinkById(startId));
+        webView.loadUrl(WikiController.getPageLinkById(startId));
     }
 
     private void readExtras() {
         Bundle extras = getIntent().getExtras();
         finishId = extras.getString(GetStartActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetStartActivity.FINISH_TITLE_KEY);
-        finishId = MainController.getRedirectedId(finishId);
+        finishId = WikiController.getRedirectedId(finishId);
         startId = extras.getString(GetStartActivity.START_ID_KEY);
     }
 

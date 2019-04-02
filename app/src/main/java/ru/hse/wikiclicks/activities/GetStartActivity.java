@@ -15,7 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.MainController;
+import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.WikiPage;
 
 public class GetStartActivity extends AppCompatActivity {
@@ -38,9 +38,9 @@ public class GetStartActivity extends AppCompatActivity {
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startPage.set(MainController.getRandomPage());
+                startPage.set(WikiController.getRandomPage());
                 startPoint.setQuery(startPage.getTitle(), true);
-                finishPage.set(MainController.getRandomPage());
+                finishPage.set(WikiController.getRandomPage());
                 finishPoint.setQuery(finishPage.getTitle(), true);
             }
         });
@@ -104,7 +104,7 @@ public class GetStartActivity extends AppCompatActivity {
                     return true;
                 }
                 chosenPage.clear();
-                List<WikiPage> suggestions = MainController.getSearchSuggestions(newText);
+                List<WikiPage> suggestions = WikiController.getSearchSuggestions(newText);
                 MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
                 int id = 0;
                 for (WikiPage page : suggestions) {
