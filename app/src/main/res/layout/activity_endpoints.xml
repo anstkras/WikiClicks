@@ -9,7 +9,7 @@
     <SearchView
         android:id="@+id/choose_start_point"
 
-        android:layout_width="242dp"
+        android:layout_width="290dp"
         android:layout_height="0dp"
 
         android:layout_marginTop="120dp"
@@ -25,7 +25,7 @@
     <SearchView
         android:id="@+id/choose_finish_point"
 
-        android:layout_width="242dp"
+        android:layout_width="290dp"
         android:layout_height="0dp"
 
         android:layout_marginTop="340dp"
