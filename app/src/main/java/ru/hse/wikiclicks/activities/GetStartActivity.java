@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -46,7 +47,13 @@ public class GetStartActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (startPage.getId() != null && finishPage.getId() != null) {
+                if (startPage.getId() == null) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (finishPage.getId() == null) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
                     Intent startGame = new Intent(GetStartActivity.this, MainActivity.class);
                     Bundle pageIds = new Bundle();
                     pageIds.putString("startid", startPage.getId());

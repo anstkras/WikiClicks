@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.MainController;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (!MainController.isCorrectWikipediaLink(url)) {
+                Toast toast = Toast.makeText(getApplicationContext(), "URL should lead to wikipedia", Toast.LENGTH_SHORT);
+                toast.show();
                 return true;
             }
             return super.shouldOverrideUrlLoading(view, url);
