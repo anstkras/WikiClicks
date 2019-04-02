@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         TextView finishTitleTextView = findViewById(R.id.tv_finish);
-        finishTitleTextView.setText("Goal: " + finishTitle);
+        finishTitleTextView.setText("Target: " + finishTitle);
     }
 
     private void initializeSharedPreferences() {
