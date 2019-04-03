@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#36c"
+        android:textColor="#0645AD"
         android:searchSuggestIntentAction="android.intent.action.VIEW">
     </TextView>
 </LinearLayout>

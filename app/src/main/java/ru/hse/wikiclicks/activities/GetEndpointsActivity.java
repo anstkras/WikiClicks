@@ -3,6 +3,7 @@ package ru.hse.wikiclicks.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -40,10 +42,11 @@ public class GetEndpointsActivity extends AppCompatActivity {
 
     /** Creates button that starts game if both start and finish are initialized. */
     private void createStartButton() {
-        Button startButton = findViewById(R.id.ok_button);
+        final Button startButton = findViewById(R.id.ok_button);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startButton.setTextColor(Color.parseColor("#663366"));
                 if (startPage.getId() == null) { // start does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
                     toast.show();
@@ -69,10 +72,11 @@ public class GetEndpointsActivity extends AppCompatActivity {
      * @param finishView view that will show end page title.
      */
     private void createRandomButton(final SearchView startView, final SearchView finishView) {
-        Button randomButton = findViewById(R.id.random_button);
+        final Button randomButton = findViewById(R.id.random_button);
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                randomButton.setTextColor(Color.parseColor("#663366"));
                 startPage.set(WikiController.getRandomPage());
                 startView.setQuery(startPage.getTitle(), true);
                 finishPage.set(WikiController.getRandomPage());
@@ -120,10 +124,13 @@ public class GetEndpointsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.equals(chosenPage.getTitle())) { // this is the title of a suggestion, no action needed
+                    changeViewTextColor(pageSearch, Color.parseColor("#0645AD"));
                     adapter.swapCursor(new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"}));
                     return true;
                 }
                 chosenPage.clear(); // the title has been modified and the correct page no longer exists
+                changeViewTextColor(pageSearch, Color.parseColor("#CC2200"));
+
                 List<WikiPage> suggestions = WikiController.getSearchSuggestions(newText);
                 MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
                 int id = 0;
@@ -134,5 +141,12 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    /** Hack that changes color of SearchView text to given color. */
+    private void changeViewTextColor(final SearchView view, int color) {
+        int id = view.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = view.findViewById(id);
+        textView.setTextColor(color);
     }
 }
