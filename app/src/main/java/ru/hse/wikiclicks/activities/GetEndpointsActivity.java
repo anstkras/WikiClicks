@@ -3,7 +3,6 @@ package ru.hse.wikiclicks.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +45,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startButton.setTextColor(Color.parseColor("#663366"));
+                startButton.setTextColor(getResources().getColor(R.color.colorUsed));;
                 if (startPage.getId() == null) { // start does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
                     toast.show();
@@ -76,7 +75,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                randomButton.setTextColor(Color.parseColor("#663366"));
+                randomButton.setTextColor(getResources().getColor(R.color.colorUsed));;
                 startPage.set(WikiController.getRandomPage());
                 startView.setQuery(startPage.getTitle(), true);
                 finishPage.set(WikiController.getRandomPage());
@@ -124,12 +123,12 @@ public class GetEndpointsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.equals(chosenPage.getTitle())) { // this is the title of a suggestion, no action needed
-                    changeViewTextColor(pageSearch, Color.parseColor("#0645AD"));
+                    changeViewTextColor(pageSearch, getResources().getColor(R.color.colorInitial));
                     adapter.swapCursor(new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"}));
                     return true;
                 }
                 chosenPage.clear(); // the title has been modified and the correct page no longer exists
-                changeViewTextColor(pageSearch, Color.parseColor("#CC2200"));
+                changeViewTextColor(pageSearch, getResources().getColor(R.color.colorNoLink));
 
                 List<WikiPage> suggestions = WikiController.getSearchSuggestions(newText);
                 MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
