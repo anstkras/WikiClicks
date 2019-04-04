@@ -1,6 +1,7 @@
 package ru.hse.wikiclicks.controllers;
 
 import android.net.Uri;
+import android.util.Log;
 
 import org.json.*;
 import org.jsoup.Jsoup;
@@ -22,11 +23,9 @@ public class WikiController {
             JSONObject result = json.getJSONObject("query").getJSONArray("random").getJSONObject(0);
             return new WikiPage(result.getString("title"), result.getString("id"));
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new WikiPage("Avatar (band)","26296973");
     }
@@ -65,11 +64,9 @@ public class WikiController {
             }
             return suggestions;
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new ArrayList<>();
     }
@@ -88,11 +85,9 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             return new WikiPage(title, json.getJSONObject("query").getJSONObject("pages").names().getString(0));
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new WikiPage();
     }
@@ -106,11 +101,9 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             return json.getJSONObject("query").getJSONObject("pages").names().getString(0);
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return id;
     }
@@ -124,12 +117,18 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             return json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return "";
+    }
+
+    private static void failedJSON(JSONException e) {
+        Log.e("Wikipedia parsing error", e.getMessage());
+    }
+
+    private static void failedExecute(IOException e) {
+        Log.e("Query execution error", e.getMessage());
     }
 }
