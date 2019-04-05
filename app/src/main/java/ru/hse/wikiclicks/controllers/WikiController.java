@@ -110,8 +110,8 @@ public class WikiController {
 
     /**  Method that returns a short extract from the Wikipedia page with the given id. */
     public static String getExtract(String id) {
-        // requests 1 extract from page with given id no more than 3 sentences long, formatted to show strange symbols
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&explaintext=1&format=json&formatversion=2&pageids=" + id;
+        // requests 1 extract from page with given id no more than 2 sentences long, formatted to show strange symbols
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=2&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
