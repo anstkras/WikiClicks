@@ -33,10 +33,26 @@ public class WikiController {
     /**
      * Method that checks whether the given link is correct, i.e. an acceptable move in the game.
      * @param url a given url.
-     * @return currently returns true if the url's host is the mobile english wikipedia, will be improved.
+     * @return currently returns true if the url's host is the mobile english wikipedia,
+     *  and url is a wiki page from main namespace.
      */
     public static boolean isCorrectWikipediaLink(String url) {
-        return "en.m.wikipedia.org".equals(Uri.parse(url).getHost());
+        return "en.m.wikipedia.org".equals(Uri.parse(url).getHost()) && isNamespaceCorrect(getPageFromUrl(url).getId());
+    }
+
+    /** * Method that checks namespace of page is the main namespace, i.e. an acceptable link. */
+    private static boolean isNamespaceCorrect(String id) {
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=info&format=json&pageids=" + id;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            return "0".equals(json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getString("ns"));
+        } catch (IOException e) {
+            failedExecute(e);
+        } catch (JSONException e) {
+            failedJSON(e);
+        }
+        return false;
     }
 
     /** Method that returns an url for the given page id. */
