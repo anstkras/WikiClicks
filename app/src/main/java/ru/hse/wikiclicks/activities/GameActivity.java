@@ -69,26 +69,32 @@ public class GameActivity extends AppCompatActivity {
             stepsTextView.setText(getString(R.string.steps, stepsCount));
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-                builder.setTitle("You win!");
-                builder.setMessage("Do you want to start a new game?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent getStartIntent = new Intent(GameActivity.this, GetEndpointsActivity.class);
-                        startActivity(getStartIntent);
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                        startActivity(mainMenuIntent);
-                    }
-                });
-                AlertDialog dialog = builder.create();
+                AlertDialog dialog = getNewWinDialog();
                 dialog.show();
             }
+        }
+
+        private AlertDialog getNewWinDialog() {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+            builder.setTitle("You win!");
+            builder.setMessage("Do you want to start a new game?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent getEndpointsIntent = new Intent(GameActivity.this, GetEndpointsActivity.class);
+                    getEndpointsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(getEndpointsIntent);
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                    mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(mainMenuIntent);
+                }
+            });
+            return builder.create();
         }
     }
 
