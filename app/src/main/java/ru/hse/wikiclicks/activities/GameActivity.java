@@ -76,6 +76,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent getStartIntent = new Intent(GameActivity.this, GetEndpointsActivity.class);
+                        getStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(getStartIntent);
                     }
                 });
@@ -83,6 +84,7 @@ public class GameActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                        mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(mainMenuIntent);
                     }
                 });
