@@ -77,9 +77,9 @@ public class GetEndpointsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 randomButton.setTextColor(getResources().getColor(R.color.colorUsed));;
                 startPage.set(WikiController.getRandomPage());
-                startView.setQuery(startPage.getTitle(), true);
+                startView.setQuery(startPage.getTitle(), false);
                 finishPage.set(WikiController.getRandomPage());
-                finishView.setQuery(finishPage.getTitle(), true);
+                finishView.setQuery(finishPage.getTitle(), false);
             }
         });
     }
@@ -109,13 +109,18 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 String title = suggestions.getString(1);
                 String pageId = suggestions.getString(2);
                 chosenPage.set(new WikiPage(title, pageId));
-                pageSearch.setQuery(suggestions.getString(1), true);
+                pageSearch.setQuery(suggestions.getString(1), false);
                 return true;
             }
         });
         pageSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (query.equals(chosenPage.getTitle())) {
+                    String extract = WikiController.getExtract(chosenPage.getId());
+                    Toast toast = Toast.makeText(getApplicationContext(), extract, Toast.LENGTH_LONG);
+                    toast.show();
+                }
                 return true;
             }
 
