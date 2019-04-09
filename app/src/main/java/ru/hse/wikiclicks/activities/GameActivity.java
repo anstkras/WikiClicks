@@ -10,12 +10,17 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Chronometer;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.TimeUnit;
 
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.WikiController;
@@ -90,10 +95,19 @@ public class GameActivity extends AppCompatActivity {
                 dialog.show();
             }
         }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            view.loadUrl("javascript:(function() { " +
+                    "document.getElementsByClassName ('header-container header-chrome')[0].style.display='none';"
+                    +"})()");
+        }
     }
 
     private void setUpWebView() {
         webView = findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
         webView.loadUrl(WikiController.getPageLinkById(startId));
     }
