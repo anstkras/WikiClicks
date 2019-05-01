@@ -84,7 +84,8 @@ public class GameActivity extends AppCompatActivity {
             super.onPageFinished(view, url);
             view.loadUrl("javascript:(function() { " +
                     "document.getElementsByClassName ('header-container header-chrome')[0].style.display='none';"
-                    +"})()");
+                    + "})()");
+        }
 
         private AlertDialog getNewWinDialog() {
             final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
