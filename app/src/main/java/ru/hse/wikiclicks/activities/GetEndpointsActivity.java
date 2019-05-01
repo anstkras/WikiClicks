@@ -1,16 +1,15 @@
 package ru.hse.wikiclicks.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -31,12 +30,54 @@ public class GetEndpointsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endpoints);
-        final SearchView startPoint = findViewById(R.id.choose_start_point);
-        final SearchView finishPoint = findViewById(R.id.choose_finish_point);
+        final AutoCompleteTextView startPoint = findViewById(R.id.choose_start_point);
+        final AutoCompleteTextView finishPoint = findViewById(R.id.choose_finish_point);
         createSearch(startPoint, startPage);
         createSearch(finishPoint, finishPage);
         createRandomButton(startPoint, finishPoint);
         createStartButton();
+        createStartHinter();
+        createFinishHinter();
+    }
+
+    /** Creates button that shows an extract from the chosen starting page. */
+    private void createStartHinter() {
+        final Button startHintButton = findViewById(R.id.start_hint_button);
+        startHintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                String text = "Please choose starting page.";
+                if (startPage.getId() != null) {
+                    text = WikiController.getExtract(startPage.getId());
+                }
+                if (text.isEmpty()) {
+                    text = "No information is available.";
+                }
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
+    }
+
+    /** Creates button that shows an extract from the chosen finish page. */
+    private void createFinishHinter() {
+        final Button finishHintButton = findViewById(R.id.finish_hint_button);
+        finishHintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                String text = "Please choose end page.";
+                if (finishPage.getId() != null) {
+                    text = WikiController.getExtract(finishPage.getId());
+                }
+                if (text.isEmpty()) {
+                    text = "No information is available.";
+                }
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+                toast.show();
+            }
+        });
     }
 
     /** Creates button that starts game if both start and finish are initialized. */
@@ -45,7 +86,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startButton.setTextColor(getResources().getColor(R.color.colorUsed));;
+                startButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 if (startPage.getId() == null) { // start does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
                     toast.show();
@@ -70,82 +111,62 @@ public class GetEndpointsActivity extends AppCompatActivity {
      * @param startView view that will show start page title.
      * @param finishView view that will show end page title.
      */
-    private void createRandomButton(final SearchView startView, final SearchView finishView) {
+    private void createRandomButton(final AutoCompleteTextView startView, final AutoCompleteTextView finishView) {
         final Button randomButton = findViewById(R.id.random_button);
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                randomButton.setTextColor(getResources().getColor(R.color.colorUsed));;
+                randomButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 startPage.set(WikiController.getRandomPage());
-                startView.setQuery(startPage.getTitle(), true);
+                startView.setText(startPage.getTitle());
+                startView.setTextColor(getResources().getColor(R.color.colorInitial));
                 finishPage.set(WikiController.getRandomPage());
-                finishView.setQuery(finishPage.getTitle(), true);
+                finishView.setText(finishPage.getTitle());
+                finishView.setTextColor(getResources().getColor(R.color.colorInitial));
             }
         });
     }
 
     /**
-     * Initializes a SearchView that searches for the chosen WikiPage.
-     * @param pageSearch the SearchView that will search for Wikipedia pages.
+     * Initializes a AutoCompleteTextView that searches for the chosen WikiPage.
+     * @param pageSearch the AutoCompleteTextView that will search for Wikipedia pages.
      * @param chosenPage a WikiPage that will store the corresponding page for the current search result.
      */
-    private void createSearch(final SearchView pageSearch, final WikiPage chosenPage) {
-        pageSearch.setIconifiedByDefault(false); // search starts immediately, without view being pressed
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                R.layout.suggestion_layout, null,
-                new String[]{"title"}, new int[]{R.id.title}, 0);
-        pageSearch.setSuggestionsAdapter(adapter); // adapter that gets search results
-        pageSearch.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return true;
-            }
+    private void createSearch(final AutoCompleteTextView pageSearch, final WikiPage chosenPage) {
+        final ArrayAdapter<WikiPage> adapter = new ArrayAdapter<>(this, R.layout.suggestion_text);
+        pageSearch.setAdapter(adapter); // adapter that gets search results
 
-            /** Method that sets the text in the pageSearch to the clicked suggestion page title and updates the chosenPage. */
+        pageSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onSuggestionClick(int position) {
-                System.out.println(position);
-                Cursor suggestions = pageSearch.getSuggestionsAdapter().getCursor();
-                String title = suggestions.getString(1);
-                String pageId = suggestions.getString(2);
-                chosenPage.set(new WikiPage(title, pageId));
-                pageSearch.setQuery(suggestions.getString(1), true);
-                return true;
-            }
-        });
-        pageSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return true;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             /** Method that gets the Wikipedia page suggestions for the new text and passes them to the adapter. */
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText.equals(chosenPage.getTitle())) { // this is the title of a suggestion, no action needed
-                    changeViewTextColor(pageSearch, getResources().getColor(R.color.colorInitial));
-                    adapter.swapCursor(new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"}));
-                    return true;
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().equals(chosenPage.getTitle())) {
+                    return; // this is the correct title, do nothing
                 }
-                chosenPage.clear(); // the title has been modified and the correct page no longer exists
-                changeViewTextColor(pageSearch, getResources().getColor(R.color.colorNoLink));
+                pageSearch.setTextColor(getResources().getColor(R.color.colorNoLink));
+                chosenPage.clear();
+                List<WikiPage> currentSuggestions = WikiController.getSearchSuggestions(s.toString());
+                System.out.println(currentSuggestions.size());
+                adapter.clear();
+                adapter.addAll(currentSuggestions);
+                System.out.println(adapter.getCount());
+            }
 
-                List<WikiPage> suggestions = WikiController.getSearchSuggestions(newText);
-                MatrixCursor cursor = new MatrixCursor(new String[]{BaseColumns._ID, "title", "id"});
-                int id = 0;
-                for (WikiPage page : suggestions) {
-                    cursor.newRow().add(id++).add(page.getTitle()).add(page.getId());
-                }
-                adapter.swapCursor(cursor); // change cursor to the new one
-                return true;
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
-    }
-
-    /** Hack that changes color of SearchView text to given color. */
-    private void changeViewTextColor(final SearchView view, int color) {
-        int id = view.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
-        TextView textView = view.findViewById(id);
-        textView.setTextColor(color);
+        pageSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /** Method that sets the text in the pageSearch to the clicked suggestion page title and updates the chosenPage. */
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                chosenPage.set(adapter.getItem(position));
+                pageSearch.setTextColor(getResources().getColor(R.color.colorInitial));
+            }
+        });
     }
 }

@@ -1,6 +1,7 @@
 package ru.hse.wikiclicks.controllers;
 
 import android.net.Uri;
+import android.util.Log;
 
 import org.json.*;
 import org.jsoup.Jsoup;
@@ -22,11 +23,9 @@ public class WikiController {
             JSONObject result = json.getJSONObject("query").getJSONArray("random").getJSONObject(0);
             return new WikiPage(result.getString("title"), result.getString("id"));
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new WikiPage("Avatar (band)","26296973");
     }
@@ -34,10 +33,26 @@ public class WikiController {
     /**
      * Method that checks whether the given link is correct, i.e. an acceptable move in the game.
      * @param url a given url.
-     * @return currently returns true if the url's host is the mobile english wikipedia, will be improved.
+     * @return currently returns true if the url's host is the mobile english wikipedia,
+     *  and url is a wiki page from main namespace.
      */
     public static boolean isCorrectWikipediaLink(String url) {
-        return "en.m.wikipedia.org".equals(Uri.parse(url).getHost());
+        return "en.m.wikipedia.org".equals(Uri.parse(url).getHost()) && isNamespaceCorrect(getPageFromUrl(url).getId());
+    }
+
+    /** * Method that checks namespace of page is the main namespace, i.e. an acceptable link. */
+    private static boolean isNamespaceCorrect(String id) {
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=info&format=json&pageids=" + id;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            return "0".equals(json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getString("ns"));
+        } catch (IOException e) {
+            failedExecute(e);
+        } catch (JSONException e) {
+            failedJSON(e);
+        }
+        return false;
     }
 
     /** Method that returns an url for the given page id. */
@@ -65,11 +80,9 @@ public class WikiController {
             }
             return suggestions;
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new ArrayList<>();
     }
@@ -88,11 +101,9 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             return new WikiPage(title, json.getJSONObject("query").getJSONObject("pages").names().getString(0));
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return new WikiPage();
     }
@@ -106,30 +117,34 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             return json.getJSONObject("query").getJSONObject("pages").names().getString(0);
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return id;
     }
 
     /**  Method that returns a short extract from the Wikipedia page with the given id. */
     public static String getExtract(String id) {
-        // requests 1 extract from page with given id no more than 3 sentences long, formatted to show strange symbols
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exlimit=1&exsentences=3&explaintext=1&format=json&formatversion=2&pageids=" + id;
+        // requests 1 extract from page with given id no more than 2 sentences long, formatted to show strange symbols
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=2&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
             return json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
         } catch (IOException e) {
-            System.out.println("Internet connection failed.");
-            e.printStackTrace();
+            failedExecute(e);
         } catch (JSONException e) {
-            System.out.println("JSON failed");
-            e.printStackTrace();
+            failedJSON(e);
         }
         return "";
+    }
+
+    private static void failedJSON(JSONException e) {
+        Log.e("Wikipedia parsing error", e.getMessage());
+    }
+
+    private static void failedExecute(IOException e) {
+        Log.e("Query execution error", e.getMessage());
     }
 }
