@@ -34,4 +34,9 @@ public class WikiPage {
         this.title = null;
         this.id = null;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
