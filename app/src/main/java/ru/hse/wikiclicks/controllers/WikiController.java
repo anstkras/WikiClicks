@@ -131,7 +131,8 @@ public class WikiController {
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
-            return json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
+            String result = json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
+            return result.isEmpty() ? "No information availible." : result;
         } catch (IOException e) {
             failedExecute(e);
         } catch (JSONException e) {
