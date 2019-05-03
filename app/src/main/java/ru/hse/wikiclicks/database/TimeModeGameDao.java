@@ -1,6 +1,6 @@
 package ru.hse.wikiclicks.database;
 
-import android.arch.lifecycle.LiveData;
+import androidx.lifecycle.LiveData;
 
 import java.util.List;
 

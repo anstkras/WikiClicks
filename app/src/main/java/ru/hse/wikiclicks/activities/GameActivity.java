@@ -1,25 +1,21 @@
 package ru.hse.wikiclicks.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Chronometer;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.concurrent.TimeUnit;
 
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameMode;
@@ -27,12 +23,11 @@ import ru.hse.wikiclicks.controllers.GameModeFactory;
 import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.GamesRepository;
 import ru.hse.wikiclicks.database.GamesViewModel;
 import ru.hse.wikiclicks.database.TimeModeGame;
 
 public class GameActivity extends AppCompatActivity {
-    private final GamesViewModel gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
+    private GamesViewModel gamesViewModel;
     private int stepsCount = -1;
     private String finishId;
     private String startId;
@@ -45,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
