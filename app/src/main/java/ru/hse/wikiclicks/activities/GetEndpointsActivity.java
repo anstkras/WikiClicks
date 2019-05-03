@@ -99,6 +99,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
                     pagesInfo.putString(START_ID_KEY, startPage.getId());
                     pagesInfo.putString(FINISH_ID_KEY, finishPage.getId());
                     pagesInfo.putString(FINISH_TITLE_KEY, finishPage.getTitle());
+                    pagesInfo.putAll(getIntent().getExtras());
                     startGame.putExtras(pagesInfo);
                     startActivity(startGame);
                 }

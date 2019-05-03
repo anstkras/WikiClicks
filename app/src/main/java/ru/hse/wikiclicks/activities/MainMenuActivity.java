@@ -24,6 +24,19 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpStartGameButton();
         setUpExitButton();
         setUpSettingButton();
+        setUpStatisticsButton();
+    }
+
+    private void setUpStatisticsButton() {
+        final Button statisticsButton = findViewById(R.id.statistics_button);
+        statisticsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                statisticsButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent statisticsIntent = new Intent(MainMenuActivity.this, StatisticsActivity.class);
+                startActivity(statisticsIntent);
+            }
+        });
     }
 
     private void setUpStartGameButton() {
@@ -32,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startGameButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent startGame = new Intent(MainMenuActivity.this, GetEndpointsActivity.class);
+                Intent startGame = new Intent(MainMenuActivity.this, SelectModeActivity.class);
                 startActivity(startGame);
             }
         });
