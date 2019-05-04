@@ -1,10 +1,11 @@
 package ru.hse.wikiclicks.database;
 
 import android.app.Application;
-import androidx.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
+
+import androidx.lifecycle.LiveData;
 
 public class GamesRepository {
 
@@ -14,10 +15,10 @@ public class GamesRepository {
     GamesRepository(Application application) {
         GamesDatabase db = GamesDatabase.getDatabase(application);
         timeModeGameDao = db.timeModeGameDao();
-        mAllGames = timeModeGameDao.getAllWords();
+        mAllGames = timeModeGameDao.getAllGames();
     }
 
-    LiveData<List<TimeModeGame>> getAllWords() {
+    LiveData<List<TimeModeGame>> getAllGames() {
         return mAllGames;
     }
 

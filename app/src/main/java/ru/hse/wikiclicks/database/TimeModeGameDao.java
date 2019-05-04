@@ -17,5 +17,5 @@ public interface TimeModeGameDao {
     void deleteAll();
 
     @Query("SELECT * from games_table ORDER BY time ASC")
-    LiveData<List<TimeModeGame>> getAllWords();
+    LiveData<List<TimeModeGame>> getAllGames();
 }

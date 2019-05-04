@@ -17,6 +17,8 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameMode;
 import ru.hse.wikiclicks.controllers.GameModeFactory;

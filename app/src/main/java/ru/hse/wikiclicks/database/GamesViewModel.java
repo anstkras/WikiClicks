@@ -9,16 +9,16 @@ import java.util.List;
 public class GamesViewModel extends AndroidViewModel {
     private GamesRepository mRepository;
 
-    private LiveData<List<TimeModeGame>> mAllWords;
+    private LiveData<List<TimeModeGame>> allGames;
 
     public GamesViewModel (Application application) {
         super(application);
         mRepository = new GamesRepository(application);
-        mAllWords = mRepository.getAllWords();
+        allGames = mRepository.getAllGames();
     }
 
-    LiveData<List<TimeModeGame>> getAllWords() {
-        return mAllWords;
+    public LiveData<List<TimeModeGame>> getAllGames() {
+        return allGames;
     }
 
     public void insert(TimeModeGame timeModeGame) {
