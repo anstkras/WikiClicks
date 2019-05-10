@@ -162,10 +162,8 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 pageSearch.setTextColor(getResources().getColor(R.color.colorNoLink));
                 chosenPage.clear();
                 List<WikiPage> currentSuggestions = WikiController.getSearchSuggestions(s.toString());
-                System.out.println(currentSuggestions.size());
                 adapter.clear();
                 adapter.addAll(currentSuggestions);
-                System.out.println(adapter.getCount());
             }
 
             @Override

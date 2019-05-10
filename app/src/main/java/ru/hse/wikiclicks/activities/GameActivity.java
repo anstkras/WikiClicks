@@ -23,6 +23,7 @@ import android.widget.Toast;
 import java.util.concurrent.TimeUnit;
 
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 
 public class GameActivity extends AppCompatActivity {
@@ -65,6 +66,11 @@ public class GameActivity extends AppCompatActivity {
                 toast.show();
                 return true;
             }
+//            if (BanController.isCountry(url)) {
+//                Toast toast = Toast.makeText(getApplicationContext(), "URL should not lead to country", Toast.LENGTH_SHORT);
+//                toast.show();
+//                return true;
+//            }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
