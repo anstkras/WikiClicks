@@ -105,6 +105,9 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 } else if (finishPage.getId() == null) { // finish does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
                     toast.show();
+                } else if (startPage.getId().equals(finishPage.getId())) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose differing start and end page.", Toast.LENGTH_SHORT);
+                    toast.show();
                 } else { // game can be started
                     Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
                     Bundle pagesInfo = new Bundle();
