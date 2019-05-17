@@ -3,6 +3,7 @@ package ru.hse.wikiclicks.activities;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import androidx.preference.PreferenceManager;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameMode;
 import ru.hse.wikiclicks.controllers.GameModeFactory;
@@ -38,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     private TextView stepsTextView;
     protected WebView webView;
     private Chronometer chronometer;
+    private SharedPreferences sharedPreferences;
     private GameMode gameMode;
 
     @Override
@@ -48,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
         readExtras();
         setUpWebView();
         setUpToolBar();
+        initializeSharedPreferences();
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
     }
@@ -135,6 +139,10 @@ public class GameActivity extends AppCompatActivity {
             });
             return builder.create();
         }
+    }
+
+    private void initializeSharedPreferences() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     protected void setUpWebView() {
