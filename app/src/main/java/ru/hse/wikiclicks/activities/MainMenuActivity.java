@@ -3,9 +3,9 @@ package ru.hse.wikiclicks.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,6 +24,19 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpStartGameButton();
         setUpExitButton();
         setUpSettingButton();
+        setUpStatisticsButton();
+    }
+
+    private void setUpStatisticsButton() {
+        final Button statisticsButton = findViewById(R.id.statistics_button);
+        statisticsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                statisticsButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent statisticsIntent = new Intent(MainMenuActivity.this, StatisticsActivity.class);
+                startActivity(statisticsIntent);
+            }
+        });
     }
 
     private void setUpStartGameButton() {
@@ -32,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startGameButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent startGame = new Intent(MainMenuActivity.this, GetEndpointsActivity.class);
+                Intent startGame = new Intent(MainMenuActivity.this, SelectModeActivity.class);
                 startActivity(startGame);
             }
         });

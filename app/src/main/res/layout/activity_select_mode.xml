@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.MainMenuActivity"
+    tools:context=".activities.SelectModeActivity"
     android:orientation="vertical">
 
     <TextView
@@ -19,56 +19,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/kek"
+        android:text="@string/select_mode"
         android:textColor="@color/colorPlainText"
         android:textSize="15sp"
         android:layout_marginStart="20dp" />
 
     <Button
-        android:id="@+id/start_game_button"
+        android:id="@+id/time_mode_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
 
-        android:text="@string/new_game"
+        android:text="@string/time_mode"
         android:textColor="@color/colorInitial"
         android:textSize="25sp" />
 
     <Button
-        android:id="@+id/settings_button"
+        android:id="@+id/steps_mode_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
 
-        android:text="@string/settings"
+        android:text="@string/steps_mode"
         android:textColor="@color/colorInitial"
         android:textSize="25sp" />
 
     <Button
-        android:id="@+id/statistics_button"
+        android:id="@+id/custom_mode_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
 
-        android:text="@string/statistics"
-        android:textColor="@color/colorInitial"
-        android:textSize="25sp" />
-
-    <Button
-        android:id="@+id/exit_button"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-
-        android:text="@string/exit"
+        android:text="@string/custom_mode"
         android:textColor="@color/colorInitial"
         android:textSize="25sp" />
 

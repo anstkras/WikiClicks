@@ -1,15 +1,14 @@
 package ru.hse.wikiclicks.activities;
 
+import androidx.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,12 +16,21 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 
+import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.GameMode;
+import ru.hse.wikiclicks.controllers.GameModeFactory;
+import ru.hse.wikiclicks.controllers.StepsGameMode;
+import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
+import ru.hse.wikiclicks.database.GamesViewModel;
+import ru.hse.wikiclicks.database.TimeModeGame;
 
 public class GameActivity extends AppCompatActivity {
+    private GamesViewModel gamesViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
@@ -30,19 +38,18 @@ public class GameActivity extends AppCompatActivity {
     private TextView stepsTextView;
     protected WebView webView;
     private Chronometer chronometer;
-    private SharedPreferences sharedPreferences;
+    private GameMode gameMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
         setContentView(R.layout.activity_game);
-
         readExtras();
         setUpWebView();
         setUpToolBar();
-        initializeSharedPreferences();
-        setUpStepsCounter(stepsModeEnabled());
-        setUpChronometer(timeModeEnabled());
+        setUpStepsCounter(gameMode.stepsModeEnabled());
+        setUpChronometer(gameMode.timeModeEnabled());
     }
 
     @Override
@@ -71,6 +78,7 @@ public class GameActivity extends AppCompatActivity {
             stepsTextView.setText(getString(R.string.steps, stepsCount));
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
+                addDatabaseEntry();
                 AlertDialog dialog = getNewWinDialog();
                 dialog.show();
             }
@@ -108,7 +116,7 @@ public class GameActivity extends AppCompatActivity {
         private AlertDialog getNewWinDialog() {
             final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
             builder.setTitle("You win!");
-            builder.setMessage("Do you want to start a new game?");
+            builder.setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?");
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -138,10 +146,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void readExtras() {
         Bundle extras = getIntent().getExtras();
+        assert extras != null;
         finishId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
         startId = extras.getString(GetEndpointsActivity.START_ID_KEY);
+        String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
+        assert gameModeString != null;
+        gameMode = GameModeFactory.getGameMode(gameModeString);
     }
 
     private void setUpToolBar() {
@@ -149,10 +161,6 @@ public class GameActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         TextView finishTitleTextView = findViewById(R.id.tv_finish);
         finishTitleTextView.setText(getString(R.string.target, finishTitle));
-    }
-
-    private void initializeSharedPreferences() {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     private void setUpStepsCounter(boolean enabled) {
@@ -172,12 +180,22 @@ public class GameActivity extends AppCompatActivity {
         chronometer.start();
     }
 
-    private boolean timeModeEnabled() {
-        return sharedPreferences.getBoolean("pref_time_mode", true);
+    private String getWinMessage() { // TODO replace this with smth more adequate
+        if (gameMode instanceof TimeGameMode) {
+            return "Your time is " + chronometer.getText();
+        }
+
+        if (gameMode instanceof StepsGameMode) {
+            return "Your steps count is" + stepsCount;
+        }
+        throw new AssertionError("Wrong game mode");
     }
 
-    private boolean stepsModeEnabled() {
-        return sharedPreferences.getBoolean("pref_steps_mode", true);
+    private void addDatabaseEntry() {
+        if (gameMode instanceof TimeGameMode) {
+            TimeModeGame timeModeGame = new TimeModeGame(chronometer.getText().toString());
+            gamesViewModel.insert(timeModeGame);
+        }
     }
 
     private boolean banCountriesEnabled() {

@@ -3,6 +3,7 @@
     package="ru.hse.wikiclicks">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity
+            android:name=".activities.SelectModeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.MainMenuActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -21,17 +26,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".activities.GameActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:configChanges="orientation|screenSize|keyboardHidden"
             android:name=".activities.SettingsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Settings" />
         <activity
             android:name=".activities.GetEndpointsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            />
+            android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>
 
 </manifest>

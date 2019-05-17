@@ -12,4 +12,9 @@
     <string name="target">Target: %1$s</string>
     <string name="kek">This game is a <i>stub</i>. You can help the developers by <i>expanding it</i>.</string>
     <string name="hint">\?</string>
+    <string name="select_mode">Select mode</string>
+    <string name="time_mode">Time mode</string>
+    <string name="steps_mode">Steps mode</string>
+    <string name="custom_mode">Custom mode</string>
+    <string name="statistics">Statistics</string>
 </resources>

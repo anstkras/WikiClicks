@@ -3,7 +3,8 @@ package ru.hse.wikiclicks.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -114,6 +115,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
                     pagesInfo.putString(START_ID_KEY, startPage.getId());
                     pagesInfo.putString(FINISH_ID_KEY, finishPage.getId());
                     pagesInfo.putString(FINISH_TITLE_KEY, finishPage.getTitle());
+                    pagesInfo.putAll(getIntent().getExtras());
                     startGame.putExtras(pagesInfo);
                     startActivity(startGame);
                 }
