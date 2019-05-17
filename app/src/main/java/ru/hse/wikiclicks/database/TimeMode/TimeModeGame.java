@@ -1,10 +1,10 @@
-package ru.hse.wikiclicks.database;
+package ru.hse.wikiclicks.database.TimeMode;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "games_table")
+@Entity(tableName = "time_mode_games_table")
 public class TimeModeGame {
     @PrimaryKey(autoGenerate = true)
     private int id;

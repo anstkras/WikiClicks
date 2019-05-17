@@ -1,15 +1,20 @@
 package ru.hse.wikiclicks.activities;
 
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,22 +22,22 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import androidx.preference.PreferenceManager;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameMode;
 import ru.hse.wikiclicks.controllers.GameModeFactory;
 import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
-import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.GamesViewModel;
-import ru.hse.wikiclicks.database.TimeModeGame;
+import ru.hse.wikiclicks.database.StepsMode.StepsModeGame;
+import ru.hse.wikiclicks.database.StepsMode.StepsModeGamesViewModel;
+import ru.hse.wikiclicks.database.TimeMode.TimeModeGamesViewModel;
+import ru.hse.wikiclicks.database.TimeMode.TimeModeGame;
 
 public class GameActivity extends AppCompatActivity {
-    private GamesViewModel gamesViewModel;
+    private TimeModeGamesViewModel timeModeGamesViewModel;
+    private StepsModeGamesViewModel stepsModeGamesViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
@@ -46,7 +51,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
+        timeModeGamesViewModel = ViewModelProviders.of(this).get(TimeModeGamesViewModel.class);
+        stepsModeGamesViewModel = ViewModelProviders.of(this).get(StepsModeGamesViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
@@ -199,10 +205,13 @@ public class GameActivity extends AppCompatActivity {
         throw new AssertionError("Wrong game mode");
     }
 
-    private void addDatabaseEntry() {
+    private void addDatabaseEntry() { // TODO make it more adequate
         if (gameMode instanceof TimeGameMode) {
             TimeModeGame timeModeGame = new TimeModeGame(chronometer.getText().toString());
-            gamesViewModel.insert(timeModeGame);
+            timeModeGamesViewModel.insert(timeModeGame);
+        } else if (gameMode instanceof StepsGameMode) {
+            StepsModeGame stepsModeGame = new StepsModeGame(stepsCount);
+            stepsModeGamesViewModel.insert(stepsModeGame);
         }
     }
 

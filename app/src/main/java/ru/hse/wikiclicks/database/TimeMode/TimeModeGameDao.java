@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.database;
+package ru.hse.wikiclicks.database.TimeMode;
 
 import androidx.lifecycle.LiveData;
 
@@ -13,9 +13,9 @@ public interface TimeModeGameDao {
     @Insert
     void insert(TimeModeGame timeModeGame);
 
-    @Query("DELETE FROM games_table")
+    @Query("DELETE FROM time_mode_games_table")
     void deleteAll();
 
-    @Query("SELECT * from games_table ORDER BY time ASC")
+    @Query("SELECT * from time_mode_games_table ORDER BY time ASC")
     LiveData<List<TimeModeGame>> getAllGames();
 }
