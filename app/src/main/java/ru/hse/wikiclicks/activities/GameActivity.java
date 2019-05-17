@@ -10,28 +10,25 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Chronometer;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.TimeUnit;
 
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 
 public class GameActivity extends AppCompatActivity {
     private int stepsCount = -1;
     private String finishId;
-    private String startId;
+    protected String startId;
     private String finishTitle;
     private TextView stepsTextView;
-    private WebView webView;
+    protected WebView webView;
     private Chronometer chronometer;
     private SharedPreferences sharedPreferences;
 
@@ -65,7 +62,7 @@ public class GameActivity extends AppCompatActivity {
                 toast.show();
                 return true;
             }
-            return super.shouldOverrideUrlLoading(view, url);
+            return catchEnforcedBans(url) || super.shouldOverrideUrlLoading(view, url);
         }
 
         @Override
@@ -85,6 +82,27 @@ public class GameActivity extends AppCompatActivity {
             view.loadUrl("javascript:(function() { " +
                     "document.getElementsByClassName ('header-container header-chrome')[0].style.display='none';"
                     + "})()");
+        }
+
+        private boolean catchEnforcedBans(String url) {
+            if (!banCountriesEnabled() && banYearsEnabled()) {
+                return false;
+            }
+            if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
+                return false; //finish is correct, no matter what
+            }
+            BanController urlController = new BanController(url);
+            if (banCountriesEnabled() && urlController.isCountry()) {
+                Toast toast = Toast.makeText(getApplicationContext(), "URL should not lead to country", Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
+            }
+            if (banYearsEnabled() && urlController.isYear()) {
+                Toast toast = Toast.makeText(getApplicationContext(), "URL should not lead to year", Toast.LENGTH_SHORT);
+                toast.show();
+                return true;
+            }
+            return false;
         }
 
         private AlertDialog getNewWinDialog() {
@@ -111,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void setUpWebView() {
+    protected void setUpWebView() {
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
@@ -160,5 +178,13 @@ public class GameActivity extends AppCompatActivity {
 
     private boolean stepsModeEnabled() {
         return sharedPreferences.getBoolean("pref_steps_mode", true);
+    }
+
+    private boolean banCountriesEnabled() {
+        return sharedPreferences.getBoolean("pref_country_mode", false);
+    }
+
+    private boolean banYearsEnabled() {
+        return sharedPreferences.getBoolean("pref_years_mode", false);
     }
 }

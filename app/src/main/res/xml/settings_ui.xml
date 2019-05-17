@@ -10,4 +10,14 @@
         android:key="pref_steps_mode"
         android:title="Steps mode on" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pref_country_mode"
+        android:title="Country ban enabled" />
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pref_years_mode"
+        android:title="Years ban enabled" />
+
 </PreferenceScreen>
