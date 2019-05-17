@@ -73,7 +73,7 @@ public class WikiController {
             JSONObject json = new JSONObject(searchResult);
             JSONArray results = json.getJSONObject("query").getJSONArray("prefixsearch");
             ArrayList<WikiPage> suggestions = new ArrayList<>();
-            for (int i = 0; i < results.length(); ++i) {
+            for (int i = 0; i < results.length(); i++) {
                 String page_id = results.getJSONObject(i).getString("pageid");
                 String title = results.getJSONObject(i).getString("title");
                 suggestions.add(new WikiPage(title, page_id));
@@ -131,13 +131,14 @@ public class WikiController {
         try {
             String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
             JSONObject json = new JSONObject(searchResult);
-            return json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
+            String result = json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
+            return result.isEmpty() ? "No information available." : result;
         } catch (IOException e) {
             failedExecute(e);
         } catch (JSONException e) {
             failedJSON(e);
         }
-        return "";
+        return "No information available.";
     }
 
     private static void failedJSON(JSONException e) {
@@ -146,5 +147,21 @@ public class WikiController {
 
     private static void failedExecute(IOException e) {
         Log.e("Query execution error", e.getMessage());
+    }
+
+    /** Returns Wikidata Id of page (used for controlling bans) by given url. */
+    public static String getWikidataIdByUrl(String url) {
+        String id = getPageFromUrl(url).getId();
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&ppprop=wikibase_item&redirects=1&pageids=" + id;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            return json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getJSONObject("pageprops").getString("wikibase_item");
+        } catch (IOException e) {
+            failedExecute(e);
+        } catch (JSONException e) {
+            failedJSON(e);
+        }
+        return "";
     }
 }

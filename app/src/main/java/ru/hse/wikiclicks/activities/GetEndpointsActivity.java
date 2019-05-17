@@ -1,8 +1,11 @@
 package ru.hse.wikiclicks.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -47,15 +50,12 @@ public class GetEndpointsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                String text = "Please choose starting page.";
-                if (startPage.getId() != null) {
-                    text = WikiController.getExtract(startPage.getId());
+                if (startPage.getId() == null) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    createDialogFromPageExtract(startPage);
                 }
-                if (text.isEmpty()) {
-                    text = "No information is available.";
-                }
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-                toast.show();
             }
         });
     }
@@ -67,17 +67,30 @@ public class GetEndpointsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finishHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                String text = "Please choose end page.";
-                if (finishPage.getId() != null) {
-                    text = WikiController.getExtract(finishPage.getId());
+                if (finishPage.getId() == null) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    createDialogFromPageExtract(finishPage);
                 }
-                if (text.isEmpty()) {
-                    text = "No information is available.";
-                }
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-                toast.show();
             }
         });
+    }
+
+    /** Shows extract for given page in a dialog. */
+    private void createDialogFromPageExtract(WikiPage page) {
+        String text = WikiController.getExtract(page.getId());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(GetEndpointsActivity.this);
+        builder.setTitle(page.getTitle() + " info");
+        builder.setMessage(text);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /** Creates button that starts game if both start and finish are initialized. */
@@ -92,6 +105,9 @@ public class GetEndpointsActivity extends AppCompatActivity {
                     toast.show();
                 } else if (finishPage.getId() == null) { // finish does not exist
                     Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (startPage.getId().equals(finishPage.getId())) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose differing start and end page.", Toast.LENGTH_SHORT);
                     toast.show();
                 } else { // game can be started
                     Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
@@ -151,10 +167,8 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 pageSearch.setTextColor(getResources().getColor(R.color.colorNoLink));
                 chosenPage.clear();
                 List<WikiPage> currentSuggestions = WikiController.getSearchSuggestions(s.toString());
-                System.out.println(currentSuggestions.size());
                 adapter.clear();
                 adapter.addAll(currentSuggestions);
-                System.out.println(adapter.getCount());
             }
 
             @Override
