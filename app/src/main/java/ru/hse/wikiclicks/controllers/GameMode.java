@@ -5,4 +5,7 @@ public interface GameMode {
 
     boolean stepsModeEnabled();
 
+    boolean banYearsEnabled();
+
+    boolean banCountriesEnabled();
 }

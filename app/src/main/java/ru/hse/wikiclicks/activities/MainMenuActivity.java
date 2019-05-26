@@ -23,7 +23,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         setUpStartGameButton();
         setUpExitButton();
-        setUpSettingButton();
         setUpStatisticsButton();
     }
 
@@ -74,18 +73,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            }
-        });
-    }
-
-    private void setUpSettingButton() {
-        final Button settingsButton = findViewById(R.id.settings_button);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settingsButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent settingsIntent = new Intent(MainMenuActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
             }
         });
     }

@@ -10,4 +10,14 @@ public class TimeGameMode implements GameMode { // TODO make singleton?
     public boolean stepsModeEnabled() {
         return false;
     }
+
+    @Override
+    public boolean banYearsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean banCountriesEnabled() {
+        return false;
+    }
 }

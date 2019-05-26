@@ -13,6 +13,7 @@ public class SelectModeActivity extends AppCompatActivity {
     static final String GAME_MODE_KEY = "game_mode";
     static final String TIME_MODE = "time_mode";
     static final String STEPS_MODE = "steps_mode";
+    static final String CUSTOM_MODE = "custom_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,9 @@ public class SelectModeActivity extends AppCompatActivity {
         customModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Not implemented yet :(", Toast.LENGTH_SHORT);
-                toast.show();
+                customModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent settingsIntent = new Intent(SelectModeActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
             }
         });
     }
