@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 
@@ -22,7 +21,6 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.preference.PreferenceManager;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.CustomGameMode;
 import ru.hse.wikiclicks.controllers.GameMode;
@@ -31,11 +29,11 @@ import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.StepsMode.StepsModeGame;
-import ru.hse.wikiclicks.database.StepsMode.StepsModeGamesViewModel;
+import ru.hse.wikiclicks.database.GameStats.GameStats;
+import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class GameActivity extends AppCompatActivity {
-    private StepsModeGamesViewModel stepsModeGamesViewModel;
+    private GameStatsViewModel gameStatsViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
@@ -50,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stepsModeGamesViewModel = ViewModelProviders.of(this).get(StepsModeGamesViewModel.class);
+        gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
@@ -223,11 +221,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void addDatabaseEntry() { // TODO make it more adequate
         if (gameMode instanceof TimeGameMode) {
-            StepsModeGame stepsModeGame = new StepsModeGame(milliseconds, startTitle, finishTitle, true);
-            stepsModeGamesViewModel.insert(stepsModeGame);
+            GameStats gameStats = new GameStats(milliseconds, startTitle, finishTitle, true);
+            gameStatsViewModel.insert(gameStats);
         } else if (gameMode instanceof StepsGameMode) {
-            StepsModeGame stepsModeGame = new StepsModeGame(stepsCount, startTitle, finishTitle, false);
-            stepsModeGamesViewModel.insert(stepsModeGame);
+            GameStats gameStats = new GameStats(stepsCount, startTitle, finishTitle, false);
+            gameStatsViewModel.insert(gameStats);
         }
     }
 
