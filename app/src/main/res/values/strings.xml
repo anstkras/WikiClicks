@@ -17,4 +17,6 @@
     <string name="steps_mode">Steps mode</string>
     <string name="custom_mode">Custom mode</string>
     <string name="statistics">Statistics</string>
+    <string name="show_times">Show times</string>
+    <string name="show_steps">Show steps</string>
 </resources>

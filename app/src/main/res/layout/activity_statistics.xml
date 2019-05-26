@@ -1,40 +1,25 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:fillViewport="true" >
-
-<LinearLayout
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/statistics"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dip" >
+    android:fillViewport="true"
+    android:orientation="vertical">
 
-    <TextView
+    <Button
+        android:id="@+id/show_times_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:text="Time mode:" />
+        android:layout_height="match_parent"
+        android:text="@string/show_times" />
 
-    <ListView
-        android:id="@+id/listview_statistics_time"
+    <Button
+        android:id="@+id/show_steps_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip">
-    </ListView>
+        android:layout_height="match_parent"
+        android:text="@string/show_steps" />
 
-    <TextView
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:gravity="center_vertical"
-        android:text="Steps mode:" />
+        android:layout_height="match_parent" />
 
-    <ListView
-        android:id="@+id/listview_statistics_steps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip">
-    </ListView>
 </LinearLayout>
-
-</ScrollView>
