@@ -33,25 +33,23 @@ import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGame;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGamesViewModel;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGamesViewModel;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGame;
 
 public class GameActivity extends AppCompatActivity {
-    private TimeModeGamesViewModel timeModeGamesViewModel;
     private StepsModeGamesViewModel stepsModeGamesViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
+    private String startTitle;
     private String finishTitle;
     private TextView stepsTextView;
     protected WebView webView;
     private Chronometer chronometer;
     private GameMode gameMode;
+    private long milliseconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timeModeGamesViewModel = ViewModelProviders.of(this).get(TimeModeGamesViewModel.class);
         stepsModeGamesViewModel = ViewModelProviders.of(this).get(StepsModeGamesViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
@@ -87,6 +85,7 @@ public class GameActivity extends AppCompatActivity {
             stepsTextView.setText(getString(R.string.steps, stepsCount));
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
+                milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();
                 AlertDialog dialog = getNewWinDialog();
                 dialog.show();
@@ -160,6 +159,7 @@ public class GameActivity extends AppCompatActivity {
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
         startId = extras.getString(GetEndpointsActivity.START_ID_KEY);
+        startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
         String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
         assert gameModeString != null;
         gameMode = GameModeFactory.getGameMode(gameModeString, this);
@@ -195,7 +195,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         if (gameMode instanceof StepsGameMode) {
-            return "Your steps count is" + stepsCount;
+            return "Your steps count is " + stepsCount;
         }
 
         if (gameMode instanceof CustomGameMode) {
@@ -216,7 +216,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private String getTimeFromChronometer() {
-        long milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
         long minutes = (milliseconds / 1000) / 60;
         long seconds = (milliseconds / 1000) % 60;
         return String.format("%02d:%02d", minutes, seconds);
@@ -224,10 +223,10 @@ public class GameActivity extends AppCompatActivity {
 
     private void addDatabaseEntry() { // TODO make it more adequate
         if (gameMode instanceof TimeGameMode) {
-            TimeModeGame timeModeGame = new TimeModeGame(getTimeFromChronometer());
-            timeModeGamesViewModel.insert(timeModeGame);
+            StepsModeGame stepsModeGame = new StepsModeGame(milliseconds, startTitle, finishTitle, true);
+            stepsModeGamesViewModel.insert(stepsModeGame);
         } else if (gameMode instanceof StepsGameMode) {
-            StepsModeGame stepsModeGame = new StepsModeGame(stepsCount);
+            StepsModeGame stepsModeGame = new StepsModeGame(stepsCount, startTitle, finishTitle, false);
             stepsModeGamesViewModel.insert(stepsModeGame);
         }
     }

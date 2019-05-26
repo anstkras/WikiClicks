@@ -15,6 +15,9 @@ public interface StepsModeGameDao {
     @Query("DELETE FROM steps_mode_games_table")
     void deleteAll();
 
-    @Query("SELECT * from steps_mode_games_table ORDER BY steps ASC")
-    LiveData<List<StepsModeGame>> getAllGames();
+    @Query("SELECT * from steps_mode_games_table WHERE isTime ORDER BY id DESC")
+    LiveData<List<StepsModeGame>> getTimeGames();
+
+    @Query("SELECT * from steps_mode_games_table WHERE NOT isTime ORDER BY id DESC")
+    LiveData<List<StepsModeGame>> getStepsGames();
 }

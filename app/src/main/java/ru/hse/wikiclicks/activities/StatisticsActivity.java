@@ -3,10 +3,7 @@ package ru.hse.wikiclicks.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,17 +14,13 @@ import androidx.lifecycle.ViewModelProviders;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGame;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGamesViewModel;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGamesViewModel;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGame;
 
 public class StatisticsActivity extends AppCompatActivity {
     private StepsModeGamesViewModel stepsModeGamesViewModel;
-    private TimeModeGamesViewModel timeModeGamesViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        timeModeGamesViewModel = ViewModelProviders.of(this).get(TimeModeGamesViewModel.class);
         stepsModeGamesViewModel = ViewModelProviders.of(this).get(StepsModeGamesViewModel.class);
         setContentView(R.layout.activity_statistics);
 
@@ -35,36 +28,36 @@ public class StatisticsActivity extends AppCompatActivity {
 
         final ListView listView2 = findViewById(R.id.listview_statistics_steps);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+        final ArrayAdapter<Long> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1);
 
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        final ArrayAdapter<Long> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
-        timeModeGamesViewModel.getAllGames().observe(this, new Observer<List<TimeModeGame>>() {
+        stepsModeGamesViewModel.getTimeGames().observe(this, new Observer<List<StepsModeGame>>() {
             @Override
-            public void onChanged(@Nullable final List<TimeModeGame> games) {
+            public void onChanged(@Nullable final List<StepsModeGame> games) {
                 adapter.clear();
                 if (games == null) {
                     return;
                 }
-                List<String> times = new ArrayList<>();
-                for (TimeModeGame game : games) {
-                    times.add(game.getTime());
+                List<Long> times = new ArrayList<>();
+                for (StepsModeGame game : games) {
+                    times.add(game.getValue());
                 }
                 adapter.addAll(times);
             }
         });
 
-        stepsModeGamesViewModel.getAllGames().observe(this, new Observer<List<StepsModeGame>>() {
+        stepsModeGamesViewModel.getStepsGames().observe(this, new Observer<List<StepsModeGame>>() {
             @Override
             public void onChanged(@Nullable final List<StepsModeGame> games) {
                 adapter2.clear();
                 if (games == null) {
                     return;
                 }
-                List<String> steps = new ArrayList<>();
+                List<Long> steps = new ArrayList<>();
                 for (StepsModeGame game : games) {
-                    steps.add(Long.toString(game.getSteps()));
+                    steps.add(game.getValue());
                 }
                 adapter2.addAll(steps);
             }

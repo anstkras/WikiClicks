@@ -11,16 +11,22 @@ import ru.hse.wikiclicks.database.GamesDatabase;
 public class StepsModeGamesRepository {
 
     private StepsModeGameDao stepsModeGameDao;
-    private LiveData<List<StepsModeGame>> allGames;
+    private LiveData<List<StepsModeGame>> timeGames;
+    private LiveData<List<StepsModeGame>> stepsGames;
+
 
     StepsModeGamesRepository(Application application) {
         GamesDatabase db = GamesDatabase.getDatabase(application);
         stepsModeGameDao = db.stepsModeGameDao();
-        allGames = stepsModeGameDao.getAllGames();
+        timeGames = stepsModeGameDao.getTimeGames();
+        stepsGames = stepsModeGameDao.getStepsGames();
     }
 
-    LiveData<List<StepsModeGame>> getAllGames() {
-        return allGames;
+    LiveData<List<StepsModeGame>> getTimeGames() {
+        return timeGames;
+    }
+    LiveData<List<StepsModeGame>> getStepsGames() {
+        return stepsGames;
     }
 
 

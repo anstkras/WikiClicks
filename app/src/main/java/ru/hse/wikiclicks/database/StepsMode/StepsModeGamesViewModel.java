@@ -12,17 +12,24 @@ public class StepsModeGamesViewModel extends AndroidViewModel {
 
     private StepsModeGamesRepository repository;
 
-    private LiveData<List<StepsModeGame>> allGames;
+    private LiveData<List<StepsModeGame>> timeGames;
+    private LiveData<List<StepsModeGame>> stepsGames;
+
 
     public StepsModeGamesViewModel(@NonNull Application application) {
         super(application);
         repository = new StepsModeGamesRepository(application);
-        allGames = repository.getAllGames();
+        timeGames = repository.getTimeGames();
+        stepsGames = repository.getStepsGames();
     }
 
-    public LiveData<List<StepsModeGame>> getAllGames() {
-        return allGames;
+    public LiveData<List<StepsModeGame>> getTimeGames() {
+        return timeGames;
     }
+    public LiveData<List<StepsModeGame>> getStepsGames() {
+        return stepsGames;
+    }
+
 
     public void insert(StepsModeGame stepsModeGame) {
         repository.insert(stepsModeGame);

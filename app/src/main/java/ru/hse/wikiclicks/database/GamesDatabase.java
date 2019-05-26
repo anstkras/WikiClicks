@@ -7,13 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGame;
 import ru.hse.wikiclicks.database.StepsMode.StepsModeGameDao;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGame;
-import ru.hse.wikiclicks.database.TimeMode.TimeModeGameDao;
 
-@Database(entities = {TimeModeGame.class, StepsModeGame.class}, version = 2, exportSchema = false)
+@Database(entities = {StepsModeGame.class}, version = 4, exportSchema = false)
 public abstract class GamesDatabase extends RoomDatabase {
-
-    public abstract TimeModeGameDao timeModeGameDao();
 
     public abstract StepsModeGameDao stepsModeGameDao();
 
