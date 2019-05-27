@@ -10,4 +10,19 @@ public class StepsGameMode implements GameMode {
     public boolean stepsModeEnabled() {
         return true;
     }
+
+    @Override
+    public boolean banYearsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean banCountriesEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean banBackEnabled() {
+        return false;
+    }
 }

@@ -1,4 +1,25 @@
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/listview_statistics"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/statistics"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/show_times_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/show_times" />
+
+    <Button
+        android:id="@+id/show_steps_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/show_steps" />
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

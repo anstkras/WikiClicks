@@ -1,15 +1,19 @@
 package ru.hse.wikiclicks.activities;
 
 import androidx.lifecycle.ViewModelProviders;
+
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,51 +21,53 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
-import androidx.preference.PreferenceManager;
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.CustomGameMode;
 import ru.hse.wikiclicks.controllers.GameMode;
 import ru.hse.wikiclicks.controllers.GameModeFactory;
 import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
-import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.GamesViewModel;
-import ru.hse.wikiclicks.database.TimeModeGame;
+import ru.hse.wikiclicks.database.GameStats.GameStats;
+import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class GameActivity extends AppCompatActivity {
-    private GamesViewModel gamesViewModel;
+    private GameStatsViewModel gameStatsViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
+    private String startTitle;
     private String finishTitle;
     private TextView stepsTextView;
     protected WebView webView;
     private Chronometer chronometer;
-    private SharedPreferences sharedPreferences;
     private GameMode gameMode;
+    private long milliseconds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
+        gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
         setUpToolBar();
-        initializeSharedPreferences();
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
     }
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
+        if (gameMode.banBackEnabled()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Back press is banned in this mode", Toast.LENGTH_SHORT);
+            toast.show();
         } else {
-            super.onBackPressed();
+            if (webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -82,6 +88,7 @@ public class GameActivity extends AppCompatActivity {
             stepsTextView.setText(getString(R.string.steps, stepsCount));
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
+                milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();
                 AlertDialog dialog = getNewWinDialog();
                 dialog.show();
@@ -141,10 +148,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeSharedPreferences() {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
     protected void setUpWebView() {
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -159,9 +162,10 @@ public class GameActivity extends AppCompatActivity {
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
         startId = extras.getString(GetEndpointsActivity.START_ID_KEY);
+        startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
         String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
         assert gameModeString != null;
-        gameMode = GameModeFactory.getGameMode(gameModeString);
+        gameMode = GameModeFactory.getGameMode(gameModeString, this);
     }
 
     private void setUpToolBar() {
@@ -190,27 +194,51 @@ public class GameActivity extends AppCompatActivity {
 
     private String getWinMessage() { // TODO replace this with smth more adequate
         if (gameMode instanceof TimeGameMode) {
-            return "Your time is " + chronometer.getText();
+            return "Your time is " + getTimeFromChronometer();
         }
 
         if (gameMode instanceof StepsGameMode) {
-            return "Your steps count is" + stepsCount;
+            return "Your steps count is " + stepsCount;
         }
+
+        if (gameMode instanceof CustomGameMode) {
+            String result = "";
+            if (gameMode.timeModeEnabled()) {
+                result += "Your time is " + getTimeFromChronometer();
+            }
+            if (gameMode.stepsModeEnabled()) {
+                if (!result.equals("")) {
+                    result += "\n";
+                }
+                result += "Your steps count is " + stepsCount;
+            }
+            return result;
+        }
+
         throw new AssertionError("Wrong game mode");
     }
 
-    private void addDatabaseEntry() {
+    private String getTimeFromChronometer() {
+        long minutes = (milliseconds / 1000) / 60;
+        long seconds = (milliseconds / 1000) % 60;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void addDatabaseEntry() { // TODO make it more adequate
         if (gameMode instanceof TimeGameMode) {
-            TimeModeGame timeModeGame = new TimeModeGame(chronometer.getText().toString());
-            gamesViewModel.insert(timeModeGame);
+            GameStats gameStats = new GameStats(milliseconds, startTitle, finishTitle, true);
+            gameStatsViewModel.insert(gameStats);
+        } else if (gameMode instanceof StepsGameMode) {
+            GameStats gameStats = new GameStats(stepsCount, startTitle, finishTitle, false);
+            gameStatsViewModel.insert(gameStats);
         }
     }
 
     private boolean banCountriesEnabled() {
-        return sharedPreferences.getBoolean("pref_country_mode", false);
+        return gameMode.banCountriesEnabled();
     }
 
     private boolean banYearsEnabled() {
-        return sharedPreferences.getBoolean("pref_years_mode", false);
+        return gameMode.banYearsEnabled();
     }
 }
