@@ -20,4 +20,9 @@ public class TimeGameMode implements GameMode { // TODO make singleton?
     public boolean banCountriesEnabled() {
         return false;
     }
+
+    @Override
+    public boolean banBackEnabled() {
+        return false;
+    }
 }

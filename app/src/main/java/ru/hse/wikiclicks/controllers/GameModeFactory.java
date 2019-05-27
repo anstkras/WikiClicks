@@ -18,7 +18,8 @@ public class GameModeFactory {
             return new CustomGameMode(sharedPreferences.getBoolean("pref_time_mode", false),
                     sharedPreferences.getBoolean("pref_steps_mode", false),
                     sharedPreferences.getBoolean("pref_years_mode", false),
-                    sharedPreferences.getBoolean("pref_country_mode", false));
+                    sharedPreferences.getBoolean("pref_country_mode", false),
+                    sharedPreferences.getBoolean("pref_back_mode", false));
         }
 
         throw new IllegalArgumentException("No such mode exists: " + mode);

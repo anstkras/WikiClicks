@@ -8,4 +8,6 @@ public interface GameMode {
     boolean banYearsEnabled();
 
     boolean banCountriesEnabled();
+
+    boolean banBackEnabled();
 }

@@ -59,10 +59,15 @@ public class GameActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()) {
-            webView.goBack();
+        if (gameMode.banBackEnabled()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Back press is banned in this mode", Toast.LENGTH_SHORT);
+            toast.show();
         } else {
-            super.onBackPressed();
+            if (webView.canGoBack()) {
+                webView.goBack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 

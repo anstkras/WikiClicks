@@ -51,7 +51,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, timesFragment);
-               // transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
@@ -66,7 +65,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, stepsFragment);
-              //  transaction.addToBackStack(null);
                 transaction.commit();
             }
         });

@@ -20,4 +20,9 @@
         android:key="pref_years_mode"
         android:title="Years ban enabled" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pref_back_mode"
+        android:title="Back move ban enabled" />
+
 </PreferenceScreen>
