@@ -11,8 +11,8 @@
         android:gravity="center_vertical"
         android:text="Time mode:" />
 
-    <ListView
-        android:id="@+id/listview_statistics_time"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleview_statistics_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip" />
