@@ -108,6 +108,12 @@ public class WikiController {
         return new WikiPage();
     }
 
+    /** Returns the title of the page with the given url */
+    public static String getPageTitleFromUrl(String url) {
+        WikiPage wikiPage = getPageFromUrl(url);
+        return wikiPage.getTitle();
+    }
+
     /** Returns the id of the page that the page with given id redirects to. */
     public static String getRedirectedId(String id) {
         // requests basic info of page with given id, processing redirects
