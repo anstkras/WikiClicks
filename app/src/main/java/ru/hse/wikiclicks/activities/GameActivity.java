@@ -17,7 +17,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
     protected WebView webView;
     private Chronometer chronometer;
     private GameMode gameMode;
+    private ImageButton exitButton;
     private long milliseconds;
 
     @Override
@@ -55,6 +58,7 @@ public class GameActivity extends AppCompatActivity {
         setUpToolBar();
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
+        setUpExitButton();
     }
 
     @Override
@@ -70,6 +74,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private class WikiWebViewClient extends WebViewClient {
         @Override
@@ -153,6 +158,37 @@ public class GameActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
         webView.loadUrl(WikiController.getPageLinkById(startId));
+    }
+
+    private void setUpExitButton() {
+        exitButton = findViewById(R.id.button_exit);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = getNewExitDialog();
+                dialog.show();
+            }
+        });
+    }
+
+    private AlertDialog getNewExitDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle("Do you want to finish this game?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainMenuIntent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
+        });
+        return builder.create();
     }
 
     private void readExtras() {
