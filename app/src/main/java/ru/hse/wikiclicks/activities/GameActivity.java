@@ -18,6 +18,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,11 +30,13 @@ import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
+import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class GameActivity extends AppCompatActivity {
     private GameStatsViewModel gameStatsViewModel;
+    private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
@@ -43,18 +46,24 @@ public class GameActivity extends AppCompatActivity {
     protected WebView webView;
     private Chronometer chronometer;
     private GameMode gameMode;
+    private ImageButton exitButton;
+    private ImageButton bookmarkButton;
     private long milliseconds;
+    private String currentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
+        bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
         setUpToolBar();
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
+        setUpExitButton();
+        setUpBookmarkButton();
     }
 
     @Override
@@ -70,6 +79,7 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private class WikiWebViewClient extends WebViewClient {
         @Override
@@ -93,6 +103,7 @@ public class GameActivity extends AppCompatActivity {
                 AlertDialog dialog = getNewWinDialog();
                 dialog.show();
             }
+            currentUrl = url;
         }
 
         @Override
@@ -153,6 +164,56 @@ public class GameActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
         webView.loadUrl(WikiController.getPageLinkById(startId));
+    }
+
+    private void setUpExitButton() {
+        exitButton = findViewById(R.id.button_exit);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog dialog = getNewExitDialog();
+                dialog.show();
+            }
+        });
+    }
+
+    private void setUpBookmarkButton() {
+        bookmarkButton = findViewById(R.id.button_bookmark);
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title;
+                if (stepsCount == 0) { // TODO ubrat' etot costyl'
+                    title = startTitle;
+                } else {
+                    title = WikiController.getPageTitleFromUrl(currentUrl);
+                }
+                ru.hse.wikiclicks.database.Bookmarks.Bookmark bookmark = new ru.hse.wikiclicks.database.Bookmarks.Bookmark(currentUrl, title);
+                bookmarkViewModel.insert(bookmark);
+                Toast toast = Toast.makeText(getApplicationContext(), "Bookmark for " + title + " added", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+    }
+
+    private AlertDialog getNewExitDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle("Do you want to finish this game?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(mainMenuIntent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                return;
+            }
+        });
+        return builder.create();
     }
 
     private void readExtras() {
