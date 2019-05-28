@@ -17,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -31,11 +30,14 @@ import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
+import ru.hse.wikiclicks.database.Bookmarks.Bookmark;
+import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class GameActivity extends AppCompatActivity {
     private GameStatsViewModel gameStatsViewModel;
+    private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
     private String finishId;
     protected String startId;
@@ -46,12 +48,15 @@ public class GameActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private GameMode gameMode;
     private ImageButton exitButton;
+    private ImageButton bookmarkButton;
     private long milliseconds;
+    private String currentUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
+        bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
         setUpWebView();
@@ -59,6 +64,7 @@ public class GameActivity extends AppCompatActivity {
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
         setUpExitButton();
+        setUpBookmarkButton();
     }
 
     @Override
@@ -98,6 +104,7 @@ public class GameActivity extends AppCompatActivity {
                 AlertDialog dialog = getNewWinDialog();
                 dialog.show();
             }
+            currentUrl = url;
         }
 
         @Override
@@ -167,6 +174,17 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog dialog = getNewExitDialog();
                 dialog.show();
+            }
+        });
+    }
+
+    private void setUpBookmarkButton() {
+        bookmarkButton = findViewById(R.id.button_bookmark);
+        bookmarkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bookmark bookmark = new Bookmark(currentUrl);
+                bookmarkViewModel.insert(bookmark);
             }
         });
     }
