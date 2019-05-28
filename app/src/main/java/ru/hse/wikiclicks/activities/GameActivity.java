@@ -30,7 +30,6 @@ import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.Bookmarks.Bookmark;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
@@ -183,7 +182,7 @@ public class GameActivity extends AppCompatActivity {
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bookmark bookmark = new Bookmark(currentUrl);
+                ru.hse.wikiclicks.database.Bookmarks.Bookmark bookmark = new ru.hse.wikiclicks.database.Bookmarks.Bookmark(currentUrl, currentUrl);
                 bookmarkViewModel.insert(bookmark);
             }
         });

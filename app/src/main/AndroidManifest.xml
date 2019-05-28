@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity android:name=".activities.BookmarkActivity"></activity>
+        <activity android:name=".activities.StatisticsActivity" />
         <activity
             android:name=".activities.SelectModeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

@@ -12,8 +12,12 @@ public class Bookmark {
     @ColumnInfo(name="url")
     private String url;
 
-    public Bookmark(String url) {
+    @ColumnInfo(name="name")
+    private String name;
+
+    public Bookmark(String url, String name) {
         this.url = url;
+        this.name = name;
     }
 
     public int getId() {
@@ -26,5 +30,9 @@ public class Bookmark {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

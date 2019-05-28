@@ -10,7 +10,7 @@ import ru.hse.wikiclicks.database.Bookmarks.BookmarkDao;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsDao;
 
-@Database(entities = {GameStats.class, Bookmark.class}, version = 6, exportSchema = false)
+@Database(entities = {GameStats.class, Bookmark.class}, version = 7, exportSchema = false)
 public abstract class GamesDatabase extends RoomDatabase {
 
     public abstract GameStatsDao stepsModeGameDao();

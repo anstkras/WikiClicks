@@ -24,6 +24,19 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpStartGameButton();
         setUpExitButton();
         setUpStatisticsButton();
+        setUpBookMarksButton();
+    }
+
+    private void setUpBookMarksButton() {
+        final Button bookmarksButton = findViewById(R.id.bookmarks_button);
+        bookmarksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bookmarksButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent bookmarksIntent = new Intent(MainMenuActivity.this, BookmarkActivity.class);
+                startActivity(bookmarksIntent);
+            }
+        });
     }
 
     private void setUpStatisticsButton() {
