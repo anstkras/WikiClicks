@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Class responsible for queries to Wikipedia and interacting with its API. */
@@ -169,5 +170,25 @@ public class WikiController {
             failedJSON(e);
         }
         return "";
+    }
+
+    public static ArrayList<String> getLinksFromPage(String title) {
+        ArrayList<String> links = new ArrayList<>();
+        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=links&pllimit=max&plnamespace=0&format=json&titles=" + title;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            JSONObject listWithId = json.getJSONObject("query").getJSONObject("pages");
+            JSONArray linksList = listWithId.getJSONObject(listWithId.names().getString(0)).getJSONArray("links");
+            for (int i = 0; i < linksList.length(); i++) {
+                String linkTitle = linksList.getJSONObject(i).getString("title");
+                links.add(linkTitle);
+            }
+        } catch (IOException e) {
+            failedExecute(e);
+        } catch (JSONException e) {
+            failedJSON(e);
+        }
+        return links;
     }
 }

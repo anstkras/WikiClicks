@@ -44,6 +44,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="Settings" />
         <activity
+            android:name=".activities.OfflineGameActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="Offline Game" />
+        <activity
             android:name=".activities.GetEndpointsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>
