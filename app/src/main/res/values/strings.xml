@@ -25,4 +25,8 @@
     <string name="level_1">Level 1</string>
     <string name="level_2">Level 2</string>
     <string name="level_3">Level 3</string>
+    <string name="leaderboard1_id">CgkIgvuY9s8LEAIQBQ</string>
+    <string name="leaderboard2_id">CgkIgvuY9s8LEAIQBg</string>
+    <string name="leaderboard3_id">CgkIgvuY9s8LEAIQBw</string>
+    <string name="show_leaderboard">Show leaderboard</string>
 </resources>

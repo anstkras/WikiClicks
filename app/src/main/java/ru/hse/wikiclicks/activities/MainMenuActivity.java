@@ -21,7 +21,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import ru.hse.wikiclicks.R;
@@ -51,6 +53,17 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpSignInButton();
         setUpChallengesButton();
         setUpSignOutButton();
+        setUpLeaderBoardButton();
+    }
+
+    private void setUpLeaderBoardButton() {
+        final Button leaderBoardButton = findViewById(R.id.leaderboard_button);
+        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard();
+            }
+        });
     }
 
     private void setUpBookMarksButton() {
@@ -108,6 +121,8 @@ public class MainMenuActivity extends AppCompatActivity {
         } catch (ApiException e) {
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);
+            Toast toast = Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -198,5 +213,24 @@ public class MainMenuActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    private static final int RC_LEADERBOARD_UI = 9004;
+
+    private void showLeaderboard() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account == null) {
+            Toast toast = Toast.makeText(this, "account is null", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
+        Games.getLeaderboardsClient(this, account)
+                .getLeaderboardIntent(getString(R.string.leaderboard1_id))
+                .addOnSuccessListener(new OnSuccessListener<Intent>() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, RC_LEADERBOARD_UI);
+                    }
+                });
     }
 }

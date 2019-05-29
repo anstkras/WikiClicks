@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
 
 public class GameModeFactory {
-    public static GameMode getGameMode(String mode, Context context) {
+    public static GameMode getGameMode(String mode, int level, Context context) {
         if (mode.equals("time_mode")) {
             return new TimeGameMode();
         }
@@ -20,6 +20,9 @@ public class GameModeFactory {
                     sharedPreferences.getBoolean("pref_years_mode", false),
                     sharedPreferences.getBoolean("pref_country_mode", false),
                     sharedPreferences.getBoolean("pref_back_mode", false));
+        }
+        if (mode.equals("level_mode")) {
+            return new LevelGameMode(level);
         }
 
         throw new IllegalArgumentException("No such mode exists: " + mode);

@@ -22,10 +22,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.games.Games;
+
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.CustomGameMode;
 import ru.hse.wikiclicks.controllers.GameMode;
 import ru.hse.wikiclicks.controllers.GameModeFactory;
+import ru.hse.wikiclicks.controllers.LevelGameMode;
 import ru.hse.wikiclicks.controllers.StepsGameMode;
 import ru.hse.wikiclicks.controllers.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
@@ -226,7 +231,8 @@ public class GameActivity extends AppCompatActivity {
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
         String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
         assert gameModeString != null;
-        gameMode = GameModeFactory.getGameMode(gameModeString, this);
+        int level = extras.getInt(ChallengesActivity.LEVEL_KEY);
+        gameMode = GameModeFactory.getGameMode(gameModeString, level, this);
     }
 
     private void setUpToolBar() {
@@ -275,6 +281,9 @@ public class GameActivity extends AppCompatActivity {
             }
             return result;
         }
+        if (gameMode instanceof  LevelGameMode) {
+            return "Your steps count is " + stepsCount;
+        }
 
         throw new AssertionError("Wrong game mode");
     }
@@ -292,6 +301,26 @@ public class GameActivity extends AppCompatActivity {
         } else if (gameMode instanceof StepsGameMode) {
             GameStats gameStats = new GameStats(stepsCount, startTitle, finishTitle, false);
             gameStatsViewModel.insert(gameStats);
+        } else if (gameMode instanceof LevelGameMode) {
+            LevelGameMode levelGameMode = (LevelGameMode) gameMode;
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+            if (account == null) {
+                Toast toast = Toast.makeText(this, "account is null", Toast.LENGTH_LONG);
+                return;
+            }
+            if (levelGameMode.getLevel() == 1) {
+                Games.getLeaderboardsClient(this, account)
+                        .submitScore(getString(R.string.leaderboard1_id), stepsCount);
+            }
+            if (levelGameMode.getLevel() == 2) {
+                Games.getLeaderboardsClient(this, account)
+                        .submitScore(getString(R.string.leaderboard2_id), stepsCount);
+            }
+
+            if (levelGameMode.getLevel() == 3) {
+                Games.getLeaderboardsClient(this, account)
+                        .submitScore(getString(R.string.leaderboard3_id), stepsCount);
+            }
         }
     }
 
