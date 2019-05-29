@@ -225,7 +225,7 @@ public class MainMenuActivity extends AppCompatActivity {
             return;
         }
         Games.getLeaderboardsClient(this, account)
-                .getLeaderboardIntent(getString(R.string.leaderboard1_id))
+                .getLeaderboardIntent(getString(R.string.leaderboard_level_1))
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
                     @Override
                     public void onSuccess(Intent intent) {

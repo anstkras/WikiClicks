@@ -306,6 +306,7 @@ public class GameActivity extends AppCompatActivity {
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
             if (account == null) {
                 Toast toast = Toast.makeText(this, "account is null", Toast.LENGTH_LONG);
+                toast.show();
                 return;
             }
             if (levelGameMode.getLevel() == 1) {
