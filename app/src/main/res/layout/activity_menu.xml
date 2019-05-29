@@ -49,6 +49,18 @@
         android:textSize="25sp" />
 
     <Button
+        android:id="@+id/challenges_button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        android:text="@string/challenges"
+        android:textColor="@color/colorInitial"
+        android:textSize="25sp" />
+
+    <Button
         android:id="@+id/bookmarks_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
@@ -59,7 +71,6 @@
         android:text="@string/bookmarks"
         android:textColor="@color/colorInitial"
         android:textSize="25sp" />
-
     <Button
         android:id="@+id/exit_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"

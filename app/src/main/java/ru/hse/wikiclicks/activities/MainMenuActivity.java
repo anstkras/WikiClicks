@@ -11,7 +11,6 @@ import android.os.StrictMode;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -36,8 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -51,6 +49,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpStatisticsButton();
         setUpBookMarksButton();
         setUpSignInButton();
+        setUpChallengesButton();
         setUpSignOutButton();
     }
 
@@ -62,6 +61,18 @@ public class MainMenuActivity extends AppCompatActivity {
                 bookmarksButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent bookmarksIntent = new Intent(MainMenuActivity.this, BookmarkActivity.class);
                 startActivity(bookmarksIntent);
+            }
+        });
+    }
+
+    private void setUpChallengesButton() {
+        final Button challengesButton = findViewById(R.id.challenges_button);
+        challengesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                challengesButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent challengesIntent = new Intent(MainMenuActivity.this, ChallengesActivity.class);
+                startActivity(challengesIntent);
             }
         });
     }
