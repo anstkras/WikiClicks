@@ -46,9 +46,16 @@
         <activity
             android:name=".activities.OfflineGameActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Offline Game" />
         <activity
             android:name=".activities.GetEndpointsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activities.DownloadActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity
+            android:name=".activities.OfflineLevelsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>
 

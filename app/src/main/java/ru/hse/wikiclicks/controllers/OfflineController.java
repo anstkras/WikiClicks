@@ -2,37 +2,51 @@ package ru.hse.wikiclicks.controllers;
 
 import org.jsoup.Connection;
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 
 public class OfflineController {
-    String outputDirectory;
+    private static String outputDirectory;
 
-    public OfflineController(ChooseOfflineGame game, String directory) {
-        outputDirectory = directory;
-        for (String title : game.pages) {
+    public static void downloadTree(ChooseOfflineGame game) {
+        for (String title : game.getPages()) {
             downloadPage(title);
         }
     }
 
-    private void downloadPage(String title) {
+    private static void downloadPage(String title) {
         try {
+            final File file = new File(outputDirectory, normalize(title));
+            if (file.exists()) {
+                return; //assume page already is downloaded
+            }
             String url = "https://en.m.wikipedia.org/wiki/" + title;
             final Connection.Response response = Jsoup.connect(url).timeout(0).ignoreContentType(true).execute();
             String webPage = response.parse().html();
             //dirty fix for links, inter-page ones might not work
-            System.out.println(normalize(title));
             webPage = webPage.replaceAll("href=\"", "href=\"" + "https://");
-            final File file = new File(outputDirectory, normalize(title));
             FileUtils.writeStringToFile(file, webPage, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public static String readPage(String title) throws IOException {
+        return FileUtils.readFileToString(new File(outputDirectory, normalize(title)), "UTF-8");
+    }
+
     public static String normalize(String title) {
         return title.replaceAll(" ", "_").toLowerCase();
+    }
+
+    public static void setOutputDirectory(String directory) {
+        outputDirectory = directory;
+    }
+
+    public static String getOutputDirectory() {
+        return outputDirectory;
     }
 }
 
