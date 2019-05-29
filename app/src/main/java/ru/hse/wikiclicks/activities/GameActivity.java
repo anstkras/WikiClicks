@@ -305,8 +305,6 @@ public class GameActivity extends AppCompatActivity {
             LevelGameMode levelGameMode = (LevelGameMode) gameMode;
             GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
             if (account == null) {
-                Toast toast = Toast.makeText(this, "account is null", Toast.LENGTH_LONG);
-                toast.show();
                 return;
             }
             if (levelGameMode.getLevel() == 1) {
@@ -322,6 +320,8 @@ public class GameActivity extends AppCompatActivity {
                 Games.getLeaderboardsClient(this, account)
                         .submitScore(getString(R.string.leaderboard_level_3), stepsCount);
             }
+            Toast toast = Toast.makeText(this, "Your score was submitted to the leaderboard", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
