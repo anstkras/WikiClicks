@@ -25,6 +25,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpExitButton();
         setUpSettingButton();
         setUpStatisticsButton();
+        setUpOfflineButton();
     }
 
     private void setUpStatisticsButton() {
@@ -35,6 +36,21 @@ public class MainMenuActivity extends AppCompatActivity {
                 statisticsButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent statisticsIntent = new Intent(MainMenuActivity.this, StatisticsActivity.class);
                 startActivity(statisticsIntent);
+            }
+        });
+    }
+
+    private void setUpOfflineButton() {
+        final Button offlineButton = findViewById(R.id.offline_button);
+        offlineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offlineButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent offlineGameIntent = new Intent(MainMenuActivity.this, OfflineGameActivity.class);
+//                Bundle pagesInfo = new Bundle();
+//                pagesInfo.putAll(getIntent().getExtras());
+//                offlineGameIntent.putExtras(pagesInfo);
+                startActivity(offlineGameIntent);
             }
         });
     }

@@ -17,4 +17,5 @@
     <string name="steps_mode">Steps mode</string>
     <string name="custom_mode">Custom mode</string>
     <string name="statistics">Statistics</string>
+    <string name="offline_game">Offline Game</string>
 </resources>
