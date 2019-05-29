@@ -19,12 +19,12 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.ChooseOfflineGame;
 import ru.hse.wikiclicks.controllers.OfflineController;
 import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.database.GamesViewModel;
+import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class OfflineGameActivity extends AppCompatActivity {
     private WebView webView;
 
-    private GamesViewModel gamesViewModel;
+    private GameStatsViewModel gamesViewModel;
     private int stepsCount = -1;
     private String finishId;
     private String startId;
