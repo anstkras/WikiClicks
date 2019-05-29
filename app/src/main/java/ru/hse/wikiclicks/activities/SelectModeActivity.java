@@ -14,6 +14,7 @@ public class SelectModeActivity extends AppCompatActivity {
     static final String TIME_MODE = "time_mode";
     static final String STEPS_MODE = "steps_mode";
     static final String CUSTOM_MODE = "custom_mode";
+    static final String LEVEL_MODE = "level_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

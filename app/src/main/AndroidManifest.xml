@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".activities.BookmarkActivity"></activity>
+        <activity android:name=".activities.ChallengesActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity android:name=".activities.StatisticsActivity" />
         <activity
             android:name=".activities.SelectModeActivity"
