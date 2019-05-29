@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources>
+    <!-- app_id -->
+    <string name="app_id" translatable="false">399411395970</string>
+    <!-- package_name -->
+    <string name="package_name" translatable="false">ru.hse.wikiclicks</string>
+    <!-- leaderboard Steps count -->
+    <string name="leaderboard_steps_count" translatable="false">CgkIgvuY9s8LEAIQAQ</string>
+    <!-- leaderboard Level 1 -->
+    <string name="leaderboard_level_1" translatable="false">CgkIgvuY9s8LEAIQBQ</string>
+    <!-- leaderboard Level 2 -->
+    <string name="leaderboard_level_2" translatable="false">CgkIgvuY9s8LEAIQBg</string>
+    <!-- leaderboard Level 3 -->
+    <string name="leaderboard_level_3" translatable="false">CgkIgvuY9s8LEAIQBw</string>
+</resources>
