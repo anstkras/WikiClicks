@@ -310,16 +310,16 @@ public class GameActivity extends AppCompatActivity {
             }
             if (levelGameMode.getLevel() == 1) {
                 Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard1_id), stepsCount);
+                        .submitScore(getString(R.string.leaderboard_level_1), stepsCount);
             }
             if (levelGameMode.getLevel() == 2) {
                 Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard2_id), stepsCount);
+                        .submitScore(getString(R.string.leaderboard_level_2), stepsCount);
             }
 
             if (levelGameMode.getLevel() == 3) {
                 Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard3_id), stepsCount);
+                        .submitScore(getString(R.string.leaderboard_level_3), stepsCount);
             }
         }
     }
