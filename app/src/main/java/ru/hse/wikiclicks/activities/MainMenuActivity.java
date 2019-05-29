@@ -32,19 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpOfflineButton();
         setUpBookMarksButton();
         setUpChallengesButton();
-        setUpSignOutButton();
-        setUpLeaderBoardButton();
         setUpDownloadButton();
-    }
-
-    private void setUpLeaderBoardButton() {
-        final Button leaderBoardButton = findViewById(R.id.leaderboard_button);
-        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard();
-            }
-        });
     }
 
     private void setUpBookMarksButton() {
