@@ -1,14 +1,20 @@
 package ru.hse.wikiclicks.controllers;
 
-public class TimeGameMode implements GameMode { // TODO make singleton?
+public class LevelGameMode implements GameMode {
+    private final int level;
+
+    public LevelGameMode(int level) {
+        this.level = level;
+    }
+
     @Override
     public boolean timeModeEnabled() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean stepsModeEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -24,5 +30,9 @@ public class TimeGameMode implements GameMode { // TODO make singleton?
     @Override
     public boolean banBackEnabled() {
         return false;
+    }
+
+    public int getLevel() {
+        return level;
     }
 }
