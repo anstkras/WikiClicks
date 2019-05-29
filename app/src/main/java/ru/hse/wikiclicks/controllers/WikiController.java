@@ -111,8 +111,7 @@ public class WikiController {
 
     /** Returns the title of the page with the given url */
     public static String getPageTitleFromUrl(String url) {
-        WikiPage wikiPage = getPageFromUrl(url);
-        return wikiPage.getTitle();
+        return url.replace("https://en.m.wikipedia.org/wiki/", "");
     }
 
     /** Returns the id of the page that the page with given id redirects to. */
@@ -190,5 +189,9 @@ public class WikiController {
             failedJSON(e);
         }
         return links;
+    }
+
+    public static String getUrlForTitle(String title) {
+        return "https://en.m.wikipedia.org/wiki/" + title;
     }
 }

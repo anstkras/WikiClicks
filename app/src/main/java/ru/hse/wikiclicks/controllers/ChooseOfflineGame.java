@@ -5,23 +5,34 @@ import java.util.Collections;
 import java.util.HashSet;
 
 public class ChooseOfflineGame {
-    private static final int TREE_SIZE = 2;
-    public HashSet<String> pages = new HashSet<>();
-    ArrayList<String> edgePages = new ArrayList<>();
-    public String startPageName;
-    public String endPageUrl = "https://en.m.wikipedia.org/wiki/";
+    private final int tree_size;
+    private HashSet<String> pages = new HashSet<>();
 
-    public void chooseRandomStartPage() {
-        pages.clear();
-        edgePages.clear();
-//        WikiPage startPage = WikiController.getRandomPage();
-//        startPageName = startPage.getTitle();
-        startPageName = "Demonophobia";
-        System.out.println(startPageName);
-        getLinksTree(startPageName, TREE_SIZE);
-        System.out.println(startPageName);
-        System.out.println(pages.size());
+    public HashSet<String> getPages() {
+        return pages;
+    }
 
+    public String getStartPageName() {
+        return startPageName;
+    }
+
+    public String getEndPageName() {
+        return endPageName;
+    }
+
+    private ArrayList<String> edgePages = new ArrayList<>();
+    private String startPageName;
+    private String endPageName;
+
+    public ChooseOfflineGame(String startPageName, String endPageName, int distance) {
+        tree_size = distance;
+        this.startPageName = startPageName;
+        this.endPageName = endPageName;
+        initializeGame();
+        pages.add(endPageName);
+    }
+
+    private String chooseRandomPossibleEndPage() {
         Collections.shuffle(edgePages);
         ArrayList<String> finalLinks = WikiController.getLinksFromPage(edgePages.get(0));
         Collections.shuffle(finalLinks);
@@ -32,7 +43,13 @@ public class ChooseOfflineGame {
                 break;
             }
         }
-        endPageUrl = endPageUrl + finalPage;
+        return finalPage;
+    }
+
+    private void initializeGame() {
+        pages.clear();
+        edgePages.clear();
+        getLinksTree(startPageName, tree_size);
     }
 
     private void getLinksTree(String page, int depth) {

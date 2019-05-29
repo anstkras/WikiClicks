@@ -32,6 +32,19 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpOfflineButton();
         setUpBookMarksButton();
         setUpChallengesButton();
+        setUpSignOutButton();
+        setUpLeaderBoardButton();
+        setUpDownloadButton();
+    }
+
+    private void setUpLeaderBoardButton() {
+        final Button leaderBoardButton = findViewById(R.id.leaderboard_button);
+        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard();
+            }
+        });
     }
 
     private void setUpBookMarksButton() {
@@ -76,11 +89,37 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 offlineButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent offlineGameIntent = new Intent(MainMenuActivity.this, OfflineGameActivity.class);
-//                Bundle pagesInfo = new Bundle();
-//                pagesInfo.putAll(getIntent().getExtras());
-//                offlineGameIntent.putExtras(pagesInfo);
+                Intent offlineGameIntent = new Intent(MainMenuActivity.this, OfflineLevelsActivity.class);
                 startActivity(offlineGameIntent);
+            }
+        });
+    }
+
+    private void setUpDownloadButton() {
+        final Button downloadButton = findViewById(R.id.download_button);
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadButton.setTextColor(getResources().getColor(R.color.colorUsed));
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
+                builder.setTitle("Download stuff");
+                builder.setMessage("This strange button downloads several online games onto your device.\n" +
+                        "It may take some time. Do you want to proceed?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent downloadIntent = new Intent(MainMenuActivity.this, DownloadActivity.class);
+                        startActivity(downloadIntent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
