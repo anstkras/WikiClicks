@@ -23,7 +23,7 @@ public class OfflineController {
             if (file.exists()) {
                 return; //assume page already is downloaded
             }
-            String url = "https://en.m.wikipedia.org/wiki/" + title;
+            String url = "https://en.wikipedia.org/wiki/" + title;
             final Connection.Response response = Jsoup.connect(url).timeout(0).ignoreContentType(true).execute();
             String webPage = response.parse().html();
             //dirty fix for links, inter-page ones might not work
@@ -42,9 +42,8 @@ public class OfflineController {
         return title.replaceAll(" ", "_").toLowerCase();
     }
 
-    private static void downloadConfirmation(String outputDirectory, int confimationNumber) {
-        final File file = new File(outputDirectory, CONFIRMATION + confimationNumber);
-
+    private static void downloadConfirmation(String outputDirectory, int confirmationNumber) {
+        final File file = new File(outputDirectory, CONFIRMATION + confirmationNumber);
         System.out.println(file.getAbsolutePath());
         try {
             FileUtils.writeStringToFile(file, "downloaded successfully", "UTF-8");
@@ -53,5 +52,3 @@ public class OfflineController {
         }
     }
 }
-
-
