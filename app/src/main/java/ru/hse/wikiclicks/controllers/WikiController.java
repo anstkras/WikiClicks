@@ -194,4 +194,23 @@ public class WikiController {
     public static String getUrlForTitle(String title) {
         return "https://en.m.wikipedia.org/wiki/" + title;
     }
+
+    public static ArrayList<String> getLinksToPage(String title) {
+        ArrayList<String> links = new ArrayList<>();
+        String query = "https://en.wikipedia.org/w/api.php?action=query&list=backlinks&bllimit=max&blnamespace=0&format=json&bltitle=" + title;
+        try {
+            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+            JSONObject json = new JSONObject(searchResult);
+            JSONArray linksList = json.getJSONObject("query").getJSONArray("backlinks");
+            for (int i = 0; i < linksList.length(); i++) {
+                String linkTitle = linksList.getJSONObject(i).getString("title");
+                links.add(linkTitle);
+            }
+        } catch (IOException e) {
+            failedExecute(e);
+        } catch (JSONException e) {
+            failedJSON(e);
+        }
+        return links;
+    }
 }

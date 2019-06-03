@@ -1,42 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.MainMenuActivity">
-    <Button
-        android:id="@+id/level1"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false"
+    android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        tools:context=".activities.DownloadLevelsActivity">
+        <Button
+            android:id="@+id/level1"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        android:text="@string/level_1"
-        android:textColor="@color/colorInitial"
-        android:textSize="25sp" />
-    <Button
-        android:id="@+id/level2"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+            android:text="@string/level_1"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level2"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        android:text="@string/level_2"
-        android:textColor="@color/colorInitial"
-        android:textSize="25sp" />
-    <Button
-        android:id="@+id/level3"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+            android:text="@string/level_2"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level3"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        android:text="@string/level_3"
-        android:textColor="@color/colorInitial"
-        android:textSize="25sp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
 
-</LinearLayout>
+            android:text="@string/level_3"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level4"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_4"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level5"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_5"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level6"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_6"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level7"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_7"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level8"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_8"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level9"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_9"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/level10"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_10"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+    </LinearLayout>
+</ScrollView>

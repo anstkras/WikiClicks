@@ -3,35 +3,48 @@ package ru.hse.wikiclicks.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 
+import static com.google.android.gms.common.internal.Preconditions.checkArgument;
+
+/** Class responsible for generating the offline game, including the list of necessary pages to download. */
 public class ChooseOfflineGame {
+    private static final int RANDOM_CONSTANT = 42;
+    private static final int PAGE_PROBABILITY = 3;
+
+    private static final int MIN_TREE_SIZE = 1;
+    private static final int MAX_TREE_SIZE = 3;
     private final int tree_size;
     private HashSet<String> pages = new HashSet<>();
-
-    public HashSet<String> getPages() {
-        return pages;
-    }
-
-    public String getStartPageName() {
-        return startPageName;
-    }
-
-    public String getEndPageName() {
-        return endPageName;
-    }
-
     private ArrayList<String> edgePages = new ArrayList<>();
+    private HashSet<String> acceptablePages = new HashSet<>();
+
     private String startPageName;
     private String endPageName;
 
+    /**
+     * Creates offline game from the given start page to the given end page, assuming given distance between them.
+     * @param startPageName the starting page's name.
+     * @param endPageName the end page's name, as it links by some shortest path from the starting page.
+     * @param distance the distance between start and end pages. Should be no more than MAX_TREE_SIZE.
+     */
     public ChooseOfflineGame(String startPageName, String endPageName, int distance) {
+        checkArgument(MIN_TREE_SIZE <= distance && distance <= MAX_TREE_SIZE);
         tree_size = distance;
         this.startPageName = startPageName;
         this.endPageName = endPageName;
-        initializeGame();
+        if (tree_size == MIN_TREE_SIZE) {
+            getExtendedLinksTree();
+        } else if (tree_size == MAX_TREE_SIZE) {
+            acceptablePages.add(endPageName);
+            getShortenedLinksTree();
+        } else {
+            getLinksTree(startPageName, tree_size);
+        }
         pages.add(endPageName);
     }
 
+    /** Method that was used to generate the levels locally. Provides a random end page for the normal link tree. */
     private String chooseRandomPossibleEndPage() {
         Collections.shuffle(edgePages);
         ArrayList<String> finalLinks = WikiController.getLinksFromPage(edgePages.get(0));
@@ -46,23 +59,61 @@ public class ChooseOfflineGame {
         return finalPage;
     }
 
-    private void initializeGame() {
-        pages.clear();
-        edgePages.clear();
-        getLinksTree(startPageName, tree_size);
+    /**
+     * Link tree generation for link tree of depth one. Use with caution.
+     * While normally a link tree of depth one is not enough to pose a challenge, the absence of a search bar in the app
+     * makes it possible to choose a large enough page not obviously connected to the end page to make this interesting.
+     * Apart from the original page, this method also randomly downloads several neighboring pages to confuse players,
+     * and hopefully make them believe there is some smart algorithm that found a larger path and downloaded the necessary pages.
+     */
+    private void getExtendedLinksTree() {
+        Random random = new Random(RANDOM_CONSTANT);
+        pages.add(startPageName);
+        ArrayList<String> links = WikiController.getLinksFromPage(startPageName);
+        for (String newPageTitle : links) {
+            if (random.nextInt() % PAGE_PROBABILITY == 0) {
+                pages.add(newPageTitle);
+            }
+        }
     }
 
+    /**
+     * Standard link tree generation.
+     * In practice, a link tree of depth two is small enough to download easily, but tricky enough to be annoying.
+     * As such, this method is the base one to use and most games should be generated with this option.
+     * @param page the current Wikipedia page.
+     * @param depth the current depth of the tree. Original depth for this method should be 2.
+     */
     private void getLinksTree(String page, int depth) {
         if (depth == 0 || pages.contains(page)) {
             return;
         }
+        pages.add(page);
         if (depth == 1) {
             edgePages.add(page);
+        } else {
+            ArrayList<String> links = WikiController.getLinksFromPage(page);
+            for (String newPageTitle : links) {
+                getLinksTree(newPageTitle, depth - 1);
+            }
         }
-        pages.add(page);
-        ArrayList<String> links = WikiController.getLinksFromPage(page);
+    }
+
+    /**
+     * Link tree generation for large trees, optimized to avoid excessive use of Wikipedia crawlers.
+     * Downloads a normal link tree from the starting page, as well as pages at distance exactly two that link to the end page.
+     */
+    private void getShortenedLinksTree() {
+        getLinksTree(startPageName, tree_size - 1);
+        pages.add(startPageName);
+        ArrayList<String> links = WikiController.getLinksToPage(endPageName);
         for (String newPageTitle : links) {
-            getLinksTree(newPageTitle, depth - 1);
+            pages.add(newPageTitle);
         }
+    }
+
+    /** A getter for the set of generated link titles. */
+    public HashSet<String> getPages() {
+        return pages;
     }
 }

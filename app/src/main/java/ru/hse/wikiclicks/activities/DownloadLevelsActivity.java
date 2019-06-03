@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.OfflineController;
 
+import static ru.hse.wikiclicks.activities.OfflineLevelsActivity.*;
+
 public class DownloadLevelsActivity extends AppCompatActivity {
     public static final String OFFLINE_FINISH_TITLE_KEY = "offline_finish_title";
     public static final String OFFLINE_START_TITLE_KEY = "offline_start_title";
@@ -20,45 +22,34 @@ public class DownloadLevelsActivity extends AppCompatActivity {
     public static final String OFFLINE_DIRECTORY_KEY = "offline_directory";
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
-    private final static int LEVEL1 = 1;
-    private final static int LEVEL2 = 2;
-    private final static int LEVEL3 = 3;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_levels);
 
-        Button level1Button = findViewById(R.id.level1);
-        level1Button.setOnClickListener(new View.OnClickListener() {
+        createDownloadButtonForLevel((Button)findViewById(R.id.level1), LEVEL1);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level2), LEVEL2);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level3), LEVEL3);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level4), LEVEL4);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level5), LEVEL5);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level6), LEVEL6);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level7), LEVEL7);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level8), LEVEL8);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level9), LEVEL9);
+        createDownloadButtonForLevel((Button)findViewById(R.id.level10), LEVEL10);
+    }
+
+    private void createDownloadButtonForLevel(Button button, int level) {
+        final int currentLevel = level;
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String startPageTitle = "Demonophobia";
-                String finishPageTitle = "Qalb";
-                downloadLevel(startPageTitle, finishPageTitle, 2, LEVEL1);
-            }
-        });
-        Button level2Button = findViewById(R.id.level2);
-        level2Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String startPageTitle = "Sexuality of Adolf Hitler";
-                String finishPageTitle = "Squatting";
-                downloadLevel(startPageTitle, finishPageTitle, 2, LEVEL2);
-            }
-        });
-        Button level3Button = findViewById(R.id.level3);
-        level3Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String startPageTitle = "Vanity Fair (novel)";
-                String finishPageTitle = "Star Wars";
-                downloadLevel(startPageTitle, finishPageTitle, 2, LEVEL3);
+                downloadLevel(currentLevel);
             }
         });
     }
 
-    private void downloadLevel(String startTitle, String finishTitle, int treeSize, int levelNumber) {
+    private void downloadLevel(int levelNumber) {
         //check if level has been downloaded already
         String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
@@ -72,10 +63,10 @@ public class DownloadLevelsActivity extends AppCompatActivity {
         //download level in new activity
         Intent downloadLevelIntent = new Intent(DownloadLevelsActivity.this, DownloadActivity.class);
         Bundle offlineLevelInfo = new Bundle();
-        offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, startTitle);
-        offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, finishTitle);
+        offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
+        offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
         offlineLevelInfo.putString(OFFLINE_DIRECTORY_KEY, downloadDirectory);
-        offlineLevelInfo.putInt(OFFLINE_STEPS_TREE_SIZE_KEY, treeSize);
+        offlineLevelInfo.putInt(OFFLINE_STEPS_TREE_SIZE_KEY, offlineLevelTreeSizes[levelNumber]);
         offlineLevelInfo.putInt(OFFLINE_LEVEL_NUMBER_KEY, levelNumber);
         downloadLevelIntent.putExtras(offlineLevelInfo);
         startActivity(downloadLevelIntent);
