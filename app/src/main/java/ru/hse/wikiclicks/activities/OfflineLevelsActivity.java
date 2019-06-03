@@ -16,7 +16,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challanges);
+        setContentView(R.layout.activity_offline_levels);
 
         Button level1Button = findViewById(R.id.level1);
         level1Button.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +52,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         Bundle pagesInfo = new Bundle();
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, startPageTitle);
         pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, finishPageTitle);
-        pagesInfo.putString(SelectModeActivity.GAME_MODE_KEY, SelectModeActivity.STEPS_MODE);
         startGame.putExtras(pagesInfo);
         startActivity(startGame);
     }

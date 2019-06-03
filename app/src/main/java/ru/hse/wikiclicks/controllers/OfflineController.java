@@ -8,15 +8,16 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 
 public class OfflineController {
-    private static String outputDirectory;
+    public static final String CONFIRMATION = "wikiclicksDownloadedGame";
 
-    public static void downloadTree(ChooseOfflineGame game) {
+    public static void downloadTree(ChooseOfflineGame game, String outputDirectory, int confirmationNumber) {
         for (String title : game.getPages()) {
-            downloadPage(title);
+            downloadPage(title, outputDirectory);
         }
+        downloadConfirmation(outputDirectory, confirmationNumber);
     }
 
-    private static void downloadPage(String title) {
+    private static void downloadPage(String title, String outputDirectory) {
         try {
             final File file = new File(outputDirectory, normalize(title));
             if (file.exists()) {
@@ -33,20 +34,23 @@ public class OfflineController {
         }
     }
 
-    public static String readPage(String title) throws IOException {
-        return FileUtils.readFileToString(new File(outputDirectory, normalize(title)), "UTF-8");
+    public static String readPage(String title, String inputDirectory) throws IOException {
+        return FileUtils.readFileToString(new File(inputDirectory, normalize(title)), "UTF-8");
     }
 
     public static String normalize(String title) {
         return title.replaceAll(" ", "_").toLowerCase();
     }
 
-    public static void setOutputDirectory(String directory) {
-        outputDirectory = directory;
-    }
+    private static void downloadConfirmation(String outputDirectory, int confimationNumber) {
+        final File file = new File(outputDirectory, CONFIRMATION + confimationNumber);
 
-    public static String getOutputDirectory() {
-        return outputDirectory;
+        System.out.println(file.getAbsolutePath());
+        try {
+            FileUtils.writeStringToFile(file, "downloaded successfully", "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

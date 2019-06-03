@@ -89,25 +89,8 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 downloadButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                final AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
-                builder.setTitle("Download stuff");
-                builder.setMessage("This strange button downloads several online games onto your device.\n" +
-                        "It may take some time. Do you want to proceed?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent downloadIntent = new Intent(MainMenuActivity.this, DownloadActivity.class);
-                        startActivity(downloadIntent);
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                Intent downloadIntent = new Intent(MainMenuActivity.this, DownloadLevelsActivity.class);
+                startActivity(downloadIntent);
             }
         });
     }
