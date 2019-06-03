@@ -39,12 +39,12 @@ public class DownloadLevelsActivity extends AppCompatActivity {
         createDownloadButtonForLevel((Button)findViewById(R.id.level10), LEVEL10);
     }
 
-    private void createDownloadButtonForLevel(Button button, int level) {
-        final int currentLevel = level;
+    private void createDownloadButtonForLevel(final Button button, final int level) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadLevel(currentLevel);
+                button.setTextColor(getResources().getColor(R.color.colorUsed));
+                    downloadLevel(level);
             }
         });
     }

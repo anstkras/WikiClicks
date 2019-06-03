@@ -45,12 +45,12 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         createButtonForLevel((Button)findViewById(R.id.level10), LEVEL10);
     }
 
-    private void createButtonForLevel(Button button, int level) {
-        final int currentLevel = level;
+    private void createButtonForLevel(final Button button, final int level) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startGame(currentLevel);
+                button.setTextColor(getResources().getColor(R.color.colorUsed));
+                startGame(level);
             }
         });
     }

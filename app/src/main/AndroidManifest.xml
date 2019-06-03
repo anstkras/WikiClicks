@@ -13,8 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
-        <activity android:name=".activities.BookmarkActivity"></activity>
-        <activity android:name=".activities.ChallengesActivity"></activity>
+        <activity
+            android:name=".activities.BookmarkActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activities.ChallengesActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
@@ -26,14 +32,16 @@
         <activity android:name=".activities.StatisticsActivity" />
         <activity
             android:name=".activities.SelectModeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activities.MainMenuActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -43,7 +51,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden"
             android:label="Settings" />
         <activity
             android:name=".activities.OfflineGameActivity"
@@ -52,16 +61,20 @@
             android:label="Offline Game" />
         <activity
             android:name=".activities.GetEndpointsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden" />
         <activity
             android:name=".activities.DownloadActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden" />
         <activity
             android:name=".activities.OfflineLevelsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden" />
         <activity
             android:name=".activities.DownloadLevelsActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize|keyboardHidden" />
         <service android:name=".controllers.DownloadService" />
     </application>
 
