@@ -31,4 +31,5 @@
     <string name="download_in_progress">Download is in progress.</string>
     <string name="level_1_leaderboard">Level 1 leaderboard</string>
     <string name="level_2_leaderboard">Level 2 leaderboard</string>
+    <string name="download_finished">Download finished!</string>
 </resources>

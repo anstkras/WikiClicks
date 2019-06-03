@@ -168,7 +168,7 @@ public class GameActivity extends AppCompatActivity {
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
-        webView.loadUrl(WikiController.getPageLinkById(startId));
+        webView.loadUrl(WikiController.getUrlForTitle(startTitle));
     }
 
     private void setUpExitButton() {
@@ -187,12 +187,7 @@ public class GameActivity extends AppCompatActivity {
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title;
-                if (stepsCount == 0) { // TODO ubrat' etot costyl'
-                    title = startTitle;
-                } else {
-                    title = WikiController.getPageTitleFromUrl(currentUrl);
-                }
+                String title = WikiController.getPageTitleFromUrl(currentUrl);
                 ru.hse.wikiclicks.database.Bookmarks.Bookmark bookmark = new ru.hse.wikiclicks.database.Bookmarks.Bookmark(currentUrl, title);
                 bookmarkViewModel.insert(bookmark);
                 Toast toast = Toast.makeText(getApplicationContext(), "Bookmark for " + title + " added", Toast.LENGTH_SHORT);
