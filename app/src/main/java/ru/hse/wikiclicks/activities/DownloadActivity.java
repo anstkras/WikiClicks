@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class DownloadActivity extends AppCompatActivity {
         }
     }
 
-    private void handleDownloadSucceeded(String result) {
+    private void handleDownloadSucceeded(final String result) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(DownloadActivity.this);
         builder.setTitle("Download successful");
         builder.setMessage(result + " Do you want to download another level?");
@@ -54,6 +55,7 @@ public class DownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent downloadIntent = new Intent(DownloadActivity.this, DownloadLevelsActivity.class);
+                downloadIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(downloadIntent);
             }
         });
@@ -61,11 +63,16 @@ public class DownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent returnIntent = new Intent(DownloadActivity.this, MainMenuActivity.class);
+                returnIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(returnIntent);
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.show();
+        try {
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Dialog showing failed", e.getMessage());
+        }
     }
 
     private void handleDownloadFailed() {
@@ -76,11 +83,16 @@ public class DownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent downloadIntent = new Intent(DownloadActivity.this, DownloadLevelsActivity.class);
+                downloadIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(downloadIntent);
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.show();
+        try {
+            dialog.show();
+        } catch (Exception e) {
+            Log.e("Dialog showing failed", e.getMessage());
+        }
     }
 
     private class DownloadReceiver extends ResultReceiver {

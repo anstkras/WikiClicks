@@ -10,6 +10,7 @@ import static com.google.android.gms.common.internal.Preconditions.checkArgument
 /** Class responsible for generating the offline game, including the list of necessary pages to download. */
 public class ChooseOfflineGame {
     private static final int RANDOM_CONSTANT = 42;
+    private static final int PAGE_TREE_GENERATION_WORKED = 10;
     private static final int PAGE_PROBABILITY = 3;
 
     private static final int MIN_TREE_SIZE = 1;
@@ -68,8 +69,10 @@ public class ChooseOfflineGame {
      */
     private void getExtendedLinksTree() {
         Random random = new Random(RANDOM_CONSTANT);
-        pages.add(startPageName);
         ArrayList<String> links = WikiController.getLinksFromPage(startPageName);
+        if (links.size() > 0) { //check page exists
+            pages.add(startPageName);
+        }
         for (String newPageTitle : links) {
             if (random.nextInt() % PAGE_PROBABILITY == 0) {
                 pages.add(newPageTitle);
@@ -88,11 +91,14 @@ public class ChooseOfflineGame {
         if (depth == 0 || pages.contains(page)) {
             return;
         }
-        pages.add(page);
         if (depth == 1) {
             edgePages.add(page);
+            pages.add(page);
         } else {
             ArrayList<String> links = WikiController.getLinksFromPage(page);
+            if (links.size() > 0) {
+                pages.add(page);
+            }
             for (String newPageTitle : links) {
                 getLinksTree(newPageTitle, depth - 1);
             }
@@ -105,15 +111,20 @@ public class ChooseOfflineGame {
      */
     private void getShortenedLinksTree() {
         getLinksTree(startPageName, tree_size - 1);
-        pages.add(startPageName);
         ArrayList<String> links = WikiController.getLinksToPage(endPageName);
-        for (String newPageTitle : links) {
-            pages.add(newPageTitle);
-        }
+        pages.addAll(links);
     }
 
     /** A getter for the set of generated link titles. */
     public HashSet<String> getPages() {
         return pages;
+    }
+
+    /**
+     * Checks whether a tree of acceptable size has been collected.
+     * A small tree is a sign of a lacking internet connection or a boring game and shouldn't be used.
+     */
+    public boolean hasFailed() {
+        return pages.size() <= PAGE_TREE_GENERATION_WORKED;
     }
 }

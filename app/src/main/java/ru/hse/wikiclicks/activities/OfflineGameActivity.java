@@ -92,6 +92,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         directory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
 
         titleTree.add(startTitle);
+        currentUrl = WikiController.getUrlForTitle(startTitle);
         String webPage = "";
         try {
             webPage = OfflineController.readPage(startTitle, directory);
