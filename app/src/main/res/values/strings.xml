@@ -24,6 +24,8 @@
         <i>offline</i> level to play without an internet connection. </string>
     <string name="select_download_in_progress"> The game is <i>downloading</i>. This may take some time. </string>
     <string name="select_endpoints"> Choose a <i>start</i> and <i>end</i> page for your game. </string>
+    <string name="select_settings"> Customize your game: choose whether to track <i>steps</i> and <i>time</i>,
+        enable additional <i>bans</i> for the game. </string>
     <string name="time_mode">Time mode</string>
     <string name="steps_mode">Steps mode</string>
     <string name="custom_mode">Custom mode</string>
