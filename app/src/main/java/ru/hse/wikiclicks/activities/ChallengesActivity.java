@@ -27,7 +27,7 @@ public class ChallengesActivity extends AppCompatActivity {
     public final static int LEVEL2 = 2;
     public final static int LEVEL3 = 3;
     public final static String LEVEL_KEY = "level";
-    private SignInButton signInButton;
+    private Button signInButton;
     private Button signOutButton;
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient googleSignInClient;
