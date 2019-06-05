@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.OfflineGameActivity">
 
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/offline_toolbar"
         android:layout_width="match_parent"
@@ -16,50 +17,63 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="">
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+                <Chronometer
+                    android:id="@+id/offline_chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="10dp"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/offline_tv_steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/steps_init"
+                    android:visibility="invisible"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="#000000"
+                    android:textSize="25sp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_bookmark_border_24px"
+                    android:id="@+id/button_bookmark"
+                    />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_exit_to_app_24px"
+                    android:id="@+id/button_exit"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/offline_tv_finish"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_row="2"
-                android:layout_column="0"
-                android:layout_columnSpan="2"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:textColor="#000000"
                 android:textSize="25sp" />
 
-            <Chronometer
-                android:id="@+id/offline_chronometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:layout_gravity="start"
-                android:textSize="25sp" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_bookmark_border_24px"
-                android:layout_row="0"
-                android:layout_column="2"
-                android:id="@+id/button_bookmark"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_exit_to_app_24px"
-                android:layout_row="0"
-                android:layout_column="3"
-                android:id="@+id/button_exit"
-                />
-        </GridLayout>
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
