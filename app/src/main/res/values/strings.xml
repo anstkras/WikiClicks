@@ -12,7 +12,18 @@
     <string name="target">Target: %1$s</string>
     <string name="kek">This game is a <i>stub</i>. You can help the developers by <i>expanding it</i>.</string>
     <string name="hint">\?</string>
-    <string name="select_mode">Select mode</string>
+    <string name="select_mode">Select a <i>mode</i> for the game. You can keep track of the time or
+        steps taken to reach the destination, or <i>customize</i> the game for something more interesting. </string>
+    <string name="show_statistics"> Show your <i>times</i> or <i>steps</i> for won games. </string>
+    <string name="select_offline_level"> Choose a previously downloaded
+        <i>offline</i> level to play without an internet connection. </string>
+    <string name="select_challenge_level"> Complete specially chosen <i>challenge</i> levels and sign in to compare
+        your results to those of other players. </string>
+    <string name="select_bookmarks"> View your previously <i>bookmarked</i> pages. </string>
+    <string name="select_download_offline_level"> Download a
+        <i>offline</i> level to play without an internet connection. </string>
+    <string name="select_download_in_progress"> The game is <i>downloading</i>. This may take some time. </string>
+    <string name="select_endpoints"> Choose a <i>start</i> and <i>end</i> page for your game. </string>
     <string name="time_mode">Time mode</string>
     <string name="steps_mode">Steps mode</string>
     <string name="custom_mode">Custom mode</string>

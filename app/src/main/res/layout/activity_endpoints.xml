@@ -2,11 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".activities.GetEndpointsActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorNoLink"
+            android:textSize="35sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/select_endpoints"
+            android:textColor="@color/colorPlainText"
+            android:textSize="15sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,6 +122,7 @@
             android:layout_marginStart="20dp"
 
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
 
             android:text="@string/random_returner"
@@ -112,6 +138,7 @@
             android:layout_marginStart="20dp"
 
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
 
             android:text="@string/start_game"

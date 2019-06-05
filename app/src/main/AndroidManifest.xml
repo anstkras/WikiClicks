@@ -15,10 +15,12 @@
         android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".activities.BookmarkActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.ChallengesActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait">
         </activity>
 
@@ -29,7 +31,8 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".activities.StatisticsActivity" />
+        <activity android:name=".activities.StatisticsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.SelectModeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -53,6 +56,7 @@
             android:name=".activities.SettingsActivity"
             android:screenOrientation="portrait"
             android:configChanges="screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="Settings" />
         <activity
             android:name=".activities.OfflineGameActivity"
@@ -62,18 +66,22 @@
         <activity
             android:name=".activities.GetEndpointsActivity"
             android:screenOrientation="portrait"
-            android:configChanges="screenSize|keyboardHidden" />
+            android:configChanges="screenSize|keyboardHidden"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
             android:name=".activities.DownloadActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="screenSize|keyboardHidden" />
         <activity
             android:name=".activities.OfflineLevelsActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="screenSize|keyboardHidden" />
         <activity
             android:name=".activities.DownloadLevelsActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="screenSize|keyboardHidden" />
         <service android:name=".controllers.DownloadService" />
     </application>

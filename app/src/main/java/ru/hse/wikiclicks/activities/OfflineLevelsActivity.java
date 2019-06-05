@@ -10,10 +10,10 @@ import ru.hse.wikiclicks.R;
 
 public class OfflineLevelsActivity extends AppCompatActivity {
     final static String[] offlineLevelStartPages = {"", "Vanity Fair (novel)", "Women in Russia", "History of tea in Japan",
-            "Invisible Pink Unicorn", "Demonophobia", "Sexuality of Adolf Hitler",
+            "Invisible Pink Unicorn", "Deep Purple", "Sexuality of Adolf Hitler",
             "Moscow", "Lady Justice", "Butte", "Anne Hathaway (wife of Shakespeare)"};
     final static String[] offlineLevelEndPages = {"", "Star Wars", "Google", "\"Hello, World!\" program",
-            "Game of Thrones", "Grigori Rasputin", "Squatting",
+            "Game of Thrones", "Hell Station", "Squatting",
             "Prada", "Seafood", "Seven Wonders of the Ancient World", "Anne Hathaway"};
     final static int[] offlineLevelTreeSizes = {-1, 2, 2, 2, 2, 3, 2, 1, 2, 2, 3};
 
@@ -24,7 +24,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int LEVEL5 = 5;
     public final static int LEVEL6 = 6;
     public final static int LEVEL7 = 7;
-    public final static int LEVEL8 = 9;
+    public final static int LEVEL8 = 8;
     public final static int LEVEL9 = 9;
     public final static int LEVEL10 = 10;
 
