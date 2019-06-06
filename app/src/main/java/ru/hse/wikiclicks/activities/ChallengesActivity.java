@@ -3,6 +3,7 @@ package ru.hse.wikiclicks.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.WikiPage;
 
 import android.content.Intent;
@@ -15,7 +16,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.games.Games;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +26,21 @@ public class ChallengesActivity extends AppCompatActivity {
     public final static int LEVEL1 = 1;
     public final static int LEVEL2 = 2;
     public final static int LEVEL3 = 3;
+    public final static int LEVEL4 = 4;
+    public final static int LEVEL5 = 5;
+    public final static int LEVEL6 = 6;
+    public final static int LEVEL7 = 7;
+    public final static int LEVEL8 = 8;
+    public final static int LEVEL9 = 9;
+    public final static int LEVEL10 = 10;
+
+    private final static String[] startPages = {"", "Russia", "Dog", "Algorithm",
+            "Saint Petersburg Academic University", "Homo sapiens", "War and Peace", "Devil",
+            "Black metal",  "Terry Pratchett", "Empty"};
+    private final static String[] endPages = {"", "Moscow", "Cat", "Javascript",
+            "Higher School of Economics", "Harry Potter", "Hamlet", "Invisible Pink Unicorn",
+            "Wombat",  "Hamiltonian path", "Full"};
+
     public final static String LEVEL_KEY = "level";
     private Button signInButton;
     private Button signOutButton;
@@ -41,33 +56,16 @@ public class ChallengesActivity extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        Button level1Button = findViewById(R.id.level1);
-        level1Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WikiPage startPage = new WikiPage("Russia", "25391");
-                WikiPage finishPage = new WikiPage("Moscow", "19004");
-                startGame(startPage, finishPage, LEVEL1);
-            }
-        });
-        Button level2Button = findViewById(R.id.level2);
-        level2Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WikiPage startPage = new WikiPage("Dog", "4269567");
-                WikiPage finishPage = new WikiPage("Cat", "6678");
-                startGame(startPage, finishPage, LEVEL2);
-            }
-        });
-        Button level3Button = findViewById(R.id.level3);
-        level3Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WikiPage startPage = new WikiPage("Algorithm", "775");
-                WikiPage finishPage = new WikiPage("Javascript", "9845");
-                startGame(startPage, finishPage, LEVEL3);
-            }
-        });
+        setUpButtonForLevel((Button) findViewById(R.id.level1), LEVEL1);
+        setUpButtonForLevel((Button) findViewById(R.id.level2), LEVEL2);
+        setUpButtonForLevel((Button) findViewById(R.id.level3), LEVEL3);
+        setUpButtonForLevel((Button) findViewById(R.id.level4), LEVEL4);
+        setUpButtonForLevel((Button) findViewById(R.id.level5), LEVEL5);
+        setUpButtonForLevel((Button) findViewById(R.id.level6), LEVEL6);
+        setUpButtonForLevel((Button) findViewById(R.id.level7), LEVEL7);
+        setUpButtonForLevel((Button) findViewById(R.id.level8), LEVEL8);
+        setUpButtonForLevel((Button) findViewById(R.id.level9), LEVEL9);
+        setUpButtonForLevel((Button) findViewById(R.id.level10), LEVEL10);
 
         Button level1LeaderBoardButton = findViewById(R.id.leaderboard_level1_button);
         level1LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
@@ -90,9 +88,68 @@ public class ChallengesActivity extends AppCompatActivity {
                 showLeaderboard(getString(R.string.leaderboard_level_3));
             }
         });
+        Button level4LeaderBoardButton = findViewById(R.id.leaderboard_level4_button);
+        level4LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_4));
+            }
+        });
+        Button level5LeaderBoardButton = findViewById(R.id.leaderboard_level5_button);
+        level5LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_5));
+            }
+        });
+        Button level6LeaderBoardButton = findViewById(R.id.leaderboard_level6_button);
+        level6LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_6));
+            }
+        });
+        Button level7LeaderBoardButton = findViewById(R.id.leaderboard_level7_button);
+        level7LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_7));
+            }
+        });
+        Button level8LeaderBoardButton = findViewById(R.id.leaderboard_level8_button);
+        level8LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_8));
+            }
+        });
+        Button level9LeaderBoardButton = findViewById(R.id.leaderboard_level9_button);
+        level9LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_9));
+            }
+        });
+        Button level10LeaderBoardButton = findViewById(R.id.leaderboard_level10_button);
+        level10LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_10));
+            }
+        });
+
 
         setUpSignInButton();
         setUpSignOutButton();
+    }
+
+    private void setUpButtonForLevel(Button button, final int level) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startGame(level);
+            }
+        });
     }
 
     private void setUpSignInButton() {
@@ -168,10 +225,12 @@ public class ChallengesActivity extends AppCompatActivity {
         signOutButton.setVisibility(View.GONE);
     }
 
-    private void startGame(WikiPage startPage, WikiPage finishPage, int level) {
+    private void startGame(int level) {
+        WikiPage startPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(startPages[level]));
+        WikiPage finishPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(endPages[level]));
+
         Intent startGame = new Intent(ChallengesActivity.this, GameActivity.class);
         Bundle pagesInfo = new Bundle();
-        pagesInfo.putString(GetEndpointsActivity.START_ID_KEY, startPage.getId());
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, startPage.getTitle());
         pagesInfo.putString(GetEndpointsActivity.FINISH_ID_KEY, finishPage.getId());
         pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, finishPage.getTitle());

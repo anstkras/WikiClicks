@@ -26,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/select_challenge_level"
             android:textColor="@color/colorPlainText"
             android:textSize="15sp" />
@@ -93,6 +93,90 @@
             android:textSize="25sp" />
 
         <Button
+            android:id="@+id/level4"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_4"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level5"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_5"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level6"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_6"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level7"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_7"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level8"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_8"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level9"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_9"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/level10"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+
+            android:text="@string/level_10"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
             android:id="@+id/leaderboard_level1_button"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
@@ -117,6 +201,90 @@
             android:textSize="25sp" />
 
         <Button
+            android:id="@+id/leaderboard_level4_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_4_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level5_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_5_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level6_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_6_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level7_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_7_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level8_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_8_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level9_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_9_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/leaderboard_level10_button"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="@string/level_10_leaderboard"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp" />
+
+        <Button
             android:id="@+id/leaderboard_level3_button"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
@@ -124,7 +292,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
 
-            android:text="Level 3 leaderboard"
+            android:text="@string/level_3_leaderboard"
             android:textColor="@color/colorInitial"
             android:textSize="25sp" />
 
