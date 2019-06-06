@@ -26,17 +26,15 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameContext;
 import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.OfflineController;
+import ru.hse.wikiclicks.controllers.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
 import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
-import ru.hse.wikiclicks.database.GameStats.GameStats;
-import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class OfflineGameActivity extends AppCompatActivity {
     private WebView webView;
 
-    private GameStatsViewModel gameStatsViewModel;
     private BookmarkViewModel bookmarkViewModel;
     private String startTitle;
     private String finishTitle;
@@ -50,13 +48,11 @@ public class OfflineGameActivity extends AppCompatActivity {
     ArrayList<String> titleTree = new ArrayList<>();
     private String directory;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline);
 
-        gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
         bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
         readExtras();
         setUpToolBar();
@@ -232,7 +228,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private void addDatabaseEntry() {
-        GameStats gameStats = new GameStats(milliseconds, startTitle, finishTitle, true);
-        gameStatsViewModel.insert(gameStats);
+        SaveStatsVisitor saveStatsVisitor = new SaveStatsVisitor(new GameContext(0, milliseconds, this, startTitle, finishTitle));
+        gameMode.accept(saveStatsVisitor);
     }
 }
