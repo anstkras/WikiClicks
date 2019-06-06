@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -38,8 +39,8 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
 
+            android:layout_marginTop="20dp"
             android:text="@string/sign_in"
             android:textColor="@color/colorInitial"
             android:textSize="25sp" />
@@ -50,251 +51,371 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
 
+            android:layout_marginTop="20dp"
             android:text="@string/sign_out"
             android:textColor="@color/colorInitial"
             android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/level1"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_1"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level2"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_1"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level1_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level1"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_2"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level3"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_2"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level2_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level2"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_3"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level4"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_3"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level3_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level3"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_4"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level4"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level5"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_4"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level4_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level4"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_5"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level5"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level6"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_5"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level5_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level5"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_6"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level6"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level7"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_6"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level6_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level6"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_7"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level7"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level8"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_7"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level7_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level7"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_8"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level8"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level9"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_8"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level8_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level8"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_9"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level9"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/level10"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_9"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/leaderboard_level9_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
+
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level9"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_10"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level10"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/leaderboard_level1_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_10"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            android:text="@string/level_1_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <ImageButton
+                android:id="@+id/leaderboard_level10_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-        <Button
-            android:id="@+id/leaderboard_level2_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+                android:src="@drawable/ic_trophy"
+                android:textColor="@color/colorInitial"
 
-            android:text="@string/level_2_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level3_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_3_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level4_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_4_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level5_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_5_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level6_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_6_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level7_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_7_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level8_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_8_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level9_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_9_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/leaderboard_level10_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:text="@string/level_10_leaderboard"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level10"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -121,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         private boolean catchEnforcedBans(String url) {
-            if (!banCountriesEnabled() && banYearsEnabled()) {
+            if (!banCountriesEnabled() && !banYearsEnabled()) {
                 return false;
             }
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
