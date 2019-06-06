@@ -22,26 +22,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.games.Games;
-
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.GameContext;
 import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
+import ru.hse.wikiclicks.controllers.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
 import ru.hse.wikiclicks.controllers.modes.GameModeFactory;
-import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
-import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
-import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
-import ru.hse.wikiclicks.database.GameStats.GameStats;
-import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
 public class GameActivity extends AppCompatActivity {
-    private GameStatsViewModel gameStatsViewModel;
     private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
     private String finishId;
@@ -59,7 +50,6 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
         bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
         setContentView(R.layout.activity_game);
         readExtras();
@@ -265,39 +255,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private String getWinMessage() {
-        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(stepsCount, milliseconds));
+        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(stepsCount, milliseconds, this, startTitle, finishTitle));
         return gameMode.accept(getWinMessageVisitor);
     }
 
-    private void addDatabaseEntry() { // TODO make it more adequate
-        if (gameMode instanceof TimeGameMode) {
-            GameStats gameStats = new GameStats(milliseconds, startTitle, finishTitle, true);
-            gameStatsViewModel.insert(gameStats);
-        } else if (gameMode instanceof StepsGameMode) {
-            GameStats gameStats = new GameStats(stepsCount, startTitle, finishTitle, false);
-            gameStatsViewModel.insert(gameStats);
-        } else if (gameMode instanceof LevelGameMode) {
-            LevelGameMode levelGameMode = (LevelGameMode) gameMode;
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-            if (account == null) {
-                return;
-            }
-            if (levelGameMode.getLevel() == 1) {
-                Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard_level_1), stepsCount);
-            }
-            if (levelGameMode.getLevel() == 2) {
-                Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard_level_2), stepsCount);
-            }
-
-            if (levelGameMode.getLevel() == 3) {
-                Games.getLeaderboardsClient(this, account)
-                        .submitScore(getString(R.string.leaderboard_level_3), stepsCount);
-            } // TODO
-            Toast toast = Toast.makeText(this, "Your score was submitted to the leaderboard", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+    private void addDatabaseEntry() {
+        SaveStatsVisitor saveStatsVisitor = new SaveStatsVisitor(new GameContext(stepsCount, milliseconds, this, startTitle, finishTitle));
+        gameMode.accept(saveStatsVisitor);
     }
 
     private boolean banCountriesEnabled() {
