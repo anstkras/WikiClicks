@@ -32,7 +32,6 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpOfflineButton();
         setUpBookMarksButton();
         setUpChallengesButton();
-        setUpDownloadButton();
     }
 
     private void setUpBookMarksButton() {
@@ -79,18 +78,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 offlineButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent offlineGameIntent = new Intent(MainMenuActivity.this, OfflineLevelsActivity.class);
                 startActivity(offlineGameIntent);
-            }
-        });
-    }
-
-    private void setUpDownloadButton() {
-        final Button downloadButton = findViewById(R.id.download_button);
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downloadButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent downloadIntent = new Intent(MainMenuActivity.this, DownloadLevelsActivity.class);
-                startActivity(downloadIntent);
             }
         });
     }
