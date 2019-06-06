@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 public interface GameMode {
     boolean timeModeEnabled();
@@ -10,4 +10,6 @@ public interface GameMode {
     boolean banCountriesEnabled();
 
     boolean banBackEnabled();
+
+    <T> T accept(GameModeVisitor<T> visitor);
 }

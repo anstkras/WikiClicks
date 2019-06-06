@@ -1,6 +1,6 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
-public class CustomGameMode implements GameMode{
+public class CustomGameMode implements GameMode {
     private final boolean isTimeModeEnabled;
     private final boolean isStepsModeEnabled;
     private final boolean isBanYearsEnabled;
@@ -39,5 +39,10 @@ public class CustomGameMode implements GameMode{
     @Override
     public boolean banBackEnabled() {
         return isBanBackEnabled;
+    }
+
+    @Override
+    public <T> T accept(GameModeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

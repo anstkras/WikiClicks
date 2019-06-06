@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,4 +27,6 @@ public class GameModeFactory {
 
         throw new IllegalArgumentException("No such mode exists: " + mode);
     }
+
+    private GameModeFactory() {}
 }

@@ -23,10 +23,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.GameMode;
-import ru.hse.wikiclicks.controllers.GameModeFactory;
+import ru.hse.wikiclicks.controllers.GameContext;
+import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.OfflineController;
 import ru.hse.wikiclicks.controllers.WikiController;
+import ru.hse.wikiclicks.controllers.modes.GameMode;
+import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
@@ -41,6 +43,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private ImageButton exitButton;
     private ImageButton bookmarkButton;
+    private final GameMode gameMode = new StepsGameMode();
     private long milliseconds;
     private String currentUrl = "";
 
@@ -133,6 +136,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             }
         }
     }
+
     private void setUpExitButton() {
         exitButton = findViewById(R.id.button_exit);
         exitButton.setOnClickListener(new View.OnClickListener() {
@@ -223,13 +227,8 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private String getWinMessage() {
-        return "Your time is " + getTimeFromChronometer();
-    }
-
-    private String getTimeFromChronometer() {
-        long minutes = (milliseconds / 1000) / 60;
-        long seconds = (milliseconds / 1000) % 60;
-        return String.format("%02d:%02d", minutes, seconds);
+        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(0, milliseconds));
+        return gameMode.accept(getWinMessageVisitor);
     }
 
     private void addDatabaseEntry() {

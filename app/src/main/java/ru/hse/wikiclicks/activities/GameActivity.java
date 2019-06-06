@@ -27,12 +27,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.games.Games;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.CustomGameMode;
-import ru.hse.wikiclicks.controllers.GameMode;
-import ru.hse.wikiclicks.controllers.GameModeFactory;
-import ru.hse.wikiclicks.controllers.LevelGameMode;
-import ru.hse.wikiclicks.controllers.StepsGameMode;
-import ru.hse.wikiclicks.controllers.TimeGameMode;
+import ru.hse.wikiclicks.controllers.GameContext;
+import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
+import ru.hse.wikiclicks.controllers.modes.GameMode;
+import ru.hse.wikiclicks.controllers.modes.GameModeFactory;
+import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
+import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
+import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
@@ -220,10 +221,12 @@ public class GameActivity extends AppCompatActivity {
     private void readExtras() {
         Bundle extras = getIntent().getExtras();
         assert extras != null;
+
         finishId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
+
         String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
         assert gameModeString != null;
         int level = extras.getInt(ChallengesActivity.LEVEL_KEY);
@@ -261,39 +264,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private String getWinMessage() { // TODO replace this with smth more adequate
-        if (gameMode instanceof TimeGameMode) {
-            return "Your time is " + getTimeFromChronometer();
-        }
-
-        if (gameMode instanceof StepsGameMode) {
-            return "Your steps count is " + stepsCount;
-        }
-
-        if (gameMode instanceof CustomGameMode) {
-            String result = "";
-            if (gameMode.timeModeEnabled()) {
-                result += "Your time is " + getTimeFromChronometer();
-            }
-            if (gameMode.stepsModeEnabled()) {
-                if (!result.equals("")) {
-                    result += "\n";
-                }
-                result += "Your steps count is " + stepsCount;
-            }
-            return result;
-        }
-        if (gameMode instanceof  LevelGameMode) {
-            return "Your steps count is " + stepsCount;
-        }
-
-        throw new AssertionError("Wrong game mode");
-    }
-
-    private String getTimeFromChronometer() {
-        long minutes = (milliseconds / 1000) / 60;
-        long seconds = (milliseconds / 1000) % 60;
-        return String.format("%02d:%02d", minutes, seconds);
+    private String getWinMessage() {
+        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(stepsCount, milliseconds));
+        return gameMode.accept(getWinMessageVisitor);
     }
 
     private void addDatabaseEntry() { // TODO make it more adequate
@@ -321,7 +294,7 @@ public class GameActivity extends AppCompatActivity {
             if (levelGameMode.getLevel() == 3) {
                 Games.getLeaderboardsClient(this, account)
                         .submitScore(getString(R.string.leaderboard_level_3), stepsCount);
-            }
+            } // TODO
             Toast toast = Toast.makeText(this, "Your score was submitted to the leaderboard", Toast.LENGTH_SHORT);
             toast.show();
         }
