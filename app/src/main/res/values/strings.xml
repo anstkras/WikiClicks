@@ -52,6 +52,15 @@
     <string name="download_in_progress">Download is in progress.</string>
     <string name="level_1_leaderboard">Level 1 leaderboard</string>
     <string name="level_2_leaderboard">Level 2 leaderboard</string>
+    <string name="level_3_leaderboard">Level 3 leaderboard</string>
+    <string name="level_4_leaderboard">Level 4 leaderboard</string>
+    <string name="level_5_leaderboard">Level 5 leaderboard</string>
+    <string name="level_6_leaderboard">Level 6 leaderboard</string>
+    <string name="level_7_leaderboard">Level 7 leaderboard</string>
+    <string name="level_8_leaderboard">Level 8 leaderboard</string>
+    <string name="level_9_leaderboard">Level 9 leaderboard</string>
+    <string name="level_10_leaderboard">Level 10 leaderboard</string>
+
     <string name="download_finished">Download finished!</string>
     <string name="show_time_mode">Time mode:</string>
     <string name="show_steps_mode">Steps mode:</string>

@@ -114,6 +114,11 @@ public class WikiController {
         return url.replace("https://en.m.wikipedia.org/wiki/", "");
     }
 
+    /** Creates a WikiPage from the given title */
+    public static WikiPage getPageFromTitle(String title) {
+        return getPageFromUrl(getUrlForTitle(title));
+    }
+
     /** Returns the id of the page that the page with given id redirects to. */
     public static String getRedirectedId(String id) {
         // requests basic info of page with given id, processing redirects
