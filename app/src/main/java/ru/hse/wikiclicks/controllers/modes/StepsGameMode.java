@@ -1,12 +1,6 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
-public class LevelGameMode implements GameMode {
-    private final int level;
-
-    public LevelGameMode(int level) {
-        this.level = level;
-    }
-
+public class StepsGameMode implements GameMode {
     @Override
     public boolean timeModeEnabled() {
         return false;
@@ -32,7 +26,8 @@ public class LevelGameMode implements GameMode {
         return false;
     }
 
-    public int getLevel() {
-        return level;
+    @Override
+    public <T> T accept(GameModeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }

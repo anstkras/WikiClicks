@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.activities;
+package ru.hse.wikiclicks.activities.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +22,7 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
     private LayoutInflater inflater;
     private Context context;
 
-    BookmarkListAdapter(Context context, List<Bookmark> data) {
+    public BookmarkListAdapter(Context context, List<Bookmark> data) {
         this.inflater = LayoutInflater.from(context);
         this.bookmarks = data;
         this.context = context;

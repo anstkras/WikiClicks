@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 public class TimeGameMode implements GameMode { // TODO make singleton?
     @Override
@@ -24,5 +24,10 @@ public class TimeGameMode implements GameMode { // TODO make singleton?
     @Override
     public boolean banBackEnabled() {
         return false;
+    }
+
+    @Override
+    public <T> T accept(GameModeVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 }
