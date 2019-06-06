@@ -148,7 +148,7 @@ public class GameActivity extends AppCompatActivity {
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent getEndpointsIntent = new Intent(GameActivity.this, GetEndpointsActivity.class);
+                    Intent getEndpointsIntent = new Intent(GameActivity.this, SelectModeActivity.class);
                     getEndpointsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(getEndpointsIntent);
                 }

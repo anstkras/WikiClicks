@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.activities.adapters.StatisticsListAdapter;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 

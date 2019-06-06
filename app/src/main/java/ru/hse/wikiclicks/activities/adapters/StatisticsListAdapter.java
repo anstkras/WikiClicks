@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.activities;
+package ru.hse.wikiclicks.activities.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAd
     private List<GameStats> gameStats;
     private LayoutInflater inflater;
 
-    StatisticsListAdapter(Context context, List<GameStats> data) {
+    public StatisticsListAdapter(Context context, List<GameStats> data) {
         this.inflater = LayoutInflater.from(context);
         this.gameStats = data;
     }

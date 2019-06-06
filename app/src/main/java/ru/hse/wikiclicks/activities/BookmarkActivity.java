@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.activities.adapters.BookmarkListAdapter;
 import ru.hse.wikiclicks.database.Bookmarks.Bookmark;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
