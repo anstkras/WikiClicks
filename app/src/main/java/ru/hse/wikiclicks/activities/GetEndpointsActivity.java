@@ -27,7 +27,6 @@ public class GetEndpointsActivity extends AppCompatActivity {
     static final String FINISH_TITLE_KEY = "finish_title";
     static final String FINISH_ID_KEY = "finish_id";
     static final String START_TITLE_KEY = "start_title";
-    static final String START_ID_KEY = "start_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +111,6 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 } else { // game can be started
                     Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
                     Bundle pagesInfo = new Bundle();
-                    pagesInfo.putString(START_ID_KEY, startPage.getId());
                     pagesInfo.putString(START_TITLE_KEY, startPage.getTitle());
                     pagesInfo.putString(FINISH_ID_KEY, finishPage.getId());
                     pagesInfo.putString(FINISH_TITLE_KEY, finishPage.getTitle());

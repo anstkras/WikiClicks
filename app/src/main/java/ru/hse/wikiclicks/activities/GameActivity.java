@@ -44,7 +44,6 @@ public class GameActivity extends AppCompatActivity {
     private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
     private String finishId;
-    protected String startId;
     private String startTitle;
     private String finishTitle;
     private TextView stepsTextView;
@@ -70,6 +69,7 @@ public class GameActivity extends AppCompatActivity {
         setUpPlaceholderText(gameMode.stepsModeEnabled() || gameMode.timeModeEnabled());
         setUpExitButton();
         setUpBookmarkButton();
+        currentUrl = WikiController.getUrlForTitle(startTitle);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         private boolean catchEnforcedBans(String url) {
-            if (!banCountriesEnabled() && banYearsEnabled()) {
+            if (!banCountriesEnabled() && !banYearsEnabled()) {
                 return false;
             }
             if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
@@ -223,7 +223,6 @@ public class GameActivity extends AppCompatActivity {
         finishId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         finishId = WikiController.getRedirectedId(finishId);
-        startId = extras.getString(GetEndpointsActivity.START_ID_KEY);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
         String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
         assert gameModeString != null;
