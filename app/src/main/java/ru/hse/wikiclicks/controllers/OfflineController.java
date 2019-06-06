@@ -22,16 +22,10 @@ public class OfflineController {
         for (String title : game.getPages()) {
             try {
                 downloadPage(title, outputDirectory);
-            } catch (IOException first) {
-                try {
-                    Thread.sleep(1000);
-                    downloadPage(title, outputDirectory);
-                } catch (InterruptedException | IOException second) {
-                    // well, it really doesn't work. fail without confirmation if too much went bad.
-                    Log.e("Failed page download", title);
-                    if (++fails >= FAIL_MARGIN) {
-                        return;
-                    }
+            } catch (IOException e) {
+                Log.e("Failed page download", title);
+                if (++fails >= FAIL_MARGIN) {
+                    return;
                 }
             }
         }
@@ -47,8 +41,6 @@ public class OfflineController {
         final Connection connection = Jsoup.connect(url).timeout(0).ignoreContentType(true);
         try {
             String webPage = connection.execute().parse().html();
-            //dirty fix for links, inter-page ones might not work
-            webPage = webPage.replaceAll("href=\"", "href=\"" + "https://");
             FileUtils.writeStringToFile(file, removeExtras(webPage), "UTF-8");
         } catch (HttpStatusException e) {
             Log.e("Failed parsing page", title + ": " + e.getMessage());
@@ -57,8 +49,12 @@ public class OfflineController {
 
     private static String removeExtras(String html) {
         String addStyle = " style=\"display:none;\"";
+
+        // break all links on page: necessary for simple WebView clicking.
+        String removedLinks =  html.replaceAll("href=\"", "href=\"" + "https://");
+
         // remove links to references from main text to avoid clicking on them.
-        String removedReferences = html.replaceAll("<sup", "<sup" + addStyle);
+        String removedReferences = removedLinks.replaceAll("<sup", "<sup" + addStyle);
 
         // remove extra elements from the top of the page.
         String removedMainMenu = removedReferences.replaceAll("id=\"mw-mf-main-menu-button\"",
@@ -76,8 +72,12 @@ public class OfflineController {
         String removedEditButtons = removedActionsMenu.replaceAll("span class=\"mw-editsection\"",
                 "span class=\"mw-editsection\"" + addStyle);
 
-        // removed "Retrieved from info
-        String removedRetrievedFrom = removedEditButtons.replaceAll("class=\"printfooter\"",
+        //remove uplinks
+        String removedUplinks = removedEditButtons.replaceAll("<span class=\"mw-cite-backlink\"",
+                "<span class=\"mw-cite-backlink\"" + addStyle);
+
+        // remove "Retrieved from info"
+        String removedRetrievedFrom = removedUplinks.replaceAll("class=\"printfooter\"",
                 "class=\"printfooter\"" + addStyle);
         return removedRetrievedFrom;
     }

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:fillViewport="false"
-    android:padding="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,121 +27,391 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:text="@string/select_offline_level"
             android:textColor="@color/colorPlainText"
             android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/level1"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_1"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level2"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_1"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level1"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level1"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_2"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level3"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_2"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level2"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level2"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_3"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level4"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_3"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level3"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level3"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_4"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level5"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level4"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_4"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level4"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level4"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_5"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level6"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level5"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_5"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level5"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level5"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_6"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level7"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level6"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_6"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level6"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level6"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_7"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level8"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level7"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_7"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level7"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level7"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_8"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
-        <Button
-            android:id="@+id/level9"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            <Button
+                android:id="@+id/level8"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_8"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level8"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level8"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            android:text="@string/level_9"
-            android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            <Button
+                android:id="@+id/level9"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/level_9"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/download_level9"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
+                android:text="@string/arrow"
+                android:textColor="@color/colorInitial"
+                android:textSize="25sp"
+                app:layout_constraintLeft_toRightOf="@id/level9"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
         <Button
             android:id="@+id/level10"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/level_10"
             android:textColor="@color/colorInitial"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/download_level10"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+
+            android:text="@string/arrow"
+            android:textColor="@color/colorInitial"
+            android:textSize="25sp"
+            app:layout_constraintLeft_toRightOf="@id/level10"
+            app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </ScrollView>

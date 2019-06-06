@@ -69,20 +69,11 @@
             android:configChanges="screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
-            android:name=".activities.DownloadActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="screenSize|keyboardHidden" />
-        <activity
             android:name=".activities.OfflineLevelsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="screenSize|keyboardHidden" />
-        <activity
-            android:name=".activities.DownloadLevelsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="screenSize|keyboardHidden" />
+
         <service android:name=".controllers.DownloadService" />
     </application>
 
