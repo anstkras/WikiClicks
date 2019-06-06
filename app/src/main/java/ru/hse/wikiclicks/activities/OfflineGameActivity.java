@@ -227,7 +227,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private String getWinMessage() {
-        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(0, milliseconds));
+        GetWinMessageVisitor getWinMessageVisitor = new GetWinMessageVisitor(new GameContext(0, milliseconds, this, startTitle, finishTitle));
         return gameMode.accept(getWinMessageVisitor);
     }
 
