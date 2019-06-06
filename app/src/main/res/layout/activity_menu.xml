@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="@string/kek"
+            android:text="@string/select_main_menu"
             android:textColor="@color/colorPlainText"
             android:textSize="15sp" />
 

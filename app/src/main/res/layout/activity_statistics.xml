@@ -30,12 +30,16 @@
         android:id="@+id/show_times_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/colorPlainText"
+        android:textSize="15sp"
         android:text="@string/show_times" />
 
     <Button
         android:id="@+id/show_steps_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/colorPlainText"
+        android:textSize="15sp"
         android:text="@string/show_steps" />
 
     <FrameLayout

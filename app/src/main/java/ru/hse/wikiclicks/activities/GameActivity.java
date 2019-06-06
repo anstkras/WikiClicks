@@ -67,6 +67,7 @@ public class GameActivity extends AppCompatActivity {
         setUpToolBar();
         setUpStepsCounter(gameMode.stepsModeEnabled());
         setUpChronometer(gameMode.timeModeEnabled());
+        setUpPlaceholderText(gameMode.stepsModeEnabled() || gameMode.timeModeEnabled());
         setUpExitButton();
         setUpBookmarkButton();
     }
@@ -240,18 +241,25 @@ public class GameActivity extends AppCompatActivity {
     private void setUpStepsCounter(boolean enabled) {
         stepsTextView = findViewById(R.id.tv_steps);
         if (!enabled) {
-            stepsTextView.setVisibility(View.INVISIBLE);
+            stepsTextView.setVisibility(View.GONE);
         }
     }
 
     private void setUpChronometer(boolean enabled) {
         chronometer = findViewById(R.id.chronometer);
         if (!enabled) {
-            chronometer.setVisibility(View.INVISIBLE);
+            chronometer.setVisibility(View.GONE);
         }
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
+    }
+
+    private void setUpPlaceholderText(boolean isInfo) {
+        if (!isInfo) {
+            TextView placeholder = findViewById(R.id.placeholder);
+            placeholder.setVisibility(View.VISIBLE);
+        }
     }
 
     private String getWinMessage() { // TODO replace this with smth more adequate
