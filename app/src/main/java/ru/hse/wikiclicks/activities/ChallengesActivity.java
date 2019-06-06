@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 public class ChallengesActivity extends AppCompatActivity {
+    public final static int LEVEL0 = 0;
     public final static int LEVEL1 = 1;
     public final static int LEVEL2 = 2;
     public final static int LEVEL3 = 3;
@@ -33,12 +34,11 @@ public class ChallengesActivity extends AppCompatActivity {
     public final static int LEVEL7 = 7;
     public final static int LEVEL8 = 8;
     public final static int LEVEL9 = 9;
-    public final static int LEVEL10 = 10;
 
-    private final static String[] startPages = {"", "Russia", "Dog", "Algorithm",
+    private final static String[] startPages = {"Russia", "Dog", "Algorithm",
             "Saint Petersburg Academic University", "Homo sapiens", "War and Peace", "Devil",
             "Black metal",  "Terry Pratchett", "Empty"};
-    private final static String[] endPages = {"", "Moscow", "Cat", "Javascript",
+    private final static String[] endPages = {"Moscow", "Cat", "Javascript",
             "Higher School of Economics", "Harry Potter", "Hamlet", "Invisible Pink Unicorn",
             "Wombat",  "Hamiltonian path", "Full"};
 
@@ -57,6 +57,7 @@ public class ChallengesActivity extends AppCompatActivity {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
+        setUpButtonForLevel((Button) findViewById(R.id.level0), LEVEL0);
         setUpButtonForLevel((Button) findViewById(R.id.level1), LEVEL1);
         setUpButtonForLevel((Button) findViewById(R.id.level2), LEVEL2);
         setUpButtonForLevel((Button) findViewById(R.id.level3), LEVEL3);
@@ -66,76 +67,75 @@ public class ChallengesActivity extends AppCompatActivity {
         setUpButtonForLevel((Button) findViewById(R.id.level7), LEVEL7);
         setUpButtonForLevel((Button) findViewById(R.id.level8), LEVEL8);
         setUpButtonForLevel((Button) findViewById(R.id.level9), LEVEL9);
-        setUpButtonForLevel((Button) findViewById(R.id.level10), LEVEL10);
 
-        ImageButton level1LeaderBoardButton = findViewById(R.id.leaderboard_level1_button);
+        Button level0LeaderBoardButton = findViewById(R.id.leaderboard_level0_button);
+        level0LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(getString(R.string.leaderboard_level_0));
+            }
+        });
+        Button level1LeaderBoardButton = findViewById(R.id.leaderboard_level1_button);
         level1LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_1));
             }
         });
-        ImageButton level2LeaderBoardButton = findViewById(R.id.leaderboard_level2_button);
+        Button level2LeaderBoardButton = findViewById(R.id.leaderboard_level2_button);
         level2LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_2));
             }
         });
-        ImageButton level3LeaderBoardButton = findViewById(R.id.leaderboard_level3_button);
+        Button level3LeaderBoardButton = findViewById(R.id.leaderboard_level3_button);
         level3LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_3));
             }
         });
-        ImageButton level4LeaderBoardButton = findViewById(R.id.leaderboard_level4_button);
+        Button level4LeaderBoardButton = findViewById(R.id.leaderboard_level4_button);
         level4LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_4));
             }
         });
-        ImageButton level5LeaderBoardButton = findViewById(R.id.leaderboard_level5_button);
+        Button level5LeaderBoardButton = findViewById(R.id.leaderboard_level5_button);
         level5LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_5));
             }
         });
-        ImageButton level6LeaderBoardButton = findViewById(R.id.leaderboard_level6_button);
+        Button level6LeaderBoardButton = findViewById(R.id.leaderboard_level6_button);
         level6LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_6));
             }
         });
-        ImageButton level7LeaderBoardButton = findViewById(R.id.leaderboard_level7_button);
+        Button level7LeaderBoardButton = findViewById(R.id.leaderboard_level7_button);
         level7LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_7));
             }
         });
-        ImageButton level8LeaderBoardButton = findViewById(R.id.leaderboard_level8_button);
+        Button level8LeaderBoardButton = findViewById(R.id.leaderboard_level8_button);
         level8LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_8));
             }
         });
-        ImageButton level9LeaderBoardButton = findViewById(R.id.leaderboard_level9_button);
+        Button level9LeaderBoardButton = findViewById(R.id.leaderboard_level9_button);
         level9LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showLeaderboard(getString(R.string.leaderboard_level_9));
-            }
-        });
-        ImageButton level10LeaderBoardButton = findViewById(R.id.leaderboard_level10_button);
-        level10LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_10));
             }
         });
 

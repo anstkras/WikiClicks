@@ -31,8 +31,9 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     final static String[] offlineLevelEndPages = {"", "Star Wars", "Google", "\"Hello, World!\" program",
             "Game of Thrones", "Hell Station", "Squatting",
             "Prada", "Seafood", "Seven Wonders of the Ancient World", "Anne Hathaway"};
-    final static int[] offlineLevelTreeSizes = {-1, 2, 2, 2, 2, 3, 2, 1, 2, 2, 3};
+    final static int[] offlineLevelTreeSizes = {2, 2, 2, 2, 3, 2, 1, 2, 2, 3};
 
+    public final static int LEVEL0 = 0;
     public final static int LEVEL1 = 1;
     public final static int LEVEL2 = 2;
     public final static int LEVEL3 = 3;
@@ -42,7 +43,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int LEVEL7 = 7;
     public final static int LEVEL8 = 8;
     public final static int LEVEL9 = 9;
-    public final static int LEVEL10 = 10;
     public final static int NOTIFICATION_ID = 179;
 
     @Override
@@ -50,6 +50,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_levels);
 
+        createButtonForLevel((Button)findViewById(R.id.level0), LEVEL0);
         createButtonForLevel((Button)findViewById(R.id.level1), LEVEL1);
         createButtonForLevel((Button)findViewById(R.id.level2), LEVEL2);
         createButtonForLevel((Button)findViewById(R.id.level3), LEVEL3);
@@ -59,9 +60,9 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         createButtonForLevel((Button)findViewById(R.id.level7), LEVEL7);
         createButtonForLevel((Button)findViewById(R.id.level8), LEVEL8);
         createButtonForLevel((Button)findViewById(R.id.level9), LEVEL9);
-        createButtonForLevel((Button)findViewById(R.id.level10), LEVEL10);
 
 
+        createDownloadButtonForLevel((Button)findViewById(R.id.download_level0), LEVEL0);
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level1), LEVEL1);
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level2), LEVEL2);
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level3), LEVEL3);
@@ -71,7 +72,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level7), LEVEL7);
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level8), LEVEL8);
         createDownloadButtonForLevel((Button)findViewById(R.id.download_level9), LEVEL9);
-        createDownloadButtonForLevel((Button)findViewById(R.id.download_level10), LEVEL10);
     }
 
     private void createButtonForLevel(final Button button, final int level) {
