@@ -1,10 +1,4 @@
-package ru.hse.wikiclicks.controllers;
-
-import ru.hse.wikiclicks.controllers.modes.CustomGameMode;
-import ru.hse.wikiclicks.controllers.modes.GameModeVisitor;
-import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
-import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
-import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
+package ru.hse.wikiclicks.controllers.modes;
 
 public class GetWinMessageVisitor implements GameModeVisitor<String> {
     private final GameContext gameContext;

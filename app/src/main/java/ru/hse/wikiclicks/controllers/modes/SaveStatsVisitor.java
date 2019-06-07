@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 import android.widget.Toast;
 
@@ -8,11 +8,6 @@ import com.google.android.gms.games.Games;
 
 import androidx.lifecycle.ViewModelProviders;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.modes.CustomGameMode;
-import ru.hse.wikiclicks.controllers.modes.GameModeVisitor;
-import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
-import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
-import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 

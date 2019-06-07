@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 import androidx.appcompat.app.AppCompatActivity;
 

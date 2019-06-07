@@ -23,9 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.GameContext;
-import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
-import ru.hse.wikiclicks.controllers.SaveStatsVisitor;
+import ru.hse.wikiclicks.controllers.modes.GameContext;
+import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
+import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
