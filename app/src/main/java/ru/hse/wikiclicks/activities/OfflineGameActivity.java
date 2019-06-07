@@ -39,13 +39,11 @@ public class OfflineGameActivity extends AppCompatActivity {
     private String startTitle;
     private String finishTitle;
     private Chronometer chronometer;
-    private ImageButton exitButton;
-    private ImageButton bookmarkButton;
     private final GameMode gameMode = TimeGameMode.getInstance();
     private long milliseconds;
     private String currentUrl = "";
 
-    ArrayList<String> titleTree = new ArrayList<>();
+    private ArrayList<String> titleTree = new ArrayList<>();
     private String directory;
 
     @Override
@@ -131,7 +129,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private void setUpExitButton() {
-        exitButton = findViewById(R.id.button_exit);
+        ImageButton exitButton = findViewById(R.id.button_exit);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +140,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private void setUpBookmarkButton() {
-        bookmarkButton = findViewById(R.id.button_bookmark);
+        ImageButton bookmarkButton = findViewById(R.id.button_bookmark);
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
