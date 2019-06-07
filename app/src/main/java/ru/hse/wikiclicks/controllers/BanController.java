@@ -1,16 +1,7 @@
 package ru.hse.wikiclicks.controllers;
 
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-
-import java.io.IOException;
 import java.util.HashSet;
 
-import static ru.hse.wikiclicks.controllers.WikiController.getWikidataIdByUrl;
 
 /** Class responsible for checking the properties of a page according to the Wikidata database. */
 public class BanController {
@@ -18,11 +9,7 @@ public class BanController {
 
     /** Creates the BanController for the Wikipedia page with the given URL. */
     public BanController(String url) {
-        String wikidataId = getWikidataIdByUrl(url);
-        if (wikidataId.equals("")) {
-            return;
-        }
-        properties.addAll(WikiController.getWikidataPropertiesById(wikidataId));
+        properties.addAll(WikiController.getWikidataPropertiesForUrl(url));
     }
 
     /** Checks if given Wikidata element is an instance of the given entity. */

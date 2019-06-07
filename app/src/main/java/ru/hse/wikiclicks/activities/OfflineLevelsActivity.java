@@ -18,19 +18,21 @@ import ru.hse.wikiclicks.controllers.DownloadService;
 import ru.hse.wikiclicks.controllers.OfflineController;
 
 public class OfflineLevelsActivity extends AppCompatActivity {
+    public final static int NOTIFICATION_ID = 179;
+
     public static final String OFFLINE_FINISH_TITLE_KEY = "offline_finish_title";
     public static final String OFFLINE_START_TITLE_KEY = "offline_start_title";
     public static final String OFFLINE_STEPS_TREE_SIZE_KEY = "offline_steps_tree_size";
     public static final String OFFLINE_DIRECTORY_KEY = "offline_directory";
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
-    final static String[] offlineLevelStartPages = {"", "Vanity Fair (novel)", "Women in Russia", "History of tea in Japan",
-            "Invisible Pink Unicorn", "Deep Purple", "Sexuality of Adolf Hitler",
-            "Moscow", "Lady Justice", "Butte", "Anne Hathaway (wife of Shakespeare)"};
-    final static String[] offlineLevelEndPages = {"", "Star Wars", "Google", "\"Hello, World!\" program",
-            "Game of Thrones", "Hell Station", "Squatting",
-            "Prada", "Seafood", "Seven Wonders of the Ancient World", "Anne Hathaway"};
-    final static int[] offlineLevelTreeSizes = {2, 2, 2, 2, 3, 2, 1, 2, 2, 3};
+    final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
+            "Moscow", "Invisible Pink Unicorn", "Sexuality of Adolf Hitler",
+            "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
+    final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "\"Hello, World!\" program",
+            "Prada", "Game of Thrones", "Squatting",
+            "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4′33″"};
+    final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
 
     public final static int LEVEL0 = 0;
     public final static int LEVEL1 = 1;
@@ -42,7 +44,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int LEVEL7 = 7;
     public final static int LEVEL8 = 8;
     public final static int LEVEL9 = 9;
-    public final static int NOTIFICATION_ID = 179;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +125,18 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         offlineLevelInfo.putInt(OFFLINE_LEVEL_NUMBER_KEY, levelNumber);
         downloadIntent.putExtras(offlineLevelInfo);
 
+        DownloadService downloadService = new DownloadService();
+        downloadService.enqueueWork(OfflineLevelsActivity.this, downloadIntent);
+        notifyOfStartedDownload(levelNumber);
+    }
 
+    private boolean doesLevelExist(int levelNumber) {
+        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
+        return hasDownloadHappened.exists();
+    }
+
+    private void notifyOfStartedDownload(int levelNumber) {
         final NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder startedDownload = new NotificationCompat.Builder(getApplicationContext())
                 .setSmallIcon(R.drawable.ic_wikipedia)
@@ -132,14 +144,5 @@ public class OfflineLevelsActivity extends AppCompatActivity {
                 .setContentText("Download is in progress.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationManager.notify(NOTIFICATION_ID + levelNumber, startedDownload.build());
-
-        DownloadService downloadService = new DownloadService();
-        downloadService.enqueueWork(OfflineLevelsActivity.this, downloadIntent);
-    }
-
-    private boolean doesLevelExist(int levelNumber) {
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-        File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
-        return hasDownloadHappened.exists();
     }
 }
