@@ -3,30 +3,32 @@ package ru.hse.wikiclicks.controllers;
 import android.net.Uri;
 import android.util.Log;
 
+import com.google.common.base.Joiner;
+
 import org.json.*;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 /** Class responsible for queries to Wikipedia and interacting with its API. */
 public class WikiController {
+    private static final String WIKIPEDIA_ERROR = "Wikipedia parsing error";
+    private static final String WIKIDATA_ERROR = "Wikidata parsing error";
+    private static final String JSOUP_ERROR = "Jsoup execution error";
 
     /** Method that returns a random WikiPage or the Avatar (band) page if the request for a random page failed. */
     public static WikiPage getRandomPage() {
         // requests list of one random page in json format without namespaces
-        String query = "https://en.wikipedia.org/w/api.php?action=query&list=random&format=json&rnnamespace=0&rnlimit=1";
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            JSONObject result = json.getJSONObject("query").getJSONArray("random").getJSONObject(0);
+            JSONObject queryResult = getQueryResult("list=random", "rnnamespace=0", "rnlimit=1");
+            JSONObject result = queryResult.getJSONArray("random").getJSONObject(0);
             return new WikiPage(result.getString("title"), result.getString("id"));
-        } catch (IOException e) {
-            failedExecute(e);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIDATA_ERROR, e.getMessage() + " returning random page");
         }
         return new WikiPage("Avatar (band)","26296973");
     }
@@ -43,22 +45,13 @@ public class WikiController {
 
     /** * Method that checks namespace of page is the main namespace, i.e. an acceptable link. */
     private static boolean isNamespaceCorrect(String id) {
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=info&format=json&pageids=" + id;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            return "0".equals(json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getString("ns"));
-        } catch (IOException e) {
-            failedExecute(e);
+            JSONObject queryResult = getQueryResult("prop=info", "pageids=" + id);
+            return "0".equals(queryResult.getJSONObject("pages").getJSONObject(id).getString("ns"));
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIDATA_ERROR, e.getMessage() + "checking namespace is correct for id" + id);
         }
-        return false;
-    }
-
-    /** Method that returns an url for the given page id. */
-    public static String getPageLinkById(String id) {
-        return "https://en.m.wikipedia.org/?curid=" + id;
+        return true;
     }
 
     /**
@@ -68,11 +61,10 @@ public class WikiController {
      */
     public static List<WikiPage> getSearchSuggestions(String prefix) {
         // requests list of prefixsearch results of length no more than 15
-        String query = "https://en.wikipedia.org/w/api.php?action=query&list=prefixsearch&prop=info&format=json&origin=*&pslimit=15&pssearch=" + prefix;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            JSONArray results = json.getJSONObject("query").getJSONArray("prefixsearch");
+            JSONObject queryResult = getQueryResult("list=prefixsearch", "prop=info",
+                    "origin=*", "pslimit=15", "pssearch=" + prefix);
+            JSONArray results = queryResult.getJSONArray("prefixsearch");
             ArrayList<WikiPage> suggestions = new ArrayList<>();
             for (int i = 0; i < results.length(); i++) {
                 String page_id = results.getJSONObject(i).getString("pageid");
@@ -80,10 +72,8 @@ public class WikiController {
                 suggestions.add(new WikiPage(title, page_id));
             }
             return suggestions;
-        } catch (IOException e) {
-            failedExecute(e);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIDATA_ERROR, e.getMessage() + " getting list of suggestions for prefix " + prefix);
         }
         return new ArrayList<>();
     }
@@ -94,17 +84,13 @@ public class WikiController {
      * @return the WikiPage that the given URL will redirect to, empty WikiPage if failed.
      */
     public static WikiPage getPageFromUrl(String url) {
-        String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
+        String title = getPageTitleFromUrl(url);
         // requests basic info of page with given title, processing redirects
-        String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&titles=" + title;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            return new WikiPage(title, json.getJSONObject("query").getJSONObject("pages").names().getString(0));
-        } catch (IOException e) {
-            failedExecute(e);
+            JSONObject queryResult = getQueryResult("redirects", "titles=" + title);
+            return new WikiPage(title, queryResult.getJSONObject("pages").names().getString(0));
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIDATA_ERROR, e.getMessage() + " getting page info for page " + title);
         }
         return new WikiPage();
     }
@@ -114,23 +100,14 @@ public class WikiController {
         return url.replace("https://en.m.wikipedia.org/wiki/", "");
     }
 
-    /** Creates a WikiPage from the given title */
-    public static WikiPage getPageFromTitle(String title) {
-        return getPageFromUrl(getUrlForTitle(title));
-    }
-
     /** Returns the id of the page that the page with given id redirects to. */
     public static String getRedirectedId(String id) {
         // requests basic info of page with given id, processing redirects
-        String query = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects&pageids=" + id;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            return json.getJSONObject("query").getJSONObject("pages").names().getString(0);
-        } catch (IOException e) {
-            failedExecute(e);
+            JSONObject queryResult = getQueryResult("redirects", "pageids=" + id);
+            return queryResult.getJSONObject("pages").names().getString(0);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving id after redirects for id " + id);
         }
         return id;
     }
@@ -138,60 +115,41 @@ public class WikiController {
     /**  Method that returns a short extract from the Wikipedia page with the given id. */
     public static String getExtract(String id) {
         // requests 1 extract from page with given id no more than 2 sentences long, formatted to show strange symbols
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=2&explaintext=1&format=json&formatversion=2&pageids=" + id;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            String result = json.getJSONObject("query").getJSONArray("pages").getJSONObject(0).getString("extract");
+            JSONObject queryResult = getQueryResult("prop=extracts", "exsentences=2",
+                    "explaintext=1", "formatversion=2", "pageids=" + id);
+            String result = queryResult.getJSONArray("pages").getJSONObject(0).getString("extract");
             return result.isEmpty() ? "No information available." : result;
-        } catch (IOException e) {
-            failedExecute(e);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " gettind extract for id " + id);
         }
         return "No information available.";
-    }
-
-    private static void failedJSON(JSONException e) {
-        Log.e("Wikipedia parsing error", e.getMessage());
-    }
-
-    private static void failedExecute(IOException e) {
-        Log.e("Query execution error", e.getMessage());
     }
 
     /** Returns Wikidata Id of page (used for controlling bans) by given url. */
     public static String getWikidataIdByUrl(String url) {
         String id = getPageFromUrl(url).getId();
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&format=json&ppprop=wikibase_item&redirects=1&pageids=" + id;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            return json.getJSONObject("query").getJSONObject("pages").getJSONObject(id).getJSONObject("pageprops").getString("wikibase_item");
-        } catch (IOException e) {
-            failedExecute(e);
+            JSONObject queryResult = getQueryResult("prop=pageprops", "ppprop=wikibase_item", "redirects", "pageids=" + id);
+            return queryResult.getJSONObject("pages").getJSONObject(id).getJSONObject("pageprops").getString("wikibase_item");
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving Wikidata id for id " + id);
         }
         return "";
     }
 
     public static ArrayList<String> getLinksFromPage(String title) {
         ArrayList<String> links = new ArrayList<>();
-        String query = "https://en.wikipedia.org/w/api.php?action=query&prop=links&pllimit=max&plnamespace=0&format=json&titles=" + title;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            JSONObject listWithId = json.getJSONObject("query").getJSONObject("pages");
+            JSONObject queryResult = getQueryResult("prop=links", "pllimit=max", "plnamespace=0", "titles=" + title);
+            JSONObject listWithId = queryResult.getJSONObject("pages");
             JSONArray linksList = listWithId.getJSONObject(listWithId.names().getString(0)).getJSONArray("links");
             for (int i = 0; i < linksList.length(); i++) {
                 String linkTitle = linksList.getJSONObject(i).getString("title");
                 links.add(linkTitle);
             }
-        } catch (IOException e) {
-            failedExecute(e);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving links from page " + title);
         }
         return links;
     }
@@ -202,20 +160,68 @@ public class WikiController {
 
     public static ArrayList<String> getLinksToPage(String title) {
         ArrayList<String> links = new ArrayList<>();
-        String query = "https://en.wikipedia.org/w/api.php?action=query&list=backlinks&bllimit=max&blnamespace=0&format=json&bltitle=" + title;
         try {
-            String searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
-            JSONObject json = new JSONObject(searchResult);
-            JSONArray linksList = json.getJSONObject("query").getJSONArray("backlinks");
+            JSONObject queryResult = getQueryResult("list=backlinks", "bllimit=max", "blnamespace=0", "bltitle=" + title);
+            JSONArray linksList = queryResult.getJSONArray("backlinks");
             for (int i = 0; i < linksList.length(); i++) {
                 String linkTitle = linksList.getJSONObject(i).getString("title");
                 links.add(linkTitle);
             }
-        } catch (IOException e) {
-            failedExecute(e);
         } catch (JSONException e) {
-            failedJSON(e);
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving links to page " + title);
         }
         return links;
+    }
+
+    public static HashSet<String> getWikidataPropertiesById(String id) {
+        HashSet<String> properties = new HashSet<>();
+        JSONArray results = new JSONArray();
+        try {
+            results= getWikidataQueryResult("entity=" + id, "property=P31").getJSONArray("P31");
+        } catch (JSONException ignored) { //no instances of P31 for this id, equivalent to empty array.
+        }
+        for (int i = 0; i < results.length(); i++) {
+            try {
+                properties.add(results.getJSONObject(i).
+                        getJSONObject("mainsnak").getJSONObject("datavalue").getJSONObject("value").getString("id"));
+            } catch (JSONException e) {
+                Log.e(WIKIDATA_ERROR, e.getMessage() + "parsing properties for id " + id);
+            }
+        }
+        return properties;
+    }
+
+    private static JSONObject getWikidataQueryResult(String... queryArgs) {
+        String queryLink = "https://www.wikidata.org/w/api.php?action=wbgetclaims";
+        String arguments = Joiner.on('&').join(queryArgs);
+        String query = Joiner.on('&').join(queryLink, "format=json", arguments);
+        try {
+            return new JSONObject(executeWikiRequest(query)).getJSONObject("claims");
+        } catch (JSONException e) {
+            Log.e(WIKIDATA_ERROR, e.getMessage() + " for query " + query);
+        }
+        return new JSONObject();
+    }
+
+    private static JSONObject getQueryResult(String... queryArgs) {
+        String queryLink = "https://en.wikipedia.org/w/api.php?action=query";
+        String arguments = Joiner.on('&').join(queryArgs);
+        String query = Joiner.on('&').join(queryLink, "format=json", arguments);
+        try {
+            return new JSONObject(executeWikiRequest(query)).getJSONObject("query");
+        } catch (JSONException e) {
+            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " for query " + query);
+        }
+        return new JSONObject();
+    }
+
+    private static String executeWikiRequest(String query) {
+        String searchResult = "";
+        try {
+            searchResult = Jsoup.connect(query).timeout(0).ignoreContentType(true).execute().body();
+        } catch (IOException e) {
+            Log.e(JSOUP_ERROR, e.getMessage() + " for query " + query);
+        }
+        return searchResult;
     }
 }
