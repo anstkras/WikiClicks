@@ -11,6 +11,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
+/** Class that save statistics depending on the game mode */
 public class SaveStatsVisitor implements GameModeVisitor<Void> {
     private final GameContext gameContext;
     private final GameStatsViewModel gameStatsViewModel;
