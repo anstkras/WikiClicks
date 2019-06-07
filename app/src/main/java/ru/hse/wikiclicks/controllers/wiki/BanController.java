@@ -20,17 +20,33 @@ public class BanController {
         return isInstanceOfEntity("Q6256");
     }
 
+    private boolean isHistoricalCountry() {
+        return isInstanceOfEntity("Q3024240");
+    }
+
     private boolean isFictionalCountry() {
         return isInstanceOfEntity( "Q1145276");
     }
 
-    /** Checks whether the controller's URL is a Wikipedia page about a country. */
-    public boolean isYear() {
+    private boolean isNormalYear() {
         return isInstanceOfEntity("Q577");
     }
 
+    private boolean isCalendarYear() {
+        return isInstanceOfEntity("Q3186692");
+    }
+
+    private boolean isYearBC() {
+        return isInstanceOfEntity("Q29964144");
+    }
+
     /** Checks whether the controller's URL is a Wikipedia page about a year. */
+    public boolean isYear() {
+        return isNormalYear() || isCalendarYear() || isYearBC();
+    }
+
+    /** Checks whether the controller's URL is a Wikipedia page about a country. */
     public boolean isCountry() {
-        return isRealCountry() || isFictionalCountry();
+        return isRealCountry() || isFictionalCountry() || isHistoricalCountry();
     }
 }
