@@ -5,11 +5,12 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 @Dao
 public interface BookmarkDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Bookmark bookmark);
 
     @Query("SElECT * from bookmarks_table ORDER by id DESC")

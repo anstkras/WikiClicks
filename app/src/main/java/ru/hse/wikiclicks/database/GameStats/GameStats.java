@@ -1,5 +1,6 @@
 package ru.hse.wikiclicks.database.GameStats;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,12 +10,15 @@ public class GameStats {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @NonNull
     @ColumnInfo(name = "value")
     private long value;
 
+    @NonNull
     @ColumnInfo(name = "from")
     private String from;
 
+    @NonNull
     @ColumnInfo(name = "to")
     private String to;
 
@@ -40,10 +44,12 @@ public class GameStats {
         this.id = id;
     }
 
+    @NonNull
     public String getFrom() {
         return from;
     }
 
+    @NonNull
     public String getTo() {
         return to;
     }
