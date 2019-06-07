@@ -17,7 +17,7 @@ import static ru.hse.wikiclicks.activities.OfflineLevelsActivity.NOTIFICATION_ID
 /** Service that generates an offline game and downloads it. */
 public class DownloadService extends JobIntentService {
     /** The job id for all DownloadServices. */
-    public static final int JOB_ID = 179;
+    private static final int JOB_ID = 179;
 
     /** Adds the given Intent to the queue of work to do. */
     public void enqueueWork(Context context, Intent work) {
