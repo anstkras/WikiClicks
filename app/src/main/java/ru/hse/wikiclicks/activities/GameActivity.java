@@ -27,8 +27,8 @@ import ru.hse.wikiclicks.controllers.modes.GameContext;
 import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
-import ru.hse.wikiclicks.controllers.BanController;
-import ru.hse.wikiclicks.controllers.WikiController;
+import ru.hse.wikiclicks.controllers.wiki.BanController;
+import ru.hse.wikiclicks.controllers.wiki.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
 public class GameActivity extends AppCompatActivity {

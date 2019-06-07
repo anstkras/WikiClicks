@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.download;
 
 import android.app.NotificationManager;
 import android.content.Context;

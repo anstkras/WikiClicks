@@ -1,9 +1,11 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.download;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
+
+import ru.hse.wikiclicks.controllers.wiki.WikiController;
 
 import static com.google.android.gms.common.internal.Preconditions.checkArgument;
 
@@ -18,7 +20,6 @@ public class ChooseOfflineGame {
     private final int tree_size;
     private HashSet<String> pages = new HashSet<>();
     private ArrayList<String> edgePages = new ArrayList<>();
-    private HashSet<String> acceptablePages = new HashSet<>();
 
     private String startPageName;
     private String endPageName;
@@ -37,7 +38,6 @@ public class ChooseOfflineGame {
         if (tree_size == MIN_TREE_SIZE) {
             getExtendedLinksTree();
         } else if (tree_size == MAX_TREE_SIZE) {
-            acceptablePages.add(endPageName);
             getShortenedLinksTree();
         } else {
             getLinksTree(startPageName, tree_size);

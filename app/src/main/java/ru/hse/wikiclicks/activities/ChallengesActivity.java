@@ -3,8 +3,8 @@ package ru.hse.wikiclicks.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.controllers.WikiPage;
+import ru.hse.wikiclicks.controllers.wiki.WikiController;
+import ru.hse.wikiclicks.controllers.wiki.WikiPage;
 import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
 
 import android.content.Intent;

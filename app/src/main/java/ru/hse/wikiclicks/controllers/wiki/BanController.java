@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.wiki;
 
 import java.util.HashSet;
 

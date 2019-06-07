@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.wiki;
 
 /**  Class that stores data about a Wikipedia page. */
 public class WikiPage {

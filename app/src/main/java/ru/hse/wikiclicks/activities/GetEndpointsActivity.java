@@ -17,8 +17,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.WikiController;
-import ru.hse.wikiclicks.controllers.WikiPage;
+import ru.hse.wikiclicks.controllers.wiki.WikiController;
+import ru.hse.wikiclicks.controllers.wiki.WikiPage;
 
 /** Activity responsible for choosing the starting and finishing Wikipedia pages. */
 public class GetEndpointsActivity extends AppCompatActivity {

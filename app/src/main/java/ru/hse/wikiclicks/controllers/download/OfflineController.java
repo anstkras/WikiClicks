@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.download;
 
 import android.util.Log;
 
@@ -9,6 +9,8 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
+
+import ru.hse.wikiclicks.controllers.wiki.WikiController;
 
 public class OfflineController {
     public static final String CONFIRMATION = "wikiclicksDownloadedGame";

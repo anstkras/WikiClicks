@@ -1,4 +1,4 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.wiki;
 
 import android.net.Uri;
 import android.util.Log;
@@ -109,7 +109,6 @@ public class WikiController {
         }
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
         String normalizedTitle = StringUtils.capitalize(title.replaceAll("_", " "));
-
         return normalizedTitle;
     }
 

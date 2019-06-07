@@ -14,8 +14,8 @@ import java.io.File;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.DownloadService;
-import ru.hse.wikiclicks.controllers.OfflineController;
+import ru.hse.wikiclicks.controllers.download.DownloadService;
+import ru.hse.wikiclicks.controllers.download.OfflineController;
 
 public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int NOTIFICATION_ID = 179;
