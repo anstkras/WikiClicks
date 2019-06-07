@@ -37,10 +37,10 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
     private final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
-            "Moscow", "Invisible Pink Unicorn", "Sexuality of Adolf Hitler",
+            "Moscow", "Invisible Pink Unicorn", "Black swan",
             "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
     private final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
-            "Prada", "Game of Thrones", "Squatting",
+            "Prada", "Game of Thrones", "Ovid",
             "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4'33\""};
     private final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
 
