@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -32,22 +31,25 @@ import ru.hse.wikiclicks.controllers.modes.GameMode;
 import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
+/** Activity for the offline game process. */
 public class OfflineGameActivity extends AppCompatActivity {
+    private static final String MIME_TYPE = "text/html";
+    private static final String ENCODING = "UTF-8";
+
     private WebView webView;
 
     private BookmarkViewModel bookmarkViewModel;
     private String startTitle;
     private String finishTitle;
     private Chronometer chronometer;
-    private ImageButton exitButton;
-    private ImageButton bookmarkButton;
     private final GameMode gameMode = TimeGameMode.getInstance();
     private long milliseconds;
     private String currentUrl = "";
 
-    ArrayList<String> titleTree = new ArrayList<>();
+    private ArrayList<String> titleTree = new ArrayList<>();
     private String directory;
 
+    /** Creates the offline game, initializes the start and end points. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         setUpWebView();
     }
 
+    /** Reloads the previous page, unless the current page was the first one loaded. */
     @Override
     public void onBackPressed() {
         if (titleTree.size() > 1) {
@@ -73,7 +76,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             } catch (IOException e) {
                 Log.e("Reload old page error", e.getMessage());
             }
-            webView.loadDataWithBaseURL("", webPage, "text/html", "UTF-8", "");
+            webView.loadDataWithBaseURL("", webPage, MIME_TYPE, ENCODING, "");
         } else {
             super.onBackPressed();
         }
@@ -87,7 +90,6 @@ public class OfflineGameActivity extends AppCompatActivity {
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAllowFileAccessFromFileURLs(true);
         webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-        directory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
 
         titleTree.add(startTitle);
         String webPage = "";
@@ -98,10 +100,12 @@ public class OfflineGameActivity extends AppCompatActivity {
             toast.show();
             this.finish();
         }
-        webView.loadDataWithBaseURL("", webPage, "text/html", "UTF-8", "");
+        webView.loadDataWithBaseURL("", webPage, MIME_TYPE, ENCODING, "");
     }
 
+    /** WebViewClient for offline game that always overrides link loadings and loads external file instead. */
     private class OfflineWebViewClient extends WebViewClient {
+        /** Always returns true and loads an external file manually. */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             try {
@@ -109,7 +113,7 @@ public class OfflineGameActivity extends AppCompatActivity {
                 String webPage = DownloadController.readPage(title, directory);
                 titleTree.add(title);
                 currentUrl = WikiController.getUrlForTitle(title);
-                webView.loadDataWithBaseURL("", webPage, "text/html", "UTF-8", "");
+                webView.loadDataWithBaseURL("", webPage, MIME_TYPE, ENCODING, "");
             } catch (IOException e) {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "This page is too far away from destination and has not been downloaded.", Toast.LENGTH_SHORT);
@@ -118,6 +122,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             return true;
         }
 
+        /** Method that checks whether the game has been won and processes the winning state. */
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             if (WikiController.getPageTitleFromUrl(currentUrl).equals(finishTitle)) {
@@ -131,7 +136,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private void setUpExitButton() {
-        exitButton = findViewById(R.id.button_exit);
+        final ImageButton exitButton = findViewById(R.id.button_exit);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +147,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     }
 
     private void setUpBookmarkButton() {
-        bookmarkButton = findViewById(R.id.button_bookmark);
+        final ImageButton bookmarkButton = findViewById(R.id.button_bookmark);
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,7 +197,6 @@ public class OfflineGameActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                return;
             }
         });
         return builder.create();
@@ -203,6 +207,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         assert extras != null;
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
+        directory = extras.getString(OfflineLevelsActivity.OFFLINE_DIRECTORY_KEY);
         currentUrl = WikiController.getUrlForTitle(startTitle);
     }
 
