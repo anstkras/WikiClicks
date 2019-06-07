@@ -9,6 +9,7 @@ import ru.hse.wikiclicks.activities.SelectModeActivity;
  */
 public class GetNewGameVisitor implements GameModeVisitor<Class<?>> {
 
+    /** Returns the singleton instance */
     public static GetNewGameVisitor getInstance() {
         return INSTANCE;
     }
