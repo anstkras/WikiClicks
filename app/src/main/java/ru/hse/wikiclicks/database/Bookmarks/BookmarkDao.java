@@ -4,6 +4,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -15,4 +16,7 @@ public interface BookmarkDao {
 
     @Query("SElECT * from bookmarks_table ORDER by id DESC")
     LiveData<List<Bookmark>> getBookmarks();
+
+    @Delete
+    void deleteBookmarks(Bookmark... bookmarks);
 }

@@ -29,6 +29,10 @@ public class BookmarkRepository {
         new BookmarkRepository.insertAsyncTask(bookmarkDao).execute(bookmark);
     }
 
+    public void delete(Bookmark bookmark) {
+        new BookmarkRepository.deleteAsyncTask(bookmarkDao).execute(bookmark);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Bookmark, Void, Void> {
 
         private BookmarkDao asyncTaskDao;
@@ -40,6 +44,21 @@ public class BookmarkRepository {
         @Override
         protected Void doInBackground(final Bookmark... params) {
             asyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Bookmark, Void, Void> {
+
+        private BookmarkDao asyncTaskDao;
+
+        deleteAsyncTask(BookmarkDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Bookmark... params) {
+            asyncTaskDao.deleteBookmarks(params);
             return null;
         }
     }

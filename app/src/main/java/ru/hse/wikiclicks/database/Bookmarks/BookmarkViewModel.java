@@ -28,4 +28,8 @@ public class BookmarkViewModel extends AndroidViewModel {
     public void insert(Bookmark bookmark) {
         repository.insert(bookmark);
     }
+
+    public void delete(Bookmark bookmark) {
+        repository.delete(bookmark);
+    }
 }
