@@ -33,12 +33,13 @@ public class OfflineController {
         downloadConfirmation(outputDirectory, confirmationNumber);
     }
 
-    private static void downloadPage(String title, String outputDirectory) throws IOException {
-        final File file = new File(outputDirectory, normalize(title));
+    private static void downloadPage(String unformattedTitle, String outputDirectory) throws IOException {
+        String url = WikiController.getUrlForTitle(unformattedTitle);
+        String title = WikiController.getPageTitleFromUrl(url);
+        final File file = new File(outputDirectory, title);
         if (file.exists()) {
             return; //assume page already is downloaded
         }
-        String url = "https://en.wikipedia.org/wiki/" + title;
         final Connection connection = Jsoup.connect(url).timeout(0).ignoreContentType(true);
         try {
             String webPage = connection.execute().parse().html();
@@ -52,7 +53,7 @@ public class OfflineController {
         String addStyle = " style=\"display:none;\"";
 
         // break all links on page: necessary for simple WebView clicking.
-        String removedLinks =  html.replaceAll("href=\"", "href=\"" + "https://");
+        String removedLinks =  html.replaceAll("href=\"", "href=\"" + "https://en.m.wikipedia.org/wiki/");
 
         // remove links to references from main text to avoid clicking on them.
         String removedReferences = removedLinks.replaceAll("<sup", "<sup" + addStyle);
@@ -84,15 +85,7 @@ public class OfflineController {
     }
 
     public static String readPage(String title, String inputDirectory) throws IOException {
-        return FileUtils.readFileToString(new File(inputDirectory, normalize(title)), "UTF-8");
-    }
-
-    public static String getTitleFromPageLink(String url) {
-        return OfflineController.normalize(url.replace("https://wiki/", ""));
-    }
-
-    public static String normalize(String title) {
-        return StringUtils.capitalize(title.replaceAll("_", " "));
+        return FileUtils.readFileToString(new File(inputDirectory, title), "UTF-8");
     }
 
     private static void downloadConfirmation(String outputDirectory, int confirmationNumber) {

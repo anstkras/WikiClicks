@@ -106,7 +106,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             try {
-                String title = OfflineController.getTitleFromPageLink(url);
+                String title = WikiController.getPageTitleFromUrl(url);
                 String webPage = OfflineController.readPage(title, directory);
                 titleTree.add(title);
                 currentUrl = WikiController.getUrlForTitle(title);
