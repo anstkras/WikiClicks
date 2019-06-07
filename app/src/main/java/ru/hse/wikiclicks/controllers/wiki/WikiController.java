@@ -154,11 +154,12 @@ public class WikiController {
 
     /** Returns the Wikipedia url to page with given title. */
     public static String getUrlForTitle(String title) {
-        return "https://en.m.wikipedia.org/wiki/" + title;
+        return "https://en.m.wikipedia.org/wiki/" + encodeTitle(title);
     }
 
     /** Method that returns an ArrayList of all links from the given Wikipedia page. */
     public static ArrayList<String> getLinksFromPage(String title) {
+        title = encodeTitle(title);
         ArrayList<String> links = new ArrayList<>();
         String shouldContinue = null;
         try {
@@ -183,6 +184,7 @@ public class WikiController {
 
      /** Method that returns an ArrayList of all links to the given Wikipedia page. */
     public static ArrayList<String> getLinksToPage(String title) {
+        title = encodeTitle(title);
         ArrayList<String> links = new ArrayList<>();
         String shouldContinue = null;
         try {
@@ -283,5 +285,17 @@ public class WikiController {
     /** Basic method that constructs a Wiki query for the given arguments. */
     private static String constructQuery(String baseActionLink, String... args) {
         return Joiner.on('&').join(baseActionLink, "format=json", Joiner.on('&').join(args));
+    }
+
+    /** Encodes specified title in URL format */
+    private static String encodeTitle(String title) {
+        String encodedTitle = "";
+        title = title.replace(" ", "_");
+        try {
+            encodedTitle = java.net.URLEncoder.encode(title, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException ignored) {
+            // could not happen
+        }
+        return encodedTitle;
     }
 }
