@@ -1,13 +1,18 @@
 package ru.hse.wikiclicks.activities;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -15,35 +20,42 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.download.DownloadService;
 import ru.hse.wikiclicks.controllers.download.DownloadController;
 
+/** Activity for choosing offline levels to download and play. */
 public class OfflineLevelsActivity extends AppCompatActivity {
+    /** The id for notifications about the downloads' status. */
     public final static int NOTIFICATION_ID = 179;
-    public final static String CHANNEL_NOTIFICATION_ID = "wikiclicks_offline_download";
 
+    /** Key for passing the offline game's finish title to the download service. */
     public static final String OFFLINE_FINISH_TITLE_KEY = "offline_finish_title";
+    /** Key for passing the offline game's start title to the download service. */
     public static final String OFFLINE_START_TITLE_KEY = "offline_start_title";
+    /** Key for passing the offline game's tree size to the download service. */
     public static final String OFFLINE_STEPS_TREE_SIZE_KEY = "offline_steps_tree_size";
+    /** Key for passing the directory the game should be downloaded to to the download service. */
     public static final String OFFLINE_DIRECTORY_KEY = "offline_directory";
+    /** Key for passing the number of the level to download to the download service. */
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
-    final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
+    private final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
             "Moscow", "Invisible Pink Unicorn", "Sexuality of Adolf Hitler",
             "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
-    final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
+    private final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
             "Prada", "Game of Thrones", "Squatting",
             "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4'33\""};
-    final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
+    private final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
 
-    public final static int LEVEL0 = 0;
-    public final static int LEVEL1 = 1;
-    public final static int LEVEL2 = 2;
-    public final static int LEVEL3 = 3;
-    public final static int LEVEL4 = 4;
-    public final static int LEVEL5 = 5;
-    public final static int LEVEL6 = 6;
-    public final static int LEVEL7 = 7;
-    public final static int LEVEL8 = 8;
-    public final static int LEVEL9 = 9;
+    private final static int LEVEL0 = 0;
+    private final static int LEVEL1 = 1;
+    private final static int LEVEL2 = 2;
+    private final static int LEVEL3 = 3;
+    private final static int LEVEL4 = 4;
+    private final static int LEVEL5 = 5;
+    private final static int LEVEL6 = 6;
+    private final static int LEVEL7 = 7;
+    private final static int LEVEL8 = 8;
+    private final static int LEVEL9 = 9;
 
+    /** Creates the activity, initializes the buttons for playing and downloading offline levels. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,13 +105,17 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         });
     }
 
+    /** Starts the given game level if it has been previously downloaded. */
     private void startGame(int levelNumber) {
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-        if (!DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
+        String downloadDirectory = getDownloadDirectory();
+        if (downloadDirectory == null) {
+            return;
+        } else if (!DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
             Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
+
         Intent startGame = new Intent(OfflineLevelsActivity.this, OfflineGameActivity.class);
         Bundle pagesInfo = new Bundle();
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
@@ -108,14 +124,17 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         startActivity(startGame);
     }
 
+    /** Starts downloading the given level in a JobIntentService if it has not been previously downloaded. */
     private void downloadLevel(int levelNumber) {
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-        if (DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
-            Toast.makeText(getApplicationContext(),"This level has already been downloaded.", Toast.LENGTH_SHORT).show();
+        String downloadDirectory = getDownloadDirectory();
+        if (downloadDirectory == null) {
+            return;
+        } else if (DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
+            Toast toast = Toast.makeText(getApplicationContext(),"This level has already been downloaded.", Toast.LENGTH_SHORT);
+            toast.show();
             return;
         }
 
-        //download level in new activity
         Intent downloadIntent = new Intent();
         Bundle offlineLevelInfo = new Bundle();
         offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
@@ -130,10 +149,38 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         notifyOfStartedDownload(levelNumber);
     }
 
+    /** Returns the current download directory for external files, displays a toast on failure. */
+    private String getDownloadDirectory() {
+        File downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+        if (downloadDirectory == null) {
+            Toast toast = Toast.makeText(getApplicationContext(),"Error: WikiClicks can't reach external storage", Toast.LENGTH_SHORT);
+            toast.show();
+            return null;
+        }
+        return downloadDirectory.getAbsolutePath();
+    }
+
+    /** Creates a notification that alerts the user about the download start and destructs on click. */
     private void notifyOfStartedDownload(int levelNumber) {
-        final NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder startedDownload = new NotificationCompat.Builder(getApplicationContext())
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        String channelId = getString(R.string.channel_id);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // Notification channels appear from SDK 26
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            NotificationChannel channel = new NotificationChannel(channelId, name, NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent newIntent = new Intent();
+        newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0, newIntent, 0);
+
+        NotificationCompat.Builder startedDownload = new NotificationCompat.Builder(getApplicationContext(), channelId)
                 .setSmallIcon(R.drawable.ic_wikipedia)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
                 .setContentTitle("Downloading level " + levelNumber)
                 .setContentText("Download is in progress.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);

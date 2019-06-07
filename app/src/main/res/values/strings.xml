@@ -44,6 +44,9 @@
     <string name="level_7">Level 7</string>
     <string name="level_8">Level 8</string>
     <string name="level_9">Level 9</string>
+    <string name="channel_id">wikiclicks_offline_download</string>
+    <string name="channel_name">WikiClicks</string>
+    <string name="channel_description">WikiClicks offline download</string>
     <string name="show_time_mode">Time mode:</string>
     <string name="show_steps_mode">Steps mode:</string>
     <string name="placeholder">Game is in progress.</string>
