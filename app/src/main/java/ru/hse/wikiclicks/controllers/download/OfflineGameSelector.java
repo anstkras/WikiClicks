@@ -10,7 +10,7 @@ import ru.hse.wikiclicks.controllers.wiki.WikiController;
 import static com.google.android.gms.common.internal.Preconditions.checkArgument;
 
 /** Class responsible for generating the offline game, including the list of necessary pages to download. */
-public class OfflineGameSelector {
+class OfflineGameSelector {
     private static final int PAGE_TREE_GENERATION_WORKED = 10;
     private static final int PAGE_RANDOM_CONSTANT = 42;
     private static final int PAGE_SELECTION_PROBABILITY = 6;
@@ -29,7 +29,7 @@ public class OfflineGameSelector {
      * @param endPageName the end page's name, as it links by some shortest path from the starting page.
      * @param distance the distance between start and end pages. Should be no more than MAX_TREE_SIZE.
      */
-    public OfflineGameSelector(String startPageName, String endPageName, int distance) {
+    OfflineGameSelector(String startPageName, String endPageName, int distance) {
         checkArgument(MIN_TREE_SIZE <= distance && distance <= MAX_TREE_SIZE);
         tree_size = distance;
         this.startPageName = startPageName;
@@ -110,7 +110,7 @@ public class OfflineGameSelector {
     }
 
     /** A getter for the set of generated link titles. */
-    public HashSet<String> getPages() {
+    HashSet<String> getPages() {
         return pages;
     }
 
@@ -118,7 +118,7 @@ public class OfflineGameSelector {
      * Checks whether a tree of acceptable size has been collected.
      * A small tree is a sign of a lacking internet connection or a boring game and shouldn't be used.
      */
-    public boolean hasFailed() {
+    boolean hasFailed() {
         return pages.size() <= PAGE_TREE_GENERATION_WORKED;
     }
 }

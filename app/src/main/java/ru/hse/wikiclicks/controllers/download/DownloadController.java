@@ -14,8 +14,7 @@ import ru.hse.wikiclicks.controllers.wiki.WikiController;
 
 /** Class responsible for downloading a chosen offline game and formatting its pages to display well. */
 public class DownloadController {
-    /** File to be downloaded when pages' download has ended, used as a check if there has been a successful download. */
-    public static final String CONFIRMATION = "wikiclicksDownloadedGame";
+    private static final String CONFIRMATION = "wikiclicksDownloadedGame";
     private static final int FAIL_MARGIN = 15;
 
     /**
@@ -24,7 +23,7 @@ public class DownloadController {
      * @param outputDirectory the directory to download the game to.
      * @param confirmationNumber the number of the download, a second download with the same number will not be attempted.
      */
-    public static void downloadTree(OfflineGameSelector game, String outputDirectory, int confirmationNumber) {
+    static void downloadTree(OfflineGameSelector game, String outputDirectory, int confirmationNumber) {
         if (game.hasFailed()) {
             return;
         }

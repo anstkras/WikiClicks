@@ -37,10 +37,10 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
     private final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
-            "Moscow", "Invisible Pink Unicorn", "Sexuality of Adolf Hitler",
+            "Moscow", "Invisible Pink Unicorn", "Black swan",
             "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
     private final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
-            "Prada", "Game of Thrones", "Squatting",
+            "Prada", "Game of Thrones", "Ovid",
             "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4'33\""};
     private final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
 
@@ -107,10 +107,10 @@ public class OfflineLevelsActivity extends AppCompatActivity {
 
     /** Starts the given game level if it has been previously downloaded. */
     private void startGame(int levelNumber) {
-        String downloadDirectory = getDownloadDirectory();
-        if (downloadDirectory == null) {
+        String gameDirectory = getDownloadDirectory();
+        if (gameDirectory == null) {
             return;
-        } else if (!DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
+        } else if (!DownloadController.checkConfirmation(gameDirectory, levelNumber)) {
             Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -120,6 +120,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         Bundle pagesInfo = new Bundle();
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
         pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
+        pagesInfo.putString(OfflineLevelsActivity.OFFLINE_DIRECTORY_KEY, gameDirectory);
         startGame.putExtras(pagesInfo);
         startActivity(startGame);
     }

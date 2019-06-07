@@ -11,7 +11,7 @@ public class WikiPage {
     }
 
     /** Constructor that creates WikiPage based on the title and unique Wikipedia pageid. */
-    public WikiPage(String title, String id) {
+    WikiPage(String title, String id) {
         this.title = title;
         this.id = id;
     }
