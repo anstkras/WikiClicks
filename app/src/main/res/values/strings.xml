@@ -53,4 +53,5 @@
     <string name="medal">🎖</string>
     <string name="arrow">▼</string>
     <string name="trash_symbol">🗑</string>
+    <string name="bookmarks_title">Bookmarks:</string>
 </resources>

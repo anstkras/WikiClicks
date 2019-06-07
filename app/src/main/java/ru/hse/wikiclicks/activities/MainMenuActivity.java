@@ -15,6 +15,7 @@ import android.widget.Button;
 
 import ru.hse.wikiclicks.R;
 
+/** Activity that represents the main menu of the game */
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override
@@ -30,11 +31,11 @@ public class MainMenuActivity extends AppCompatActivity {
         setUpExitButton();
         setUpStatisticsButton();
         setUpOfflineButton();
-        setUpBookMarksButton();
+        setUpBookmarksButton();
         setUpChallengesButton();
     }
 
-    private void setUpBookMarksButton() {
+    private void setUpBookmarksButton() {
         final Button bookmarksButton = findViewById(R.id.bookmarks_button);
         bookmarksButton.setOnClickListener(new View.OnClickListener() {
             @Override

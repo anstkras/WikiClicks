@@ -15,6 +15,7 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Activity that displays bookmarks and allows to delete them */
 public class BookmarkActivity extends AppCompatActivity {
 
     @Override
@@ -22,7 +23,7 @@ public class BookmarkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookmark);
 
-        BookmarkViewModel bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
+        final BookmarkViewModel bookmarkViewModel = ViewModelProviders.of(this).get(BookmarkViewModel.class);
 
         final RecyclerView recyclerView = findViewById(R.id.bookmarks_recycler_view);
 
