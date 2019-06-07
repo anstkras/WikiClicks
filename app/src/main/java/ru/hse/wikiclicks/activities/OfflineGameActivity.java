@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.download.OfflineController;
+import ru.hse.wikiclicks.controllers.download.DownloadController;
 import ru.hse.wikiclicks.controllers.modes.GameContext;
 import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
@@ -69,7 +69,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             String lastTitle = titleTree.get(titleTree.size() - 1);
             String webPage = "";
             try {
-                webPage = OfflineController.readPage(lastTitle, directory);
+                webPage = DownloadController.readPage(lastTitle, directory);
             } catch (IOException e) {
                 Log.e("Reload old page error", e.getMessage());
             }
@@ -92,9 +92,9 @@ public class OfflineGameActivity extends AppCompatActivity {
         titleTree.add(startTitle);
         String webPage = "";
         try {
-            webPage = OfflineController.readPage(startTitle, directory);
+            webPage = DownloadController.readPage(startTitle, directory);
         } catch (IOException e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
             toast.show();
             this.finish();
         }
@@ -106,7 +106,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             try {
                 String title = WikiController.getPageTitleFromUrl(url);
-                String webPage = OfflineController.readPage(title, directory);
+                String webPage = DownloadController.readPage(title, directory);
                 titleTree.add(title);
                 currentUrl = WikiController.getUrlForTitle(title);
                 webView.loadDataWithBaseURL("", webPage, "text/html", "UTF-8", "");

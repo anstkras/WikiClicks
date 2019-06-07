@@ -15,13 +15,17 @@ import ru.hse.wikiclicks.activities.OfflineLevelsActivity;
 
 import static ru.hse.wikiclicks.activities.OfflineLevelsActivity.NOTIFICATION_ID;
 
+/** Service that generates an offline game and downloads it. */
 public class DownloadService extends JobIntentService {
+    /** The job id for all DownloadServices. */
     public static final int JOB_ID = 179;
 
+    /** Adds the given Intent to the queue of work to do. */
     public void enqueueWork(Context context, Intent work) {
         enqueueWork(context, DownloadService.class, JOB_ID, work);
     }
 
+    /** Generates and downloads an offline game in a separate thread. Displays a notification upon finishing. */
     @Override
     protected void onHandleWork(@Nullable Intent intent) {
         if (intent == null) {
@@ -36,10 +40,10 @@ public class DownloadService extends JobIntentService {
         int levelSize = extras.getInt(OfflineLevelsActivity.OFFLINE_STEPS_TREE_SIZE_KEY);
         int levelNumber = extras.getInt(OfflineLevelsActivity.OFFLINE_LEVEL_NUMBER_KEY);
 
-        ChooseOfflineGame game = new ChooseOfflineGame(startTitle, finishTitle, levelSize);
-        OfflineController.downloadTree(game, directory, levelNumber);
+        OfflineGameSelector game = new OfflineGameSelector(startTitle, finishTitle, levelSize);
+        DownloadController.downloadTree(game, directory, levelNumber);
 
-        File hasDownloadHappened = new File(directory, OfflineController.CONFIRMATION + levelNumber);
+        File hasDownloadHappened = new File(directory, DownloadController.CONFIRMATION + levelNumber);
         String resultText = "Download finished successfully!";
         if (!hasDownloadHappened.exists()) { //download failed
             resultText = "Downloading the level failed. Please try again.";
