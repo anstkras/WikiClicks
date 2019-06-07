@@ -78,7 +78,7 @@ public class OfflineController {
                 "<span class=\"mw-cite-backlink\"" + addStyle);
 
         // remove "Retrieved from info"
-        String removedRetrievedFrom = removedActionsMenu.replaceAll("class=\"printfooter\"",
+        String removedRetrievedFrom = removedUplinks.replaceAll("class=\"printfooter\"",
                 "class=\"printfooter\"" + addStyle);
         return removedRetrievedFrom;
     }
