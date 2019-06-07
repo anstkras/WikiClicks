@@ -8,11 +8,11 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import ru.hse.wikiclicks.database.GamesDatabase;
 
-public class BookmarkRepository {
+// Class that provides methods to manage bookmarks table
+class BookmarkRepository {
 
     private BookmarkDao bookmarkDao;
     private LiveData<List<Bookmark>> bookmarks;
-
 
     BookmarkRepository(Application application) {
         GamesDatabase db = GamesDatabase.getDatabase(application);
@@ -24,12 +24,11 @@ public class BookmarkRepository {
         return bookmarks;
     }
 
-
-    public void insert(Bookmark bookmark) {
+    void insert(Bookmark bookmark) {
         new BookmarkRepository.insertAsyncTask(bookmarkDao).execute(bookmark);
     }
 
-    public void delete(Bookmark bookmark) {
+    void delete(Bookmark bookmark) {
         new BookmarkRepository.deleteAsyncTask(bookmarkDao).execute(bookmark);
     }
 
@@ -37,7 +36,7 @@ public class BookmarkRepository {
 
         private BookmarkDao asyncTaskDao;
 
-        insertAsyncTask(BookmarkDao dao) {
+        private insertAsyncTask(BookmarkDao dao) {
             asyncTaskDao = dao;
         }
 
@@ -52,7 +51,7 @@ public class BookmarkRepository {
 
         private BookmarkDao asyncTaskDao;
 
-        deleteAsyncTask(BookmarkDao dao) {
+        private deleteAsyncTask(BookmarkDao dao) {
             asyncTaskDao = dao;
         }
 

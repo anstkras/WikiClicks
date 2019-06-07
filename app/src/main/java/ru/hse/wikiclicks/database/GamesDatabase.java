@@ -10,6 +10,7 @@ import ru.hse.wikiclicks.database.Bookmarks.BookmarkDao;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsDao;
 
+/** Class that referents Room database for the application */
 @Database(entities = {GameStats.class, Bookmark.class}, version = 8, exportSchema = false)
 public abstract class GamesDatabase extends RoomDatabase {
 

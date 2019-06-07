@@ -6,19 +6,20 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/** Class that represents Bookmark entity in Games database's bookmarks table */
 @Entity(tableName = "bookmarks_table",
         indices = {@Index(value = "url",
-        unique = true)})
+                unique = true)})
 public class Bookmark {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     @NonNull
-    @ColumnInfo(name="url")
+    @ColumnInfo(name = "url")
     private String url;
 
     @NonNull
-    @ColumnInfo(name="name")
+    @ColumnInfo(name = "name")
     private String name;
 
     public Bookmark(@NonNull String url, @NonNull String name) {

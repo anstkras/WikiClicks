@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/** Class that represents Game statistics entity in Games database's bookmarks table */
 @Entity(tableName = "game_stats_table")
 public class GameStats {
     @PrimaryKey(autoGenerate = true)
@@ -25,7 +26,7 @@ public class GameStats {
     @ColumnInfo(name = "isTime")
     private boolean isTime;
 
-    public GameStats(long value, String from, String to, boolean isTime) {
+    public GameStats(long value, @NonNull String from, @NonNull String to, boolean isTime) {
         this.value = value;
         this.from = from;
         this.to = to;

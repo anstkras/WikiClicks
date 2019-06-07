@@ -9,6 +9,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+/** Interface that represents Room Dao for bookmarks table */
 @Dao
 public interface BookmarkDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
