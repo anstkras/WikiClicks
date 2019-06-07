@@ -3,6 +3,11 @@ package ru.hse.wikiclicks.controllers.modes;
 import android.os.Parcel;
 
 public class StepsGameMode implements GameMode {
+
+    public static StepsGameMode getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean timeModeEnabled() {
         return false;
@@ -56,6 +61,8 @@ public class StepsGameMode implements GameMode {
         }
     };
 
-    public StepsGameMode() {
+    private StepsGameMode() {
     }
+
+    private static final StepsGameMode INSTANCE = new StepsGameMode();
 }

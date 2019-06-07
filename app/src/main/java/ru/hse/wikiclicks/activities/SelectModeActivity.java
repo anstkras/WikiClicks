@@ -30,7 +30,7 @@ public class SelectModeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 timeModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent getEndpointsIntent = new Intent(SelectModeActivity.this, GetEndpointsActivity.class);
-                getEndpointsIntent.putExtra(GAME_MODE_KEY, new TimeGameMode());
+                getEndpointsIntent.putExtra(GAME_MODE_KEY, TimeGameMode.getInstance());
                 startActivity(getEndpointsIntent);
             }
         });
@@ -43,7 +43,7 @@ public class SelectModeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 stepsModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent getEndpointsIntent = new Intent(SelectModeActivity.this, GetEndpointsActivity.class);
-                getEndpointsIntent.putExtra(GAME_MODE_KEY, new StepsGameMode());
+                getEndpointsIntent.putExtra(GAME_MODE_KEY, StepsGameMode.getInstance());
                 startActivity(getEndpointsIntent);
             }
         });

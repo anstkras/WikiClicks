@@ -41,7 +41,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private ImageButton exitButton;
     private ImageButton bookmarkButton;
-    private final GameMode gameMode = new StepsGameMode();
+    private final GameMode gameMode = StepsGameMode.getInstance();
     private long milliseconds;
     private String currentUrl = "";
 

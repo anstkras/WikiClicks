@@ -2,7 +2,12 @@ package ru.hse.wikiclicks.controllers.modes;
 
 import android.os.Parcel;
 
-public class TimeGameMode implements GameMode { // TODO make singleton?
+public class TimeGameMode implements GameMode {
+
+    public static TimeGameMode getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean timeModeEnabled() {
         return true;
@@ -56,6 +61,8 @@ public class TimeGameMode implements GameMode { // TODO make singleton?
         }
     };
 
-    public TimeGameMode() {
+    private TimeGameMode() {
     }
+
+    private static final TimeGameMode INSTANCE = new TimeGameMode();
 }
