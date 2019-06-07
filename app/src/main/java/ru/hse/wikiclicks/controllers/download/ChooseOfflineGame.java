@@ -13,7 +13,7 @@ import static com.google.android.gms.common.internal.Preconditions.checkArgument
 public class ChooseOfflineGame {
     private static final int RANDOM_CONSTANT = 42;
     private static final int PAGE_TREE_GENERATION_WORKED = 10;
-    private static final int PAGE_PROBABILITY = 3;
+    private static final int PAGE_PROBABILITY = 6;
 
     private static final int MIN_TREE_SIZE = 1;
     private static final int MAX_TREE_SIZE = 3;
@@ -43,6 +43,7 @@ public class ChooseOfflineGame {
             getLinksTree(startPageName, tree_size);
         }
         pages.add(endPageName);
+        System.out.println(pages.size());
     }
 
     /** Method that was used to generate the levels locally. Provides a random end page for the normal link tree. */

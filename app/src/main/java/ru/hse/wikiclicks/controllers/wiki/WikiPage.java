@@ -16,15 +16,18 @@ public class WikiPage {
         this.id = id;
     }
 
+    /** Sets this WikiPage to be equal to the given one. */
     public void set(WikiPage other) {
         title = other.title;
         id = other.id;
     }
 
+    /** Getter for title field. */
     public String getTitle() {
         return title;
     }
 
+    /** Getter for id field. */
     public String getId() {
         return id;
     }
@@ -35,6 +38,7 @@ public class WikiPage {
         this.id = null;
     }
 
+    /** Returns the WikiPage in a user-friendly format, i.e. title only. */
     @Override
     public String toString() {
         return title;

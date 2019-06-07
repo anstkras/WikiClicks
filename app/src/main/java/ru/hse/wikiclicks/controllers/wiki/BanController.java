@@ -2,7 +2,6 @@ package ru.hse.wikiclicks.controllers.wiki;
 
 import java.util.HashSet;
 
-
 /** Class responsible for checking the properties of a page according to the Wikidata database. */
 public class BanController {
     private final HashSet<String> properties = new HashSet<>();
