@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SelectModeActivity"
+    android:orientation="vertical"
     android:padding="10dp"
-    android:orientation="vertical">
-
+    tools:context=".activities.SelectModeActivity">
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +25,6 @@
         android:text="@string/select_mode"
         android:textColor="@color/colorPlainText"
         android:textSize="15sp" />
-
 
     <Button
         android:id="@+id/time_mode_button"

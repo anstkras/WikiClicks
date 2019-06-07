@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 
+/** Class that represents an adapter for recycle view of games statistics */
 public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAdapter.ViewHolder> {
 
     private List<GameStats> gameStats;
@@ -36,7 +38,7 @@ public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAd
         GameStats game = gameStats.get(position);
         holder.fromTextView.setText(game.getFrom());
         holder.toTextView.setText(game.getTo());
-        if (game.isTime()){
+        if (game.isTime()) {
             holder.valueTextView.setText(getTimeFromMillis(game.getValue()));
         } else {
             holder.valueTextView.setText(String.valueOf(game.getValue()));
@@ -48,13 +50,12 @@ public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAd
         return gameStats.size();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView fromTextView;
         private TextView toTextView;
         private TextView valueTextView;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             fromTextView = itemView.findViewById(R.id.from_textView);
             toTextView = itemView.findViewById(R.id.to_textView);
@@ -65,6 +66,6 @@ public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAd
     private String getTimeFromMillis(long milliseconds) {
         long minutes = (milliseconds / 1000) / 60;
         long seconds = (milliseconds / 1000) % 60;
-        return String.format("%02d:%02d", minutes, seconds);
+        return String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds);
     }
 }

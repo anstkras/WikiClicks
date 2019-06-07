@@ -23,17 +23,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+/** Activity for choosing level of challenges and viewing leader boards */
 public class ChallengesActivity extends AppCompatActivity {
-    public final static int LEVEL0 = 0;
-    public final static int LEVEL1 = 1;
-    public final static int LEVEL2 = 2;
-    public final static int LEVEL3 = 3;
-    public final static int LEVEL4 = 4;
-    public final static int LEVEL5 = 5;
-    public final static int LEVEL6 = 6;
-    public final static int LEVEL7 = 7;
-    public final static int LEVEL8 = 8;
-    public final static int LEVEL9 = 9;
+    private final static int LEVEL0 = 0;
+    private final static int LEVEL1 = 1;
+    private final static int LEVEL2 = 2;
+    private final static int LEVEL3 = 3;
+    private final static int LEVEL4 = 4;
+    private final static int LEVEL5 = 5;
+    private final static int LEVEL6 = 6;
+    private final static int LEVEL7 = 7;
+    private final static int LEVEL8 = 8;
+    private final static int LEVEL9 = 9;
 
     private final static String[] startPages = {"Dog", "Women in Russia", "Algorithm",
             "Saint Petersburg Academic University", "Terry Pratchett", "War and Peace", "Devil",
@@ -52,8 +53,7 @@ public class ChallengesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenges);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                .build();
+        final GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
         setUpButtonForLevel((Button) findViewById(R.id.level0), LEVEL0);
@@ -67,76 +67,16 @@ public class ChallengesActivity extends AppCompatActivity {
         setUpButtonForLevel((Button) findViewById(R.id.level8), LEVEL8);
         setUpButtonForLevel((Button) findViewById(R.id.level9), LEVEL9);
 
-        Button level0LeaderBoardButton = findViewById(R.id.leaderboard_level0_button);
-        level0LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_0));
-            }
-        });
-        Button level1LeaderBoardButton = findViewById(R.id.leaderboard_level1_button);
-        level1LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_1));
-            }
-        });
-        Button level2LeaderBoardButton = findViewById(R.id.leaderboard_level2_button);
-        level2LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_2));
-            }
-        });
-        Button level3LeaderBoardButton = findViewById(R.id.leaderboard_level3_button);
-        level3LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_3));
-            }
-        });
-        Button level4LeaderBoardButton = findViewById(R.id.leaderboard_level4_button);
-        level4LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_4));
-            }
-        });
-        Button level5LeaderBoardButton = findViewById(R.id.leaderboard_level5_button);
-        level5LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_5));
-            }
-        });
-        Button level6LeaderBoardButton = findViewById(R.id.leaderboard_level6_button);
-        level6LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_6));
-            }
-        });
-        Button level7LeaderBoardButton = findViewById(R.id.leaderboard_level7_button);
-        level7LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_7));
-            }
-        });
-        Button level8LeaderBoardButton = findViewById(R.id.leaderboard_level8_button);
-        level8LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_8));
-            }
-        });
-        Button level9LeaderBoardButton = findViewById(R.id.leaderboard_level9_button);
-        level9LeaderBoardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLeaderboard(getString(R.string.leaderboard_level_9));
-            }
-        });
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level0_button), getString(R.string.leaderboard_level_0));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level1_button), getString(R.string.leaderboard_level_1));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level2_button), getString(R.string.leaderboard_level_2));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level3_button), getString(R.string.leaderboard_level_3));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level4_button), getString(R.string.leaderboard_level_4));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level5_button), getString(R.string.leaderboard_level_5));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level6_button), getString(R.string.leaderboard_level_6));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level7_button), getString(R.string.leaderboard_level_7));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level8_button), getString(R.string.leaderboard_level_8));
+        setUpButtonForLeaderBoard((Button) findViewById(R.id.leaderboard_level9_button), getString(R.string.leaderboard_level_9));
 
         setUpSignInButton();
         setUpSignOutButton();
@@ -147,6 +87,15 @@ public class ChallengesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startGame(level);
+            }
+        });
+    }
+
+    private void setUpButtonForLeaderBoard(Button button, final String leaderBoardId) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLeaderboard(leaderBoardId);
             }
         });
     }
@@ -191,12 +140,12 @@ public class ChallengesActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            Toast toast = Toast.makeText(this, "sign in success", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Hi, " + account.getGivenName(), Toast.LENGTH_LONG);
             toast.show();
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);
         } catch (ApiException e) {
-            Toast toast = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, "Something went wrong. Error code: " + e.getStatusCode(), Toast.LENGTH_LONG);
             toast.show();
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);

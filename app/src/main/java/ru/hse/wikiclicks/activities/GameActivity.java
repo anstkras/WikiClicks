@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.modes.GameContext;
+import ru.hse.wikiclicks.controllers.modes.GetNewGameVisitor;
 import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
@@ -31,18 +32,17 @@ import ru.hse.wikiclicks.controllers.wiki.BanController;
 import ru.hse.wikiclicks.controllers.wiki.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
+/** Activity for the main game process */
 public class GameActivity extends AppCompatActivity {
     private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
-    private String finishId;
     private String startTitle;
     private String finishTitle;
+    private String finishPageId;
     private TextView stepsTextView;
-    protected WebView webView;
+    private WebView webView;
     private Chronometer chronometer;
     private GameMode gameMode;
-    private ImageButton exitButton;
-    private ImageButton bookmarkButton;
     private long milliseconds;
     private String currentUrl;
 
@@ -76,7 +76,6 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-
     private class WikiWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -92,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
             stepsTextView.setText(getString(R.string.steps, stepsCount));
-            if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
+            if (finishPageId.equals(WikiController.getPageFromUrl(url).getId())) {
                 chronometer.stop();
                 milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();
@@ -114,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
             if (!banCountriesEnabled() && !banYearsEnabled()) {
                 return false;
             }
-            if (finishId.equals(WikiController.getPageFromUrl(url).getId())) {
+            if (finishPageId.equals(WikiController.getPageFromUrl(url).getId())) {
                 return false; //finish is correct, no matter what
             }
             BanController urlController = new BanController(url);
@@ -138,9 +137,9 @@ public class GameActivity extends AppCompatActivity {
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent getEndpointsIntent = new Intent(GameActivity.this, SelectModeActivity.class);
-                    getEndpointsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(getEndpointsIntent);
+                    Intent intent = new Intent(GameActivity.this, gameMode.accept(GetNewGameVisitor.getInstance()));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -155,7 +154,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    protected void setUpWebView() {
+    private void setUpWebView() {
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WikiWebViewClient());
@@ -163,7 +162,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpExitButton() {
-        exitButton = findViewById(R.id.button_exit);
+        final ImageButton exitButton = findViewById(R.id.button_exit);
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,7 +173,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setUpBookmarkButton() {
-        bookmarkButton = findViewById(R.id.button_bookmark);
+        final ImageButton bookmarkButton = findViewById(R.id.button_bookmark);
         bookmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,9 +210,9 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         assert extras != null;
 
-        finishId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
+        finishPageId = extras.getString(GetEndpointsActivity.FINISH_ID_KEY);
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
-        finishId = WikiController.getRedirectedId(finishId);
+        finishPageId = WikiController.getRedirectedId(finishPageId);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
 
         gameMode = extras.getParcelable(SelectModeActivity.GAME_MODE_KEY);

@@ -10,6 +10,7 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
 import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 
+/** Activity for choosing the game mode */
 public class SelectModeActivity extends AppCompatActivity {
     static final String GAME_MODE_KEY = "game_mode";
 

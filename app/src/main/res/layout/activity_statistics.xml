@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/statistics"
     android:layout_width="fill_parent"
@@ -30,17 +31,17 @@
         android:id="@+id/show_times_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:text="@string/show_times"
         android:textColor="@color/colorPlainText"
-        android:textSize="15sp"
-        android:text="@string/show_times" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/show_steps_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:text="@string/show_steps"
         android:textColor="@color/colorPlainText"
-        android:textSize="15sp"
-        android:text="@string/show_steps" />
+        android:textSize="15sp" />
 
     <FrameLayout
         android:id="@+id/fragment_container"

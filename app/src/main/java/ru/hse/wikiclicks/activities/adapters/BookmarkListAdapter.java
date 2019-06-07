@@ -20,13 +20,13 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.database.Bookmarks.Bookmark;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
+/** Class that represents an adapter for recycle view of bookmarks */
 public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapter.ViewHolder> {
 
     private List<Bookmark> bookmarks;
     private LayoutInflater inflater;
     private Context context;
     private final BookmarkViewModel bookmarkViewModel;
-
 
     public BookmarkListAdapter(Context context, BookmarkViewModel bookmarkViewModel, List<Bookmark> data) {
         this.inflater = LayoutInflater.from(context);
@@ -44,7 +44,7 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Bookmark bookmark = bookmarks.get(position);
+        final Bookmark bookmark = bookmarks.get(position);
         holder.bookmarkTextView.setText(bookmark.getName());
     }
 
@@ -53,11 +53,10 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
         return bookmarks.size();
     }
 
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView bookmarkTextView;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             bookmarkTextView = itemView.findViewById(R.id.bookmark_text_view);
             bookmarkTextView.setOnClickListener(new View.OnClickListener() {

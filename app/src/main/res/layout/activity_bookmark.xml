@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/steps_fragment"
     android:layout_width="match_parent"
@@ -32,7 +33,7 @@
         android:textSize="20sp"
         android:textColor="@color/colorPlainText"
         android:gravity="center_vertical"
-        android:text="Bookmarks:" />
+        android:text="@string/bookmarks_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookmarks_recycler_view"

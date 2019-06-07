@@ -24,6 +24,7 @@ import ru.hse.wikiclicks.activities.adapters.StatisticsListAdapter;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
+/** Activity for displaying statistics */
 public class StatisticsActivity extends AppCompatActivity {
 
     @Override
@@ -31,6 +32,7 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        // Show steps stats as default
         Fragment settingsFragment = new StepsFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -44,7 +46,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setUpShowTimesButton() {
-        Button showTimesButton = findViewById(R.id.show_times_button);
+        final Button showTimesButton = findViewById(R.id.show_times_button);
         showTimesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +60,7 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setUpShowStepsButton() {
-        Button showStepsButton = findViewById(R.id.show_steps_button);
+        final Button showStepsButton = findViewById(R.id.show_steps_button);
         showStepsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,7 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
+    /** Fragment that displays statistics for time mode games */
     public static class TimeFragment extends Fragment {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,13 +88,10 @@ public class StatisticsActivity extends AppCompatActivity {
 
             GameStatsViewModel gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
 
-
             final RecyclerView recyclerView = view.findViewById(R.id.recycleview_statistics_time);
-
             final List<GameStats> gameStats = new ArrayList<>();
             final StatisticsListAdapter adapter = new StatisticsListAdapter(this.getActivity(), gameStats);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
 
             gameStatsViewModel.getTimeGames().observe(this, new Observer<List<GameStats>>() {
                 @Override
@@ -110,6 +110,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
+    /** Fragment that displays statistics for steps mode games */
     public static class StepsFragment extends Fragment {
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,15 +125,10 @@ public class StatisticsActivity extends AppCompatActivity {
 
             GameStatsViewModel gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
 
-
-
             final RecyclerView recyclerView = view.findViewById(R.id.listview_statistics_steps);
-
-
             final List<GameStats> gameStats = new ArrayList<>();
             final StatisticsListAdapter adapter = new StatisticsListAdapter(this.getActivity(), gameStats);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
 
             gameStatsViewModel.getStepsGames().observe(this, new Observer<List<GameStats>>() {
                 @Override
