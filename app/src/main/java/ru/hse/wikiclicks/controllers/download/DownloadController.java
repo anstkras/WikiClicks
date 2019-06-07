@@ -16,6 +16,7 @@ import ru.hse.wikiclicks.controllers.wiki.WikiController;
 public class DownloadController {
     private static final String CONFIRMATION = "wikiclicksDownloadedGame";
     private static final int FAIL_MARGIN = 15;
+    private static final int COOLOUT = 10;
 
     /**
      * Downloads the chosen game to the given directory and saves a file as confirmation if download succeeded.
@@ -28,7 +29,14 @@ public class DownloadController {
             return;
         }
         int fails = 0;
+        int pagesDownloaded = 0;
         for (String title : game.getPages()) {
+            if (++pagesDownloaded % COOLOUT == 0) { // minimal wait between queries
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ignored) {
+                }
+            }
             if (!downloadPage(title, outputDirectory)) {
                 if (++fails >= FAIL_MARGIN) { // downloads are failing en masse, stop trying
                     return;
