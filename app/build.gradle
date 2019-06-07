@@ -49,6 +49,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.android.gms:play-services-games:17.0.0'
 
-    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.apache.commons:commons-lang3:3.0'
     implementation 'com.google.guava:guava:27.0.1-android'
 }

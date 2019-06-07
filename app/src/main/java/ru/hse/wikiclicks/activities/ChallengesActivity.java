@@ -35,12 +35,12 @@ public class ChallengesActivity extends AppCompatActivity {
     public final static int LEVEL8 = 8;
     public final static int LEVEL9 = 9;
 
-    private final static String[] startPages = {"Russia", "Dog", "Algorithm",
-            "Saint Petersburg Academic University", "Homo sapiens", "War and Peace", "Devil",
-            "Black metal",  "Terry Pratchett", "Empty"};
-    private final static String[] endPages = {"Moscow", "Cat", "Javascript",
-            "Higher School of Economics", "Harry Potter", "Hamlet", "Invisible Pink Unicorn",
-            "Wombat",  "Hamiltonian path", "Full"};
+    private final static String[] startPages = {"Dog", "Women in Russia", "Algorithm",
+            "Saint Petersburg Academic University", "Terry Pratchett", "War and Peace", "Devil",
+            "Black metal",  "Anne Hathaway (wife of Shakespeare)", "Empty"};
+    private final static String[] endPages = {"Cat", "Google", "Javascript",
+            "Higher School of Economics", "Hamiltonian path", "Hamlet", "Invisible Pink Unicorn",
+            "Wombat",  "Anne Hathaway", "Full"};
 
     private Button signInButton;
     private Button signOutButton;

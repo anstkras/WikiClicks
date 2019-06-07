@@ -91,7 +91,6 @@ public class OfflineGameActivity extends AppCompatActivity {
         directory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
 
         titleTree.add(startTitle);
-        currentUrl = WikiController.getUrlForTitle(startTitle);
         String webPage = "";
         try {
             webPage = OfflineController.readPage(startTitle, directory);
@@ -107,7 +106,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             try {
-                String title = url.replace("https://wiki/", "");
+                String title = OfflineController.getTitleFromPageLink(url);
                 String webPage = OfflineController.readPage(title, directory);
                 titleTree.add(title);
                 currentUrl = WikiController.getUrlForTitle(title);
@@ -122,8 +121,7 @@ public class OfflineGameActivity extends AppCompatActivity {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if (OfflineController.normalize(WikiController.getPageTitleFromUrl(currentUrl)).
-                    equals(OfflineController.normalize(finishTitle))) {
+            if (WikiController.getPageTitleFromUrl(currentUrl).equals(finishTitle)) {
                 chronometer.stop();
                 milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();
@@ -206,6 +204,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         assert extras != null;
         finishTitle = extras.getString(GetEndpointsActivity.FINISH_TITLE_KEY);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
+        currentUrl = WikiController.getUrlForTitle(startTitle);
     }
 
     private void setUpToolBar() {

@@ -83,6 +83,10 @@
                 android:id="@+id/leaderboard_level0_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
@@ -118,6 +122,10 @@
             <Button
                 android:id="@+id/leaderboard_level1_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -155,6 +163,10 @@
                 android:id="@+id/leaderboard_level2_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
@@ -190,6 +202,10 @@
             <Button
                 android:id="@+id/leaderboard_level3_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -227,6 +243,10 @@
                 android:id="@+id/leaderboard_level4_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
@@ -262,6 +282,10 @@
             <Button
                 android:id="@+id/leaderboard_level5_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -299,6 +323,10 @@
                 android:id="@+id/leaderboard_level6_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
@@ -334,6 +362,10 @@
             <Button
                 android:id="@+id/leaderboard_level7_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -371,6 +403,10 @@
                 android:id="@+id/leaderboard_level8_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
 
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
 
@@ -406,6 +442,10 @@
             <Button
                 android:id="@+id/leaderboard_level9_button"
                 style="@style/Widget.AppCompat.Button.Borderless.Colored"
+
+
+                android:minWidth="0dp"
+                android:minHeight="0dp"
 
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

@@ -28,7 +28,7 @@ public class WikiController {
             JSONObject result = queryResult.getJSONArray("random").getJSONObject(0);
             return new WikiPage(result.getString("title"), result.getString("id"));
         } catch (JSONException e) {
-            Log.e(WIKIDATA_ERROR, e.getMessage() + " returning random page");
+            Log.e(WIKIDATA_ERROR, "returning random page");
         }
         return new WikiPage("Avatar (band)","26296973");
     }
@@ -49,7 +49,7 @@ public class WikiController {
             JSONObject queryResult = getQueryResult("prop=info", "pageids=" + id);
             return "0".equals(queryResult.getJSONObject("pages").getJSONObject(id).getString("ns"));
         } catch (JSONException e) {
-            Log.e(WIKIDATA_ERROR, e.getMessage() + "checking namespace is correct for id" + id);
+            Log.e(WIKIDATA_ERROR, "checking namespace is correct for id" + id);
         }
         return true;
     }
@@ -73,7 +73,7 @@ public class WikiController {
             }
             return suggestions;
         } catch (JSONException e) {
-            Log.e(WIKIDATA_ERROR, e.getMessage() + " getting list of suggestions for prefix " + prefix);
+            Log.e(WIKIDATA_ERROR, "getting list of suggestions for prefix " + prefix);
         }
         return new ArrayList<>();
     }
@@ -90,7 +90,7 @@ public class WikiController {
             JSONObject queryResult = getQueryResult("redirects", "titles=" + title);
             return new WikiPage(title, queryResult.getJSONObject("pages").names().getString(0));
         } catch (JSONException e) {
-            Log.e(WIKIDATA_ERROR, e.getMessage() + " getting page info for page " + title);
+            Log.e(WIKIDATA_ERROR,"getting page info for page " + title);
         }
         return new WikiPage();
     }
@@ -107,7 +107,7 @@ public class WikiController {
             JSONObject queryResult = getQueryResult("redirects", "pageids=" + id);
             return queryResult.getJSONObject("pages").names().getString(0);
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving id after redirects for id " + id);
+            Log.e(WIKIPEDIA_ERROR,"retrieving id after redirects for id " + id);
         }
         return id;
     }
@@ -121,35 +121,50 @@ public class WikiController {
             String result = queryResult.getJSONArray("pages").getJSONObject(0).getString("extract");
             return result.isEmpty() ? "No information available." : result;
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " gettind extract for id " + id);
+            Log.e(WIKIPEDIA_ERROR, "getting extract for id " + id);
         }
         return "No information available.";
     }
 
     /** Returns Wikidata Id of page (used for controlling bans) by given url. */
-    public static String getWikidataIdByUrl(String url) {
+    private static String getWikidataIdByUrl(String url) {
         String id = getPageFromUrl(url).getId();
         try {
             JSONObject queryResult = getQueryResult("prop=pageprops", "ppprop=wikibase_item", "redirects", "pageids=" + id);
             return queryResult.getJSONObject("pages").getJSONObject(id).getJSONObject("pageprops").getString("wikibase_item");
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving Wikidata id for id " + id);
+            Log.e(WIKIPEDIA_ERROR, "retrieving Wikidata id for id " + id);
         }
         return "";
     }
 
     public static ArrayList<String> getLinksFromPage(String title) {
         ArrayList<String> links = new ArrayList<>();
+        String shouldContinue = null;
         try {
-            JSONObject queryResult = getQueryResult("prop=links", "pllimit=max", "plnamespace=0", "titles=" + title);
-            JSONObject listWithId = queryResult.getJSONObject("pages");
-            JSONArray linksList = listWithId.getJSONObject(listWithId.names().getString(0)).getJSONArray("links");
-            for (int i = 0; i < linksList.length(); i++) {
-                String linkTitle = linksList.getJSONObject(i).getString("title");
-                links.add(linkTitle);
-            }
+            do {
+                JSONObject queryResult;
+                if (shouldContinue != null) {
+                    queryResult = getQueryResult("prop=links", "pllimit=max", "plnamespace=0",
+                            "plcontinue=" + shouldContinue, "titles=" + title);
+                } else {
+                    queryResult = getQueryResult("prop=links", "pllimit=max", "plnamespace=0", "titles=" + title);
+                }
+                JSONObject listWithId = queryResult.getJSONObject("pages");
+                JSONArray linksList = listWithId.getJSONObject(listWithId.names().getString(0)).getJSONArray("links");
+                for (int i = 0; i < linksList.length(); i++) {
+                    String linkTitle = linksList.getJSONObject(i).getString("title");
+                    links.add(linkTitle);
+                }
+                try { // get query continuation.
+                    shouldContinue = queryResult.getJSONObject("continue").getString("plcontinue");
+                } catch (JSONException e) {
+                    shouldContinue = null;
+                }
+            } while (shouldContinue != null);
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving links from page " + title);
+            Log.e(WIKIPEDIA_ERROR, "retrieving links from page " + title);
+            e.printStackTrace();
         }
         return links;
     }
@@ -160,24 +175,39 @@ public class WikiController {
 
     public static ArrayList<String> getLinksToPage(String title) {
         ArrayList<String> links = new ArrayList<>();
+        String shouldContinue = null;
         try {
-            JSONObject queryResult = getQueryResult("list=backlinks", "bllimit=max", "blnamespace=0", "bltitle=" + title);
-            JSONArray linksList = queryResult.getJSONArray("backlinks");
-            for (int i = 0; i < linksList.length(); i++) {
-                String linkTitle = linksList.getJSONObject(i).getString("title");
-                links.add(linkTitle);
-            }
+            do {
+                JSONObject queryResult;
+                if (shouldContinue != null) {
+                    queryResult = getQueryResult("list=backlinks", "bllimit=max", "blnamespace=0",
+                            "blcontinue=" + shouldContinue, "bltitle=" + title);
+                } else {
+                    queryResult = getQueryResult("list=backlinks", "bllimit=max", "blnamespace=0", "bltitle=" + title);
+                }
+                JSONArray linksList = queryResult.getJSONArray("backlinks");
+                for (int i = 0; i < linksList.length(); i++) {
+                    String linkTitle = linksList.getJSONObject(i).getString("title");
+                    links.add(linkTitle);
+                }
+                try { // get query continuation.
+                    shouldContinue = queryResult.getJSONObject("continue").getString("blcontinue");
+                } catch (JSONException e) {
+                    shouldContinue = null;
+                }
+            } while (shouldContinue != null);
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " retrieving links to page " + title);
+            Log.e(WIKIPEDIA_ERROR, "retrieving links to page " + title);
         }
         return links;
     }
 
-    public static HashSet<String> getWikidataPropertiesById(String id) {
+    public static HashSet<String> getWikidataPropertiesForUrl(String url) {
+        String id = getWikidataIdByUrl(url);
         HashSet<String> properties = new HashSet<>();
         JSONArray results = new JSONArray();
         try {
-            results= getWikidataQueryResult("entity=" + id, "property=P31").getJSONArray("P31");
+            results = getWikidataQueryResult("entity=" + id, "property=P31").getJSONArray("P31");
         } catch (JSONException ignored) { //no instances of P31 for this id, equivalent to empty array.
         }
         for (int i = 0; i < results.length(); i++) {
@@ -185,32 +215,28 @@ public class WikiController {
                 properties.add(results.getJSONObject(i).
                         getJSONObject("mainsnak").getJSONObject("datavalue").getJSONObject("value").getString("id"));
             } catch (JSONException e) {
-                Log.e(WIKIDATA_ERROR, e.getMessage() + "parsing properties for id " + id);
+                Log.e(WIKIDATA_ERROR, "parsing properties for id " + id);
             }
         }
         return properties;
     }
 
     private static JSONObject getWikidataQueryResult(String... queryArgs) {
-        String queryLink = "https://www.wikidata.org/w/api.php?action=wbgetclaims";
-        String arguments = Joiner.on('&').join(queryArgs);
-        String query = Joiner.on('&').join(queryLink, "format=json", arguments);
+        String query = constructQuery("https://www.wikidata.org/w/api.php?action=wbgetclaims", queryArgs);
         try {
             return new JSONObject(executeWikiRequest(query)).getJSONObject("claims");
         } catch (JSONException e) {
-            Log.e(WIKIDATA_ERROR, e.getMessage() + " for query " + query);
+            Log.e(WIKIDATA_ERROR, "for query " + query + ": " + e.getMessage());
         }
         return new JSONObject();
     }
 
     private static JSONObject getQueryResult(String... queryArgs) {
-        String queryLink = "https://en.wikipedia.org/w/api.php?action=query";
-        String arguments = Joiner.on('&').join(queryArgs);
-        String query = Joiner.on('&').join(queryLink, "format=json", arguments);
+        String query = constructQuery("https://en.wikipedia.org/w/api.php?action=query", queryArgs);
         try {
             return new JSONObject(executeWikiRequest(query)).getJSONObject("query");
         } catch (JSONException e) {
-            Log.e(WIKIPEDIA_ERROR, e.getMessage() + " for query " + query);
+            Log.e(WIKIPEDIA_ERROR, "for query " + query + ": " + e.getMessage());
         }
         return new JSONObject();
     }
@@ -223,5 +249,9 @@ public class WikiController {
             Log.e(JSOUP_ERROR, e.getMessage() + " for query " + query);
         }
         return searchResult;
+    }
+
+    private static String constructQuery(String baseActionLink, String... args) {
+        return Joiner.on('&').join(baseActionLink, "format=json", Joiner.on('&').join(args));
     }
 }

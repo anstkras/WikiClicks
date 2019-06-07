@@ -2,6 +2,7 @@ package ru.hse.wikiclicks.controllers;
 
 import android.util.Log;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Connection;
 import java.io.File;
 import java.io.IOException;
@@ -86,13 +87,16 @@ public class OfflineController {
         return FileUtils.readFileToString(new File(inputDirectory, normalize(title)), "UTF-8");
     }
 
+    public static String getTitleFromPageLink(String url) {
+        return OfflineController.normalize(url.replace("https://wiki/", ""));
+    }
+
     public static String normalize(String title) {
-        return title.replaceAll(" ", "_").toLowerCase();
+        return StringUtils.capitalize(title.replaceAll("_", " "));
     }
 
     private static void downloadConfirmation(String outputDirectory, int confirmationNumber) {
         final File file = new File(outputDirectory, CONFIRMATION + confirmationNumber);
-        System.out.println(file.getAbsolutePath());
         try {
             FileUtils.writeStringToFile(file, "downloaded successfully", "UTF-8");
         } catch (IOException ignored) { //lack of confirmation will show that failure happened.
