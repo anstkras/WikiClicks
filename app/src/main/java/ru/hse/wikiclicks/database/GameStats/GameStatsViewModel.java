@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/** View model for a game statistics entity from the database */
 public class GameStatsViewModel extends AndroidViewModel {
 
     private GameStatsRepository repository;
 
     private LiveData<List<GameStats>> timeGames;
     private LiveData<List<GameStats>> stepsGames;
-
 
     public GameStatsViewModel(@NonNull Application application) {
         super(application);
@@ -29,7 +29,6 @@ public class GameStatsViewModel extends AndroidViewModel {
     public LiveData<List<GameStats>> getStepsGames() {
         return stepsGames;
     }
-
 
     public void insert(GameStats gameStats) {
         repository.insert(gameStats);

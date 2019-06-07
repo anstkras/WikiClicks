@@ -1,21 +1,28 @@
 package ru.hse.wikiclicks.database.Bookmarks;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "bookmarks_table")
+/** Class that represents Bookmark entity in Games database's bookmarks table */
+@Entity(tableName = "bookmarks_table",
+        indices = {@Index(value = "url",
+                unique = true)})
 public class Bookmark {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @ColumnInfo(name="url")
+    @NonNull
+    @ColumnInfo(name = "url")
     private String url;
 
-    @ColumnInfo(name="name")
+    @NonNull
+    @ColumnInfo(name = "name")
     private String name;
 
-    public Bookmark(String url, String name) {
+    public Bookmark(@NonNull String url, @NonNull String name) {
         this.url = url;
         this.name = name;
     }
@@ -24,6 +31,7 @@ public class Bookmark {
         return id;
     }
 
+    @NonNull
     public String getUrl() {
         return url;
     }
@@ -32,6 +40,7 @@ public class Bookmark {
         this.id = id;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }

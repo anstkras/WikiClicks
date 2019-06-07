@@ -8,12 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/** View model for a bookmark entity from the database */
 public class BookmarkViewModel extends AndroidViewModel {
 
     private BookmarkRepository repository;
 
     private LiveData<List<Bookmark>> bookmarks;
-
 
     public BookmarkViewModel(@NonNull Application application) {
         super(application);
@@ -27,5 +27,9 @@ public class BookmarkViewModel extends AndroidViewModel {
 
     public void insert(Bookmark bookmark) {
         repository.insert(bookmark);
+    }
+
+    public void delete(Bookmark bookmark) {
+        repository.delete(bookmark);
     }
 }

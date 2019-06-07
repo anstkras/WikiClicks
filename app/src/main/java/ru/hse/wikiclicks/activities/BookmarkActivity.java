@@ -27,7 +27,7 @@ public class BookmarkActivity extends AppCompatActivity {
         final RecyclerView recyclerView = findViewById(R.id.bookmarks_recycler_view);
 
         final List<Bookmark> bookmarks = new ArrayList<>();
-        final BookmarkListAdapter adapter = new BookmarkListAdapter(this, bookmarks);
+        final BookmarkListAdapter adapter = new BookmarkListAdapter(this, bookmarkViewModel, bookmarks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         bookmarkViewModel.getBookmarks().observe(this, new Observer<List<Bookmark>>() {

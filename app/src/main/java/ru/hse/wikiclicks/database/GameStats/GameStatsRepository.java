@@ -8,6 +8,7 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import ru.hse.wikiclicks.database.GamesDatabase;
 
+// Class that provides methods to manage game stats table
 public class GameStatsRepository {
 
     private GameStatsDao gameStatsDao;
