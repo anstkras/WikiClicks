@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.download.DownloadService;
-import ru.hse.wikiclicks.controllers.download.OfflineController;
+import ru.hse.wikiclicks.controllers.download.DownloadController;
 
 public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int NOTIFICATION_ID = 179;
@@ -96,7 +94,8 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     }
 
     private void startGame(int levelNumber) {
-        if (!doesLevelExist(levelNumber)) {
+        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        if (!DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
             Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -110,7 +109,8 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     }
 
     private void downloadLevel(int levelNumber) {
-        if (doesLevelExist(levelNumber)) {
+        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        if (DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
             Toast.makeText(getApplicationContext(),"This level has already been downloaded.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -118,7 +118,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         //download level in new activity
         Intent downloadIntent = new Intent();
         Bundle offlineLevelInfo = new Bundle();
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
         offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
         offlineLevelInfo.putString(OFFLINE_DIRECTORY_KEY, downloadDirectory);
@@ -129,12 +128,6 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         DownloadService downloadService = new DownloadService();
         downloadService.enqueueWork(OfflineLevelsActivity.this, downloadIntent);
         notifyOfStartedDownload(levelNumber);
-    }
-
-    private boolean doesLevelExist(int levelNumber) {
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-        File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
-        return hasDownloadHappened.exists();
     }
 
     private void notifyOfStartedDownload(int levelNumber) {
