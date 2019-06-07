@@ -104,6 +104,8 @@ public class WikiController {
             url = java.net.URLDecoder.decode(url, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException ignored) {
             // not going to happen - value came from JDK's own StandardCharsets
+        } catch (IllegalArgumentException ignored) {
+            //better a bad title that a crash
         }
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
         String normalizedTitle = StringUtils.capitalize(title.replaceAll("_", " "));

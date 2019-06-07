@@ -82,7 +82,6 @@ public class OfflineGameActivity extends AppCompatActivity {
     private void setUpWebView() {
         webView = findViewById(R.id.offline_webview);
         webView.setWebViewClient(new OfflineWebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setAllowFileAccess(true);

@@ -19,6 +19,7 @@ import ru.hse.wikiclicks.controllers.OfflineController;
 
 public class OfflineLevelsActivity extends AppCompatActivity {
     public final static int NOTIFICATION_ID = 179;
+    public final static String CHANNEL_NOTIFICATION_ID = "wikiclicks_offline_download";
 
     public static final String OFFLINE_FINISH_TITLE_KEY = "offline_finish_title";
     public static final String OFFLINE_START_TITLE_KEY = "offline_start_title";
@@ -29,9 +30,9 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
             "Moscow", "Invisible Pink Unicorn", "Sexuality of Adolf Hitler",
             "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
-    final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "\"Hello, World!\" program",
+    final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
             "Prada", "Game of Thrones", "Squatting",
-            "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4′33″"};
+            "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4'33\""};
     final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
 
     public final static int LEVEL0 = 0;

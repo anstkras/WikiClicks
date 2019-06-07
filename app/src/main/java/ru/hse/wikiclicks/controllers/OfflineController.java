@@ -2,7 +2,6 @@ package ru.hse.wikiclicks.controllers;
 
 import android.util.Log;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Connection;
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class OfflineController {
         String addStyle = " style=\"display:none;\"";
 
         // break all links on page: necessary for simple WebView clicking.
-        String removedLinks =  html.replaceAll("href=\"", "href=\"" + "https://en.m.wikipedia.org/wiki/");
+        String removedLinks =  html.replaceAll("href=\"", "href=\"" + "https://en.m.wikipedia.org");
 
         // remove links to references from main text to avoid clicking on them.
         String removedReferences = removedLinks.replaceAll("<sup", "<sup" + addStyle);
@@ -74,12 +73,12 @@ public class OfflineController {
         String removedEditButtons = removedActionsMenu.replaceAll("span class=\"mw-editsection\"",
                 "span class=\"mw-editsection\"" + addStyle);
 
-        //remove uplinks
+//        remove uplinks
         String removedUplinks = removedEditButtons.replaceAll("<span class=\"mw-cite-backlink\"",
                 "<span class=\"mw-cite-backlink\"" + addStyle);
 
         // remove "Retrieved from info"
-        String removedRetrievedFrom = removedUplinks.replaceAll("class=\"printfooter\"",
+        String removedRetrievedFrom = removedActionsMenu.replaceAll("class=\"printfooter\"",
                 "class=\"printfooter\"" + addStyle);
         return removedRetrievedFrom;
     }
