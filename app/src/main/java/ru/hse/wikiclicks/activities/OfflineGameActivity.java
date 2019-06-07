@@ -82,7 +82,6 @@ public class OfflineGameActivity extends AppCompatActivity {
     private void setUpWebView() {
         webView = findViewById(R.id.offline_webview);
         webView.setWebViewClient(new OfflineWebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAllowContentAccess(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         webView.getSettings().setAllowFileAccess(true);
@@ -106,7 +105,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             try {
-                String title = OfflineController.getTitleFromPageLink(url);
+                String title = WikiController.getPageTitleFromUrl(url);
                 String webPage = OfflineController.readPage(title, directory);
                 titleTree.add(title);
                 currentUrl = WikiController.getUrlForTitle(title);

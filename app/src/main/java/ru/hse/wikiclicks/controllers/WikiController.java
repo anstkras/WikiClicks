@@ -5,12 +5,15 @@ import android.util.Log;
 
 import com.google.common.base.Joiner;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.json.*;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
@@ -97,7 +100,17 @@ public class WikiController {
 
     /** Returns the title of the page with the given url */
     public static String getPageTitleFromUrl(String url) {
-        return url.replace("https://en.m.wikipedia.org/wiki/", "");
+        try {
+            url = java.net.URLDecoder.decode(url, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException ignored) {
+            // not going to happen - value came from JDK's own StandardCharsets
+        } catch (IllegalArgumentException ignored) {
+            //better a bad title that a crash
+        }
+        String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
+        String normalizedTitle = StringUtils.capitalize(title.replaceAll("_", " "));
+
+        return normalizedTitle;
     }
 
     /** Returns the id of the page that the page with given id redirects to. */
