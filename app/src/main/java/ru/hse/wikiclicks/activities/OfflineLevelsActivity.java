@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -94,21 +93,22 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         });
     }
 
-    private void startGame(int level) {
+    private void startGame(int levelNumber) {
+        if (!doesLevelExist(levelNumber)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
         Intent startGame = new Intent(OfflineLevelsActivity.this, OfflineGameActivity.class);
         Bundle pagesInfo = new Bundle();
-        pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages[level]);
-        pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, offlineLevelEndPages[level]);
+        pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
+        pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
         startGame.putExtras(pagesInfo);
         startActivity(startGame);
     }
 
     private void downloadLevel(int levelNumber) {
-        //check if level has been downloaded already
-        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
-        File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
-        System.out.println(hasDownloadHappened.getAbsolutePath());
-        if (hasDownloadHappened.exists()) {
+        if (doesLevelExist(levelNumber)) {
             Toast.makeText(getApplicationContext(),"This level has already been downloaded.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -116,6 +116,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         //download level in new activity
         Intent downloadIntent = new Intent();
         Bundle offlineLevelInfo = new Bundle();
+        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
         offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
         offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
         offlineLevelInfo.putString(OFFLINE_DIRECTORY_KEY, downloadDirectory);
@@ -134,5 +135,11 @@ public class OfflineLevelsActivity extends AppCompatActivity {
 
         DownloadService downloadService = new DownloadService();
         downloadService.enqueueWork(OfflineLevelsActivity.this, downloadIntent);
+    }
+
+    private boolean doesLevelExist(int levelNumber) {
+        String downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath();
+        File hasDownloadHappened = new File(downloadDirectory, OfflineController.CONFIRMATION + levelNumber);
+        return hasDownloadHappened.exists();
     }
 }
