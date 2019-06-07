@@ -12,13 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.modes.CustomGameMode;
 
-import static ru.hse.wikiclicks.activities.SelectModeActivity.CUSTOM_MODE;
 import static ru.hse.wikiclicks.activities.SelectModeActivity.GAME_MODE_KEY;
-import static ru.hse.wikiclicks.activities.SelectModeActivity.STEPS_MODE;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class CustomSettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +41,8 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startGameButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent getEndpointsIntent = new Intent(SettingsActivity.this, GetEndpointsActivity.class);
-                getEndpointsIntent.putExtra(GAME_MODE_KEY, CUSTOM_MODE);
+                Intent getEndpointsIntent = new Intent(CustomSettingsActivity.this, GetEndpointsActivity.class);
+                getEndpointsIntent.putExtra(GAME_MODE_KEY, new CustomGameMode(getApplicationContext()));
                 startActivity(getEndpointsIntent);
             }
         });

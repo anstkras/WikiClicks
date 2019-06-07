@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.WikiPage;
+import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -42,7 +42,6 @@ public class ChallengesActivity extends AppCompatActivity {
             "Higher School of Economics", "Harry Potter", "Hamlet", "Invisible Pink Unicorn",
             "Wombat",  "Hamiltonian path", "Full"};
 
-    public final static String LEVEL_KEY = "level";
     private Button signInButton;
     private Button signOutButton;
     private static final int RC_SIGN_IN = 1;
@@ -234,8 +233,7 @@ public class ChallengesActivity extends AppCompatActivity {
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, startPage.getTitle());
         pagesInfo.putString(GetEndpointsActivity.FINISH_ID_KEY, finishPage.getId());
         pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, finishPage.getTitle());
-        pagesInfo.putString(SelectModeActivity.GAME_MODE_KEY, SelectModeActivity.LEVEL_MODE);
-        pagesInfo.putInt(LEVEL_KEY, level);
+        pagesInfo.putParcelable(SelectModeActivity.GAME_MODE_KEY, new LevelGameMode(level));
         startGame.putExtras(pagesInfo);
         startActivity(startGame);
     }

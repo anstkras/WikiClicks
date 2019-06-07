@@ -1,6 +1,8 @@
 package ru.hse.wikiclicks.controllers.modes;
 
-public interface GameMode {
+import android.os.Parcelable;
+
+public interface GameMode extends Parcelable {
     boolean timeModeEnabled();
 
     boolean stepsModeEnabled();

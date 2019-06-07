@@ -5,16 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
+import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
+import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 
 public class SelectModeActivity extends AppCompatActivity {
     static final String GAME_MODE_KEY = "game_mode";
-    static final String TIME_MODE = "time_mode";
-    static final String STEPS_MODE = "steps_mode";
-    static final String CUSTOM_MODE = "custom_mode";
-    static final String LEVEL_MODE = "level_mode";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public class SelectModeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 timeModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent getEndpointsIntent = new Intent(SelectModeActivity.this, GetEndpointsActivity.class);
-                getEndpointsIntent.putExtra(GAME_MODE_KEY, TIME_MODE);
+                getEndpointsIntent.putExtra(GAME_MODE_KEY, new TimeGameMode());
                 startActivity(getEndpointsIntent);
             }
         });
@@ -46,7 +43,7 @@ public class SelectModeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 stepsModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent getEndpointsIntent = new Intent(SelectModeActivity.this, GetEndpointsActivity.class);
-                getEndpointsIntent.putExtra(GAME_MODE_KEY, STEPS_MODE);
+                getEndpointsIntent.putExtra(GAME_MODE_KEY, new StepsGameMode());
                 startActivity(getEndpointsIntent);
             }
         });
@@ -58,7 +55,7 @@ public class SelectModeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 customModeButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent settingsIntent = new Intent(SelectModeActivity.this, SettingsActivity.class);
+                Intent settingsIntent = new Intent(SelectModeActivity.this, CustomSettingsActivity.class);
                 startActivity(settingsIntent);
             }
         });

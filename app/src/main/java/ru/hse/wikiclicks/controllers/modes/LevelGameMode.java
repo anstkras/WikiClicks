@@ -1,5 +1,7 @@
 package ru.hse.wikiclicks.controllers.modes;
 
+import android.os.Parcel;
+
 public class LevelGameMode implements GameMode {
     private final int level;
 
@@ -40,4 +42,27 @@ public class LevelGameMode implements GameMode {
     public int getLevel() {
         return level;
     }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(level);
+    }
+
+    public static final Creator<LevelGameMode> CREATOR = new Creator<LevelGameMode>() {
+        @Override
+        public LevelGameMode createFromParcel(Parcel in) {
+            return new LevelGameMode(in.readInt());
+        }
+
+
+        @Override
+        public LevelGameMode[] newArray(int size) {
+            return new LevelGameMode[size];
+        }
+    };
 }
