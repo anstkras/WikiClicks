@@ -1,11 +1,8 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
-import ru.hse.wikiclicks.controllers.modes.CustomGameMode;
-import ru.hse.wikiclicks.controllers.modes.GameModeVisitor;
-import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
-import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
-import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
+import java.util.Locale;
 
+/** Class that constructs a proper win message depending on the game mode */
 public class GetWinMessageVisitor implements GameModeVisitor<String> {
     private final GameContext gameContext;
 
@@ -46,6 +43,6 @@ public class GetWinMessageVisitor implements GameModeVisitor<String> {
     private static String getTimeFromMilliseconds(long milliseconds) {
         long minutes = (milliseconds / 1000) / 60;
         long seconds = (milliseconds / 1000) % 60;
-        return String.format("%02d:%02d", minutes, seconds);
+        return String.format(Locale.getDefault(),"%02d:%02d", minutes, seconds);
     }
 }

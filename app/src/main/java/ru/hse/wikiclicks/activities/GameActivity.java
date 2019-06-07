@@ -23,11 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.GameContext;
-import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
-import ru.hse.wikiclicks.controllers.SaveStatsVisitor;
+import ru.hse.wikiclicks.controllers.modes.GameContext;
+import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
+import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
-import ru.hse.wikiclicks.controllers.modes.GameModeFactory;
 import ru.hse.wikiclicks.controllers.BanController;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
@@ -217,10 +216,8 @@ public class GameActivity extends AppCompatActivity {
         finishId = WikiController.getRedirectedId(finishId);
         startTitle = extras.getString(GetEndpointsActivity.START_TITLE_KEY);
 
-        String gameModeString = extras.getString(SelectModeActivity.GAME_MODE_KEY);
-        assert gameModeString != null;
-        int level = extras.getInt(ChallengesActivity.LEVEL_KEY);
-        gameMode = GameModeFactory.getGameMode(gameModeString, level, this);
+        gameMode = extras.getParcelable(SelectModeActivity.GAME_MODE_KEY);
+        assert gameMode != null;
     }
 
     private void setUpToolBar() {

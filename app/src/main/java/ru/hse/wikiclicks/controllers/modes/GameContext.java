@@ -1,7 +1,8 @@
-package ru.hse.wikiclicks.controllers;
+package ru.hse.wikiclicks.controllers.modes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/** Class that stores important information about game state to be used by visitors */
 public class GameContext {
     private final int stepsCount;
     private final long millisecondsElapsed;
@@ -9,6 +10,7 @@ public class GameContext {
     private final String startTitle;
     private final String finishTitle;
 
+    /** Basic constructor for the class */
     public GameContext(int stepsCount, long millisecondsElapsed, AppCompatActivity activity, String startTitle, String finishTitle) {
         this.stepsCount = stepsCount;
         this.millisecondsElapsed = millisecondsElapsed;
@@ -17,23 +19,23 @@ public class GameContext {
         this.finishTitle = finishTitle;
     }
 
-    public int getStepsCount() {
+    int getStepsCount() {
         return stepsCount;
     }
 
-    public long getMillisecondsElapsed() {
+    long getMillisecondsElapsed() {
         return millisecondsElapsed;
     }
 
-    public AppCompatActivity getActivity() {
+    AppCompatActivity getActivity() {
         return activity;
     }
 
-    public String getFinishTitle() {
+    String getFinishTitle() {
         return finishTitle;
     }
 
-    public String getStartTitle() {
+    String getStartTitle() {
         return startTitle;
     }
 }

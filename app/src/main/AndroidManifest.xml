@@ -53,7 +53,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".activities.CustomSettingsActivity"
             android:screenOrientation="portrait"
             android:configChanges="screenSize|keyboardHidden"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"

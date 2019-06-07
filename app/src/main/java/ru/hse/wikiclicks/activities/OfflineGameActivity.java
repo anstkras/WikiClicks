@@ -23,13 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import ru.hse.wikiclicks.R;
-import ru.hse.wikiclicks.controllers.GameContext;
-import ru.hse.wikiclicks.controllers.GetWinMessageVisitor;
+import ru.hse.wikiclicks.controllers.modes.GameContext;
+import ru.hse.wikiclicks.controllers.modes.GetWinMessageVisitor;
 import ru.hse.wikiclicks.controllers.OfflineController;
-import ru.hse.wikiclicks.controllers.SaveStatsVisitor;
+import ru.hse.wikiclicks.controllers.modes.SaveStatsVisitor;
 import ru.hse.wikiclicks.controllers.WikiController;
 import ru.hse.wikiclicks.controllers.modes.GameMode;
-import ru.hse.wikiclicks.controllers.modes.StepsGameMode;
+import ru.hse.wikiclicks.controllers.modes.TimeGameMode;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
 public class OfflineGameActivity extends AppCompatActivity {
@@ -41,7 +41,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     private Chronometer chronometer;
     private ImageButton exitButton;
     private ImageButton bookmarkButton;
-    private final GameMode gameMode = new StepsGameMode();
+    private final GameMode gameMode = TimeGameMode.getInstance();
     private long milliseconds;
     private String currentUrl = "";
 
