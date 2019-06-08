@@ -48,6 +48,7 @@ public class OfflineGameActivity extends AppCompatActivity {
 
     private ArrayList<String> titleTree = new ArrayList<>();
     private String directory;
+    private boolean hasGameEnded;
 
     /** Creates the offline game, initializes the start and end points. */
     @Override
@@ -62,6 +63,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         setUpExitButton();
         setUpBookmarkButton();
         setUpWebView();
+        hasGameEnded = false;
     }
 
     /** Reloads the previous page, unless the current page was the first one loaded. */
@@ -125,7 +127,8 @@ public class OfflineGameActivity extends AppCompatActivity {
         /** Method that checks whether the game has been won and processes the winning state. */
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            if (WikiController.getPageTitleFromUrl(currentUrl).equals(finishTitle)) {
+            if (!hasGameEnded && WikiController.getPageTitleFromUrl(currentUrl).equals(finishTitle)) {
+                hasGameEnded = true;
                 chronometer.stop();
                 milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();

@@ -36,6 +36,7 @@ import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 public class GameActivity extends AppCompatActivity {
     private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
+    private boolean hasGameEnded;
     private String startTitle;
     private String finishTitle;
     private String finishPageId;
@@ -60,6 +61,7 @@ public class GameActivity extends AppCompatActivity {
         setUpExitButton();
         setUpBookmarkButton();
         currentUrl = WikiController.getUrlForTitle(startTitle);
+        hasGameEnded = false;
     }
 
     @Override
@@ -91,7 +93,8 @@ public class GameActivity extends AppCompatActivity {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
             stepsTextView.setText(getString(R.string.steps, stepsCount));
-            if (finishPageId.equals(WikiController.getPageFromUrl(url).getId())) {
+            if (!hasGameEnded && finishPageId.equals(WikiController.getPageFromUrl(url).getId())) {
+                hasGameEnded = true;
                 chronometer.stop();
                 milliseconds = SystemClock.elapsedRealtime() - chronometer.getBase();
                 addDatabaseEntry();
