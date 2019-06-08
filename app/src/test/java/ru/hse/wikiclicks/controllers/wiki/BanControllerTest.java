@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class BanControllerTest {
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testCountriesAreCountriesSimple() {
         BanController russianController = new BanController(WikiController.getUrlForTitle("Russia"));
         assertTrue(russianController.isCountry());
@@ -27,7 +27,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testCountriesAreCountriesFictional() {
         BanController wakandanController = new BanController(WikiController.getUrlForTitle("Wakanda"));
         assertTrue(wakandanController.isCountry());
@@ -37,7 +37,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testCountriesAreCountriesPreviouslyExisting() {
         BanController ussrController = new BanController(WikiController.getUrlForTitle("USSR"));
         assertTrue(ussrController.isCountry());
@@ -47,7 +47,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotCountriesAreNotCountriesSimple() {
         BanController appleController = new BanController(WikiController.getUrlForTitle("Apple"));
         assertFalse(appleController.isCountry());
@@ -60,7 +60,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotCountriesAreNotCountriesUnrecognized() {
         BanController transnistriaController = new BanController(WikiController.getUrlForTitle("Transnistria"));
         assertFalse(transnistriaController.isCountry());
@@ -70,7 +70,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotCountriesAreNotCountriesCountryMusic() {
         BanController countryController = new BanController(WikiController.getUrlForTitle("Country music"));
         assertFalse(countryController.isCountry());
@@ -80,7 +80,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotCountriesAreNotCountriesOtherGeography() {
         BanController fifthController = new BanController(WikiController.getUrlForTitle("Fifth Avenue"));
         assertFalse(fifthController.isCountry());
@@ -99,7 +99,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testYearsAreYearsSimple() {
         BanController mmController = new BanController(WikiController.getUrlForTitle("2000"));
         assertTrue(mmController.isYear());
@@ -115,7 +115,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotYearsAreNotYearsSimple() {
         BanController appleController = new BanController(WikiController.getUrlForTitle("Apple"));
         assertFalse(appleController.isYear());
@@ -128,7 +128,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotYearsAreNotYearsOtherTimePeriods() {
         BanController centuryController = new BanController(WikiController.getUrlForTitle("7th century BC"));
         assertFalse(centuryController.isYear());
@@ -144,7 +144,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testNotYearsAreNotYearsTitlesWithYearInThem() {
         BanController sep11Controller = new BanController(WikiController.getUrlForTitle("9/11/2001"));
         assertFalse(sep11Controller.isYear());
@@ -157,7 +157,7 @@ public class BanControllerTest {
     }
 
     @Test
-    @Config(manifest=Config.NONE)
+    @Config(manifest = Config.NONE)
     public void testCountriesAreNotYearsAndYearsAreNotCountries() {
         BanController ukController = new BanController(WikiController.getUrlForTitle("UK"));
         assertFalse(ukController.isYear());
