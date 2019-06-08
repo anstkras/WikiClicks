@@ -32,7 +32,7 @@ public class BookmarkViewModel extends AndroidViewModel {
         repository.insert(bookmark);
     }
 
-    /** Deletes a Bookmark, will do nothing if it does not already exist. */
+    /** Deletes an existing Bookmark. */
     public void delete(Bookmark bookmark) {
         repository.delete(bookmark);
     }

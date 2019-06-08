@@ -60,6 +60,7 @@ public class StepsGameMode implements GameMode {
     public void writeToParcel(Parcel dest, int flags) {
     }
 
+    /** Required to make the game mode parcelable. */
     public static final Creator<StepsGameMode> CREATOR = new Creator<StepsGameMode>() {
         /** {@inheritDoc} */
         @Override

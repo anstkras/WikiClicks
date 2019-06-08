@@ -13,9 +13,9 @@ import ru.hse.wikiclicks.database.GameStats.GameStatsDao;
 /** Class that referents Room database for the application. */
 @Database(entities = {GameStats.class, Bookmark.class}, version = 8, exportSchema = false)
 public abstract class GamesDatabase extends RoomDatabase {
-    /** Info for the saved game stats. */
+    /** Data access object for the saved game stats. */
     public abstract GameStatsDao gameStatsDao();
-    /** Info for the saved bookmarks. */
+    /** Data access object for the saved bookmarks. */
     public abstract BookmarkDao bookmarkDao();
 
     private static volatile GamesDatabase INSTANCE;

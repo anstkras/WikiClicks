@@ -83,6 +83,7 @@ public class CustomGameMode implements GameMode {
         dest.writeBooleanArray(features);
     }
 
+    /** Required to make the game mode parcelable. */
     public static final Creator<CustomGameMode> CREATOR = new Creator<CustomGameMode>() {
         /** {@inheritDoc} */
         @Override

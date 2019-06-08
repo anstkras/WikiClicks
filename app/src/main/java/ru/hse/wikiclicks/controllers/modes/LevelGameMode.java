@@ -6,7 +6,7 @@ import android.os.Parcel;
 public class LevelGameMode implements GameMode {
     private final int level;
 
-    /** Creates a LevelGameMode for the given level number, */
+    /** Creates a LevelGameMode for the given level number. */
     public LevelGameMode(int level) {
         this.level = level;
     }
@@ -64,6 +64,7 @@ public class LevelGameMode implements GameMode {
         dest.writeInt(level);
     }
 
+    /** Required to make the game mode parcelable. */
     public static final Creator<LevelGameMode> CREATOR = new Creator<LevelGameMode>() {
         /** {@inheritDoc} */
         @Override

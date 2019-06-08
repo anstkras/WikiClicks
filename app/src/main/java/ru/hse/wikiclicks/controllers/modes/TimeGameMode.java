@@ -61,6 +61,7 @@ public class TimeGameMode implements GameMode {
 
     }
 
+    /** Required to make the game mode parcelable. */
     public static final Creator<TimeGameMode> CREATOR = new Creator<TimeGameMode>() {
         /** {@inheritDoc} */
         @Override

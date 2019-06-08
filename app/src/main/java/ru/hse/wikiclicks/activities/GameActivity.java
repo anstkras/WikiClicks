@@ -111,7 +111,7 @@ public class GameActivity extends AppCompatActivity {
             currentUrl = url;
         }
 
-        /** Removes the search bar from the top of hte screen. */
+        /** Removes the search bar from the top of the screen. */
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
