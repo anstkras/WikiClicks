@@ -82,19 +82,21 @@ public class ChallengesActivity extends AppCompatActivity {
         setUpSignOutButton();
     }
 
-    private void setUpButtonForLevel(Button button, final int level) {
+    private void setUpButtonForLevel(final Button button, final int level) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button.setTextColor(getResources().getColor(R.color.colorUsed));
                 startGame(level);
             }
         });
     }
 
-    private void setUpButtonForLeaderBoard(Button button, final String leaderBoardId) {
+    private void setUpButtonForLeaderBoard(final Button button, final String leaderBoardId) {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button.setTextColor(getResources().getColor(R.color.colorUsed));
                 showLeaderboard(leaderBoardId);
             }
         });
@@ -105,6 +107,7 @@ public class ChallengesActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                signInButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 signIn();
             }
         });
@@ -167,6 +170,7 @@ public class ChallengesActivity extends AppCompatActivity {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                signOutButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 signOut();
             }
         });
