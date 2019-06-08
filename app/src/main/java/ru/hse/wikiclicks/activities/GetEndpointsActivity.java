@@ -2,6 +2,7 @@ package ru.hse.wikiclicks.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.hse.wikiclicks.R;
@@ -165,9 +167,8 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 }
                 pageSearch.setTextColor(getResources().getColor(R.color.colorNoLink));
                 chosenPage.clear();
-                List<WikiPage> currentSuggestions = WikiController.getSearchSuggestions(s.toString());
-                adapter.clear();
-                adapter.addAll(currentSuggestions);
+                SetSuggestionsTask task = new SetSuggestionsTask(adapter);
+                task.execute(s.toString());
             }
 
             @Override
@@ -182,5 +183,33 @@ public class GetEndpointsActivity extends AppCompatActivity {
                 pageSearch.setTextColor(getResources().getColor(R.color.colorInitial));
             }
         });
+    }
+
+    /**
+     * Wrapper class for generating suggestions in separate thread.
+     * Suggestions are regularly generated and as such take up too much time on the main thread.
+     */
+    private static class SetSuggestionsTask extends AsyncTask<String, Void, List<WikiPage>> {
+        private final ArrayAdapter<WikiPage> adapter;
+
+        private SetSuggestionsTask(ArrayAdapter<WikiPage> adapter) {
+            this.adapter = adapter;
+        }
+
+        /** Gets the search suggestions from the WikiController. */
+        @Override
+        protected List<WikiPage> doInBackground(String... strings) {
+            List<WikiPage> result = new ArrayList<>();
+            for (String string : strings) {
+                result.addAll(WikiController.getSearchSuggestions(string));
+            }
+            return result;
+        }
+
+        /** Updates the search suggestion adapter. */
+        protected void onPostExecute(List <WikiPage> result) {
+            adapter.clear();
+            adapter.addAll(result);
+        }
     }
 }
