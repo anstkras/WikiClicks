@@ -11,16 +11,18 @@ import ru.hse.wikiclicks.R;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
-/** Class that save statistics depending on the game mode */
+/** Class that saves necessary statistics depending on the game mode. */
 public class SaveStatsVisitor implements GameModeVisitor<Void> {
     private final GameContext gameContext;
     private final GameStatsViewModel gameStatsViewModel;
 
+    /** Basic constructor that depends on the current game context. */
     public SaveStatsVisitor(GameContext gameContext) {
         this.gameContext = gameContext;
         this.gameStatsViewModel = ViewModelProviders.of(gameContext.getActivity()).get(GameStatsViewModel.class);
     }
 
+    /** Submits statistics for time game mode. */
     @Override
     public Void visit(TimeGameMode timeGameMode) {
         GameStats gameStats = new GameStats(gameContext.getMillisecondsElapsed(), gameContext.getStartTitle(), gameContext.getFinishTitle(), true);
@@ -28,6 +30,7 @@ public class SaveStatsVisitor implements GameModeVisitor<Void> {
         return null;
     }
 
+    /** Submits statistics for steps game mode. */
     @Override
     public Void visit(StepsGameMode stepsGameMode) {
         GameStats gameStats = new GameStats(gameContext.getStepsCount(), gameContext.getStartTitle(), gameContext.getFinishTitle(), false);
@@ -35,11 +38,13 @@ public class SaveStatsVisitor implements GameModeVisitor<Void> {
         return null;
     }
 
+    /** Submits no statistics for custom game mode. */
     @Override
     public Void visit(CustomGameMode customGameMode) {
         return null;
     }
 
+    /** Submits scores to the correct leaderboards for level game mode. */
     @Override
     public Void visit(LevelGameMode levelGameMode) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(gameContext.getActivity());

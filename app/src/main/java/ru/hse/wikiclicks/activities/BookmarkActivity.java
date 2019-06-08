@@ -15,9 +15,10 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Activity that displays bookmarks and allows to delete them */
+/** Activity that displays bookmarks and allows to delete them. */
 public class BookmarkActivity extends AppCompatActivity {
 
+    /** Creates the bookmark viewing activity. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

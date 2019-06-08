@@ -8,7 +8,7 @@ import android.os.Parcel;
  */
 public class TimeGameMode implements GameMode {
 
-    /** Returns the singleton instance */
+    /** Returns the singleton instance. */
     public static TimeGameMode getInstance() {
         return INSTANCE;
     }
@@ -61,6 +61,7 @@ public class TimeGameMode implements GameMode {
 
     }
 
+    /** Required to make the game mode parcelable. */
     public static final Creator<TimeGameMode> CREATOR = new Creator<TimeGameMode>() {
         /** {@inheritDoc} */
         @Override
