@@ -23,7 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-/** Activity for choosing level of challenges and viewing leader boards */
+/** Activity for choosing a challenge level and viewing their leader boards. */
 public class ChallengesActivity extends AppCompatActivity {
     private final static int LEVEL0 = 0;
     private final static int LEVEL1 = 1;
@@ -48,6 +48,7 @@ public class ChallengesActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient googleSignInClient;
 
+    /** Creates the activity, initializes the buttons for sign in, playing levels and viewing leaderboards. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +114,7 @@ public class ChallengesActivity extends AppCompatActivity {
         });
     }
 
+    /** Signs in the user if the result is correct. */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -155,6 +157,7 @@ public class ChallengesActivity extends AppCompatActivity {
         }
     }
 
+    /** Signs in user by default if the user has been signed in previously. */
     @Override
     protected void onStart() {
         super.onStart();

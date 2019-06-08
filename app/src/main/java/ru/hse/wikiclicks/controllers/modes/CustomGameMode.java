@@ -6,10 +6,7 @@ import android.os.Parcel;
 
 import androidx.preference.PreferenceManager;
 
-/**
- * Class that represents custom game mode where all features
- * could be chosen by user
- */
+/** Class that represents custom game mode where all features can be chosen by user. */
 public class CustomGameMode implements GameMode {
     private final boolean isTimeModeEnabled;
     private final boolean isStepsModeEnabled;
@@ -17,7 +14,7 @@ public class CustomGameMode implements GameMode {
     private final boolean isBanCountriesEnabled;
     private final boolean isBanBackEnabled;
 
-    /** Constructs a custom game mode using the specified features */
+    /** Constructs a custom game mode using the specified features. */
     public CustomGameMode(boolean isTimeModeEnabled, boolean isStepsModeEnabled, boolean isBanYearsEnabled,
                           boolean isBanCountriesEnabled, boolean isBanBackEnabled) {
         this.isTimeModeEnabled = isTimeModeEnabled;
@@ -27,7 +24,7 @@ public class CustomGameMode implements GameMode {
         this.isBanBackEnabled = isBanBackEnabled;
     }
 
-    /** Constructs a custom game mode using shared preferences */
+    /** Constructs a custom game mode using shared preferences. */
     public CustomGameMode(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         this.isTimeModeEnabled = sharedPreferences.getBoolean("pref_time_mode", false);

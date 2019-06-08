@@ -8,7 +8,7 @@ import android.os.Parcel;
  */
 public class TimeGameMode implements GameMode {
 
-    /** Returns the singleton instance */
+    /** Returns the singleton instance. */
     public static TimeGameMode getInstance() {
         return INSTANCE;
     }

@@ -2,6 +2,7 @@ package ru.hse.wikiclicks.activities;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,7 +33,7 @@ import ru.hse.wikiclicks.controllers.wiki.BanController;
 import ru.hse.wikiclicks.controllers.wiki.WikiController;
 import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 
-/** Activity for the main game process */
+/** Activity for the main game process. */
 public class GameActivity extends AppCompatActivity {
     private BookmarkViewModel bookmarkViewModel;
     private int stepsCount = -1;
@@ -47,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
     private long milliseconds;
     private String currentUrl;
 
+    /** Creates the game, initializes the start and end points. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +66,8 @@ public class GameActivity extends AppCompatActivity {
         hasGameEnded = false;
     }
 
+
+    /** Reloads the previous page, unless the current page was the first one loaded or ban mode is enabled. */
     @Override
     public void onBackPressed() {
         if (gameMode.banBackEnabled()) {
@@ -78,7 +82,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /** WebViewClient for game that formats page to remove search bar and checks game process state. */
     private class WikiWebViewClient extends WebViewClient {
+        /** Blocks loading if url is not to Wikipedia page. */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (!WikiController.isCorrectWikipediaLink(url)) {
@@ -89,6 +95,7 @@ public class GameActivity extends AppCompatActivity {
             return catchEnforcedBans(url) || super.shouldOverrideUrlLoading(view, url);
         }
 
+        /** Method that checks whether the game has been won and processes the winning state. */
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             stepsCount++;
@@ -104,6 +111,7 @@ public class GameActivity extends AppCompatActivity {
             currentUrl = url;
         }
 
+        /** Removes the search bar from the top of hte screen. */
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
@@ -157,6 +165,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setUpWebView() {
         webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -203,7 +212,6 @@ public class GameActivity extends AppCompatActivity {
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                return;
             }
         });
         return builder.create();

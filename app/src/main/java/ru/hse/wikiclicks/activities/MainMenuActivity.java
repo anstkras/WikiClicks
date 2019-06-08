@@ -15,9 +15,10 @@ import android.widget.Button;
 
 import ru.hse.wikiclicks.R;
 
-/** Activity that represents the main menu of the game */
+/** Activity that represents the main menu of the game. */
 public class MainMenuActivity extends AppCompatActivity {
 
+    /** Creates the main menu. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

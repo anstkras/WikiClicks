@@ -14,8 +14,9 @@ import ru.hse.wikiclicks.controllers.modes.CustomGameMode;
 
 import static ru.hse.wikiclicks.activities.SelectModeActivity.GAME_MODE_KEY;
 
-/** Activity for choosing settings of the custom game mode */
+/** Activity for choosing settings of the custom game mode. */
 public class CustomSettingsActivity extends AppCompatActivity {
+    /** Creates the custom settings preference manager activity. */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class CustomSettingsActivity extends AppCompatActivity {
         });
     }
 
+    /** Class for storing the Fragment for choosing the custom settings. */
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

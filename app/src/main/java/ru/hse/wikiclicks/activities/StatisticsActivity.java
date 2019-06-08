@@ -24,16 +24,16 @@ import ru.hse.wikiclicks.activities.adapters.StatisticsListAdapter;
 import ru.hse.wikiclicks.database.GameStats.GameStats;
 import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 
-/** Activity for displaying statistics */
+/** Activity for displaying statistics of previously won games. */
 public class StatisticsActivity extends AppCompatActivity {
 
+    /** Creates the activity for displaying statistics, displays steps statistics by default. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
-        // Show steps stats as default
-        Fragment settingsFragment = new StepsFragment();
+        Fragment settingsFragment = new StepsFragment(); // Show steps stats as default
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (savedInstanceState == null) {
@@ -73,13 +73,15 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
-    /** Fragment that displays statistics for time mode games */
+    /** Fragment that displays statistics for time mode games. */
     public static class TimeFragment extends Fragment {
+        /** Creates the fragment for time mode stats. */
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
 
+        /** Initializes the fragment's view and shows the availible statistics. */
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -94,6 +96,7 @@ public class StatisticsActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
             gameStatsViewModel.getTimeGames().observe(this, new Observer<List<GameStats>>() {
+                /** Modifies the statistics when new games have been won. */
                 @Override
                 public void onChanged(@Nullable final List<GameStats> games) {
                     gameStats.clear();
@@ -110,13 +113,15 @@ public class StatisticsActivity extends AppCompatActivity {
         }
     }
 
-    /** Fragment that displays statistics for steps mode games */
+    /** Fragment that displays statistics for steps mode games. */
     public static class StepsFragment extends Fragment {
+        /** Creates the fragment for steps mode stats. */
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
 
+        /** Initializes the fragment's view and shows the availible statistics. */
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -131,6 +136,7 @@ public class StatisticsActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
             gameStatsViewModel.getStepsGames().observe(this, new Observer<List<GameStats>>() {
+                /** Modifies the statistics when new games have been won. */
                 @Override
                 public void onChanged(@Nullable final List<GameStats> games) {
                     gameStats.clear();

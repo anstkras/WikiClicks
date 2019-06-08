@@ -8,7 +8,7 @@ import android.os.Parcel;
  */
 public class StepsGameMode implements GameMode {
 
-    /** Returns the singleton instance */
+    /** Returns the singleton instance. */
     public static StepsGameMode getInstance() {
         return INSTANCE;
     }

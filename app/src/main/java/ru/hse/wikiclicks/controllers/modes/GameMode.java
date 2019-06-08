@@ -2,24 +2,24 @@ package ru.hse.wikiclicks.controllers.modes;
 
 import android.os.Parcelable;
 
-/** Interface that represents game mode in wikiClicks game */
+/** Interface that represents game mode in WikiClicks game. */
 public interface GameMode extends Parcelable {
 
-    /** Returns if the time is counted */
+    /** Returns true if the time is counted, false otherwise.  */
     boolean timeModeEnabled();
 
-    /** Returns if the steps are counted */
+    /** Returns true if the steps are counted, false otherwise. */
     boolean stepsModeEnabled();
 
-    /** Returns if the usage of years url is banned */
+    /** Returns true if the usage of year urls is banned, false otherwise. */
     boolean banYearsEnabled();
 
-    /** Returns if the usage of countries url is banned */
+    /** Returns true if the usage of country urls is banned, false otherwise. */
     boolean banCountriesEnabled();
 
-    /** Returns if the back button press is be banned */
+    /** Returns true if the back button press is banned, false otherwise. */
     boolean banBackEnabled();
 
-    /** Implements visitor pattern to add game mode dependent functionality */
+    /** Implements visitor pattern to add game mode dependent functionality. */
     <T> T accept(GameModeVisitor<T> visitor);
 }

@@ -2,10 +2,11 @@ package ru.hse.wikiclicks.controllers.modes;
 
 import android.os.Parcel;
 
-/** Class that represents level game mode */
+/** Class that represents level game mode. */
 public class LevelGameMode implements GameMode {
     private final int level;
 
+    /** Creates a LevelGameMode for the given level number, */
     public LevelGameMode(int level) {
         this.level = level;
     }

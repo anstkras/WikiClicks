@@ -18,7 +18,7 @@ public class GameStatsRepository {
 
     GameStatsRepository(Application application) {
         GamesDatabase db = GamesDatabase.getDatabase(application);
-        gameStatsDao = db.stepsModeGameDao();
+        gameStatsDao = db.gameStatsDao();
         timeGames = gameStatsDao.getTimeGames();
         stepsGames = gameStatsDao.getStepsGames();
     }

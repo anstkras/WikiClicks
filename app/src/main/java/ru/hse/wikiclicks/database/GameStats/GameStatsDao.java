@@ -7,7 +7,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-/** Interface that represents Room Dao for bookmarks table */
+/** Interface that represents Room Dao for bookmarks table. */
 @Dao
 public interface GameStatsDao {
     @Insert

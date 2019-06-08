@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-/** View model for a game statistics entity from the database */
+/** View model for a game statistics entity from the database. */
 public class GameStatsViewModel extends AndroidViewModel {
 
     private GameStatsRepository repository;
@@ -16,6 +16,7 @@ public class GameStatsViewModel extends AndroidViewModel {
     private LiveData<List<GameStats>> timeGames;
     private LiveData<List<GameStats>> stepsGames;
 
+    /** Creates the GameStatsViewModel for an Application. */
     public GameStatsViewModel(@NonNull Application application) {
         super(application);
         repository = new GameStatsRepository(application);
@@ -23,13 +24,17 @@ public class GameStatsViewModel extends AndroidViewModel {
         stepsGames = repository.getStepsGames();
     }
 
+    /** Returns a list of the existing statistics for timed games. */
     public LiveData<List<GameStats>> getTimeGames() {
         return timeGames;
     }
+
+    /** Returns a list of the existing statistics for step-counting games. */
     public LiveData<List<GameStats>> getStepsGames() {
         return stepsGames;
     }
 
+    /** Adds a new game statistics to the DB. */
     public void insert(GameStats gameStats) {
         repository.insert(gameStats);
     }
