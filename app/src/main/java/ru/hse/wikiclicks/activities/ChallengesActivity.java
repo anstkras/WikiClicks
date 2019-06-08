@@ -181,6 +181,12 @@ public class ChallengesActivity extends AppCompatActivity {
         WikiPage startPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(startPages[level]));
         WikiPage finishPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(endPages[level]));
 
+        if (startPage.getTitle() == null || startPage.getId() == null ||
+                finishPage.getTitle() == null || finishPage.getId() == null) {
+            Toast toast = Toast.makeText(this, "Loading the level failed", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
         Intent startGame = new Intent(ChallengesActivity.this, GameActivity.class);
         Bundle pagesInfo = new Bundle();
         pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, startPage.getTitle());

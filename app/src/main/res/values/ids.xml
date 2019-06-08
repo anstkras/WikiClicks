@@ -9,23 +9,23 @@ Save this file as res/values/games-ids.xml in your project.
     <!-- package_name -->
     <string name="package_name" translatable="false">ru.hse.wikiclicks</string>
     <!-- leaderboard Level 0 -->
-    <string name="leaderboard_level_0" translatable="false">CgkIgvuY9s8LEAIQBQ</string>
+    <string name="leaderboard_level_0" translatable="false">CgkIgvuY9s8LEAIQDw</string>
     <!-- leaderboard Level 1 -->
-    <string name="leaderboard_level_1" translatable="false">CgkIgvuY9s8LEAIQBg</string>
+    <string name="leaderboard_level_1" translatable="false">CgkIgvuY9s8LEAIQBQ</string>
     <!-- leaderboard Level 2 -->
-    <string name="leaderboard_level_2" translatable="false">CgkIgvuY9s8LEAIQBw</string>
+    <string name="leaderboard_level_2" translatable="false">CgkIgvuY9s8LEAIQBg</string>
     <!-- leaderboard Level 3 -->
-    <string name="leaderboard_level_3" translatable="false">CgkIgvuY9s8LEAIQCA</string>
+    <string name="leaderboard_level_3" translatable="false">CgkIgvuY9s8LEAIQEQ</string>
     <!-- leaderboard Level 4 -->
-    <string name="leaderboard_level_4" translatable="false">CgkIgvuY9s8LEAIQCQ</string>
+    <string name="leaderboard_level_4" translatable="false">CgkIgvuY9s8LEAIQCA</string>
     <!-- leaderboard Level 5 -->
-    <string name="leaderboard_level_5" translatable="false">CgkIgvuY9s8LEAIQCg</string>
+    <string name="leaderboard_level_5" translatable="false">CgkIgvuY9s8LEAIQCQ</string>
     <!-- leaderboard Level 6 -->
-    <string name="leaderboard_level_6" translatable="false">CgkIgvuY9s8LEAIQCw</string>
+    <string name="leaderboard_level_6" translatable="false">CgkIgvuY9s8LEAIQCg</string>
     <!-- leaderboard Level 7 -->
-    <string name="leaderboard_level_7" translatable="false">CgkIgvuY9s8LEAIQDA</string>
+    <string name="leaderboard_level_7" translatable="false">CgkIgvuY9s8LEAIQCw</string>
     <!-- leaderboard Level 8 -->
-    <string name="leaderboard_level_8" translatable="false">CgkIgvuY9s8LEAIQDQ</string>
+    <string name="leaderboard_level_8" translatable="false">CgkIgvuY9s8LEAIQEA</string>
     <!-- leaderboard Level 9 -->
-    <string name="leaderboard_level_9" translatable="false">CgkIgvuY9s8LEAIQDg</string>
+    <string name="leaderboard_level_9" translatable="false">CgkIgvuY9s8LEAIQDQ</string>
 </resources>
