@@ -36,6 +36,12 @@ public class ChallengesActivity extends AppCompatActivity {
     private final static int LEVEL8 = 8;
     private final static int LEVEL9 = 9;
 
+    /*
+     * 1. Логичнее сгруппировать стартовые и конечные страницы в пары, т.к. поодиночке они
+     *   не имеют особого смысла (ну и можно добавить одну страницу и забыть добавить парную)
+     * 2. Все страницы для испытаний лучше вынести в ресурсы, чтобы можно было легко добавять
+     *   новые бе перекомпиляции всего приложения
+     */
     private final static String[] startPages = {"Dog", "Women in Russia", "Algorithm",
             "Saint Petersburg Academic University", "Terry Pratchett", "War and Peace", "Devil",
             "Black metal",  "Anne Hathaway (wife of Shakespeare)", "Empty"};
@@ -144,6 +150,7 @@ public class ChallengesActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+            // переменная account не используется
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Toast toast = Toast.makeText(this, "sign in successful", Toast.LENGTH_LONG);
             toast.show();

@@ -19,6 +19,9 @@ public class GameContext {
         this.finishTitle = finishTitle;
     }
 
+    /*
+     * Почему все эти методы package-private?
+     */
     int getStepsCount() {
         return stepsCount;
     }

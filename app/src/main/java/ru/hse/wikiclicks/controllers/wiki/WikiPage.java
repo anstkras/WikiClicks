@@ -23,6 +23,7 @@ public class WikiPage {
     }
 
     /** Getter for title field. */
+
     public String getTitle() {
         return title;
     }

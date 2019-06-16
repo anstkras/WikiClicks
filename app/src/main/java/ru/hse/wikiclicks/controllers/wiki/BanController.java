@@ -16,6 +16,9 @@ public class BanController {
         return properties.contains(entity);
     }
 
+    /*
+     * Все эти константы стоит сделать отдельными private static final String константами
+     */
     private boolean isRealCountry() {
         return isInstanceOfEntity("Q6256");
     }

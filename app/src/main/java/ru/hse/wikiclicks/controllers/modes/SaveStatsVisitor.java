@@ -51,6 +51,9 @@ public class SaveStatsVisitor implements GameModeVisitor<Void> {
         if (account == null) {
             return null;
         }
+        /*
+         * Всю эту пачку if'ов можно заменить на один for
+         */
         if (levelGameMode.getLevel() == 0) {
             submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_0), account);
         }

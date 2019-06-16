@@ -20,6 +20,10 @@ import java.util.List;
 
 /** Class responsible for queries to the Wiki databases and interacting with their API. */
 public class WikiController {
+    /*
+     * У классов, которые содержат только статические методы, принято делать пустой приватный конструктор
+     */
+
     private static final String WIKIPEDIA_ERROR = "Wikipedia parsing error";
     private static final String WIKIDATA_ERROR = "Wikidata parsing error";
     private static final String JSOUP_ERROR = "Jsoup execution error";
@@ -108,6 +112,9 @@ public class WikiController {
             // not going to happen - value came from JDK's own StandardCharsets
         } catch (IllegalArgumentException ignored) {
             //better a bad title that a crash
+            /*
+             * Тут стоит хотя бы в лог написать
+             */
         }
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
         return StringUtils.capitalize(title.replaceAll("_", " ")); // normalized title
@@ -158,8 +165,15 @@ public class WikiController {
     }
 
     /** Method that returns an ArrayList of all links from the given Wikipedia page. */
+    /*
+     * Это важно, что возвращается именно ArrayList? Если нет, то возвращайте List
+     * То же замечание для последующих методов
+     */
     public static ArrayList<String> getLinksFromPage(String title) {
         title = encodeTitle(title);
+        /*
+         * При объявлении переменных указывайте наиболее общий тип (List<String>)
+         */
         ArrayList<String> links = new ArrayList<>();
         String shouldContinue = null;
         try {
