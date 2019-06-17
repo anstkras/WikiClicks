@@ -77,7 +77,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             try {
                 webPage = DownloadController.readPage(lastTitle, directory);
             } catch (IOException e) {
-                Log.e("Reload old page error", e.getMessage());
+                Log.e(getString(R.string.reload_error_message), e.getMessage());
             }
             webView.loadDataWithBaseURL("", webPage, MIME_TYPE, ENCODING, "");
         } else {
@@ -99,7 +99,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         try {
             webPage = DownloadController.readPage(startTitle, directory);
         } catch (IOException e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.game_not_downloaded_message), Toast.LENGTH_SHORT);
             toast.show();
             this.finish();
         }
@@ -119,7 +119,7 @@ public class OfflineGameActivity extends AppCompatActivity {
                 webView.loadDataWithBaseURL("", webPage, MIME_TYPE, ENCODING, "");
             } catch (IOException e) {
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "This page is too far away from destination and has not been downloaded.", Toast.LENGTH_SHORT);
+                        getString(R.string.page_too_far_message), Toast.LENGTH_SHORT);
                 toast.show();
             }
             return true;
@@ -158,7 +158,7 @@ public class OfflineGameActivity extends AppCompatActivity {
                 String title = WikiController.getPageTitleFromUrl(currentUrl);
                 ru.hse.wikiclicks.database.Bookmarks.Bookmark bookmark = new ru.hse.wikiclicks.database.Bookmarks.Bookmark(currentUrl, title);
                 bookmarkViewModel.insert(bookmark);
-                Toast toast = Toast.makeText(getApplicationContext(), "Bookmark for " + title + " added", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.bookmark_added_message, title), Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -166,9 +166,9 @@ public class OfflineGameActivity extends AppCompatActivity {
 
     private AlertDialog getNewWinDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(OfflineGameActivity.this);
-        return builder.setTitle("You win!")
-                .setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        return builder.setTitle(getString(R.string.win_message))
+                .setMessage(getWinMessage() + System.lineSeparator() + getString(R.string.new_game_question_message))
+                .setPositiveButton(getString(R.string.yes_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent getEndpointsIntent = new Intent(OfflineGameActivity.this, OfflineLevelsActivity.class);
@@ -176,7 +176,7 @@ public class OfflineGameActivity extends AppCompatActivity {
                         startActivity(getEndpointsIntent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
@@ -189,8 +189,8 @@ public class OfflineGameActivity extends AppCompatActivity {
 
     private AlertDialog getNewExitDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(OfflineGameActivity.this);
-        return builder.setTitle("Do you want to finish this game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        return builder.setTitle(getString(R.string.game_finishing_message))
+                .setPositiveButton(getString(R.string.yes_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
@@ -198,7 +198,7 @@ public class OfflineGameActivity extends AppCompatActivity {
                         startActivity(mainMenuIntent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
@@ -224,7 +224,7 @@ public class OfflineGameActivity extends AppCompatActivity {
 
     private void setUpChronometer() {
         chronometer = findViewById(R.id.offline_chronometer);
-        chronometer.setFormat("Time: %s");
+        chronometer.setFormat(getString(R.string.time_format));
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }

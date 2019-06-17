@@ -83,22 +83,15 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 exitButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
-                /*
-                 *
-                 * Все эти строки стоит вынести в текстовые ресурсы
-                 * 1. Так проще за ними следить и менять при необходимости
-                 * 2. Это очень нужно для локализации приложения
-                 * Это же относится ко всем остальным захаркоженным в проекте строкам
-                 */
-                builder.setTitle("Exit")
-                        .setMessage("Are you sure you want to exit?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.exit_title_message))
+                        .setMessage(getString(R.string.exit_question_message))
+                        .setPositiveButton(getString(R.string.yes_message), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.no_message), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
