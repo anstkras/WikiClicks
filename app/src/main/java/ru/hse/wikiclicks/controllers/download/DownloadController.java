@@ -15,6 +15,7 @@ import ru.hse.wikiclicks.controllers.wiki.WikiController;
 /** Class responsible for downloading a chosen offline game and formatting its pages to display well. */
 public class DownloadController {
     private DownloadController() {}
+
     private static final String CONFIRMATION = "wikiclicksDownloadedGame";
     private static final int FAIL_MARGIN = 15;
     private static final int COOLOUT = 10;

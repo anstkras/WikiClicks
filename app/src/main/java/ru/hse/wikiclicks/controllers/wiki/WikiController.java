@@ -25,6 +25,7 @@ public class WikiController {
     private static final String WIKIPEDIA_ERROR = "Wikipedia parsing error";
     private static final String WIKIDATA_ERROR = "Wikidata parsing error";
     private static final String JSOUP_ERROR = "Jsoup execution error";
+    private static final String URL_ERROR = "Uri parsing error";
 
     /** Method that returns a random WikiPage or the Avatar (band) page if the request for a random page failed. */
     public static WikiPage getRandomPage() {
@@ -110,9 +111,7 @@ public class WikiController {
             // not going to happen - value came from JDK's own StandardCharsets
         } catch (IllegalArgumentException ignored) {
             //better a bad title that a crash
-            /*
-             * Тут стоит хотя бы в лог написать
-             */
+            Log.e(URL_ERROR, "parsing url " + url);
         }
         String title = url.replace("https://en.m.wikipedia.org/wiki/", "");
         return StringUtils.capitalize(title.replaceAll("_", " ")); // normalized title
