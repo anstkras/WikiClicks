@@ -115,4 +115,16 @@
         <item>4\'33\"</item>
         <item>3</item>
     </string-array>
+    <array name="leaderBoards">
+        <item>@string/leaderboard_level_0</item>
+        <item>@string/leaderboard_level_1</item>
+        <item>@string/leaderboard_level_2</item>
+        <item>@string/leaderboard_level_3</item>
+        <item>@string/leaderboard_level_4</item>
+        <item>@string/leaderboard_level_5</item>
+        <item>@string/leaderboard_level_6</item>
+        <item>@string/leaderboard_level_7</item>
+        <item>@string/leaderboard_level_8</item>
+        <item>@string/leaderboard_level_9</item>
+    </array>
 </resources>
