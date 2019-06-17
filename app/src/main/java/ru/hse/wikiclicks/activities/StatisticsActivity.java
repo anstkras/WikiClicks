@@ -114,12 +114,6 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     static abstract class StatisticsFragment extends Fragment {
-        /** Creates the fragment stats. */
-        @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
-
         /** Initializes the fragment's view and shows the available statistics. */
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
