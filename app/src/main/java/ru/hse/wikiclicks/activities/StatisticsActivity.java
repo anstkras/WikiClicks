@@ -73,6 +73,11 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
+    /*
+     * Код для TimeFragment и StepsFragment отличается буквально в паре строчек, так что имеет
+     *   смысл вынести весь общий код в один абстрактный класс, а в конкретных наследниках
+     *   указать эти специфичные пару строчек
+     */
     /** Fragment that displays statistics for time mode games. */
     public static class TimeFragment extends Fragment {
         /** Creates the fragment for time mode stats. */
@@ -81,7 +86,7 @@ public class StatisticsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
         }
 
-        /** Initializes the fragment's view and shows the availible statistics. */
+        /** Initializes the fragment's view and shows the available statistics. */
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -121,7 +126,7 @@ public class StatisticsActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
         }
 
-        /** Initializes the fragment's view and shows the availible statistics. */
+        /** Initializes the fragment's view and shows the available statistics. */
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {

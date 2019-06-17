@@ -41,6 +41,20 @@ public class MainMenuActivity extends AppCompatActivity {
         bookmarksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
+                 * Все эти listener'ы, кроме последнего, представляют из себя копипаст кода,
+                 *   который отличается лишь Class<?> той activity, на которую требуется перейти
+                 *   (если что, view, возвращаемая в event'е -- это как раз нажатая кнопка),
+                 *   поэтому простановку всех этих listener'ов можно было сделать в одну строку
+                 *
+                 * Также OnClickListener является функциональным интерфейсом, так что можно было
+                 *   использовать лямбду, вместо того, чтобы городить анонимный класс. Код с лямбдами
+                 *   гораздо приятнее читать. Возможно, анонимные классы вы выбрали из-за того, что
+                 *   старые версии Android живут на Java 6, и это я понять могу.
+                 *
+                 * Не очень понятно, зачем перекрашивать нажатую кнопку, это же не ссылки в браузере.
+                 *   Но, в целом, это дело вкуса.
+                 */
                 bookmarksButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 Intent bookmarksIntent = new Intent(MainMenuActivity.this, BookmarkActivity.class);
                 startActivity(bookmarksIntent);
@@ -103,6 +117,15 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 exitButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
+                /*
+                 * Все сеттеры у этого builder'а возвращают его же, так что можно было бы сделать
+                 *   цепочку вызовов без повторения переменной builder
+                 *
+                 * Все эти строки стоит вынести в текстовые ресурсы
+                 * 1. Так проще за ними следить и менять при необходимости
+                 * 2. Это очень нужно для локализации приложения
+                 * Это же относится ко всем остальным захаркоженным в проекте строкам
+                 */
                 builder.setTitle("Exit");
                 builder.setMessage("Are you sure you want to exit?");
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
