@@ -1,5 +1,7 @@
 package ru.hse.wikiclicks.activities;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -73,54 +76,45 @@ public class StatisticsActivity extends AppCompatActivity {
         });
     }
 
-    /*
-     * Код для TimeFragment и StepsFragment отличается буквально в паре строчек, так что имеет
-     *   смысл вынести весь общий код в один абстрактный класс, а в конкретных наследниках
-     *   указать эти специфичные пару строчек
-     */
     /** Fragment that displays statistics for time mode games. */
-    public static class TimeFragment extends Fragment {
-        /** Creates the fragment for time mode stats. */
+    public static class TimeFragment extends StatisticsFragment {
         @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+        int getFragmentLayout() {
+            return R.layout.time_games_fragment;
         }
 
-        /** Initializes the fragment's view and shows the available statistics. */
         @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.time_games_fragment,
-                    container, false);
+        int getRecyclerViewId() {
+            return R.id.recycleview_statistics_time;
+        }
 
-            GameStatsViewModel gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
-
-            final RecyclerView recyclerView = view.findViewById(R.id.recycleview_statistics_time);
-            final List<GameStats> gameStats = new ArrayList<>();
-            final StatisticsListAdapter adapter = new StatisticsListAdapter(this.getActivity(), gameStats);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
-            gameStatsViewModel.getTimeGames().observe(this, new Observer<List<GameStats>>() {
-                /** Modifies the statistics when new games have been won. */
-                @Override
-                public void onChanged(@Nullable final List<GameStats> games) {
-                    gameStats.clear();
-                    if (games == null) {
-                        return;
-                    }
-                    gameStats.addAll(games);
-                    adapter.notifyDataSetChanged();
-                }
-            });
-
-            recyclerView.setAdapter(adapter);
-            return view;
+        @Override
+        LiveData<List<GameStats>> gameStatsToObserve(GameStatsViewModel gameStatsViewModel) {
+            return gameStatsViewModel.getTimeGames();
         }
     }
 
     /** Fragment that displays statistics for steps mode games. */
-    public static class StepsFragment extends Fragment {
-        /** Creates the fragment for steps mode stats. */
+    public static class StepsFragment extends StatisticsFragment {
+
+        @Override
+        int getFragmentLayout() {
+            return R.layout.steps_games_fragment;
+        }
+
+        @Override
+        int getRecyclerViewId() {
+            return R.id.recyclerview_statistics_steps;
+        }
+
+        @Override
+        LiveData<List<GameStats>> gameStatsToObserve(GameStatsViewModel gameStatsViewModel) {
+            return gameStatsViewModel.getStepsGames();
+        }
+    }
+
+    static abstract class StatisticsFragment extends Fragment {
+        /** Creates the fragment stats. */
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -130,17 +124,17 @@ public class StatisticsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.steps_games_fragment,
+            View view = inflater.inflate(getFragmentLayout(),
                     container, false);
 
             GameStatsViewModel gameStatsViewModel = ViewModelProviders.of(this).get(GameStatsViewModel.class);
 
-            final RecyclerView recyclerView = view.findViewById(R.id.listview_statistics_steps);
+            final RecyclerView recyclerView = view.findViewById(getRecyclerViewId());
             final List<GameStats> gameStats = new ArrayList<>();
             final StatisticsListAdapter adapter = new StatisticsListAdapter(this.getActivity(), gameStats);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-            gameStatsViewModel.getStepsGames().observe(this, new Observer<List<GameStats>>() {
+            gameStatsToObserve(gameStatsViewModel).observe(this, new Observer<List<GameStats>>() {
                 /** Modifies the statistics when new games have been won. */
                 @Override
                 public void onChanged(@Nullable final List<GameStats> games) {
@@ -156,5 +150,9 @@ public class StatisticsActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             return view;
         }
+
+        abstract @LayoutRes int getFragmentLayout();
+        abstract @IdRes int getRecyclerViewId();
+        abstract LiveData<List<GameStats>> gameStatsToObserve(GameStatsViewModel gameStatsViewModel);
     }
 }
