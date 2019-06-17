@@ -19,26 +19,23 @@ public class GameContext {
         this.finishTitle = finishTitle;
     }
 
-    /*
-     * Почему все эти методы package-private?
-     */
-    int getStepsCount() {
+    public int getStepsCount() {
         return stepsCount;
     }
 
-    long getMillisecondsElapsed() {
+    public long getMillisecondsElapsed() {
         return millisecondsElapsed;
     }
 
-    AppCompatActivity getActivity() {
+    public AppCompatActivity getActivity() {
         return activity;
     }
 
-    String getFinishTitle() {
+    public String getFinishTitle() {
         return finishTitle;
     }
 
-    String getStartTitle() {
+    public String getStartTitle() {
         return startTitle;
     }
 }
