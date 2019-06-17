@@ -11,8 +11,8 @@ import ru.hse.wikiclicks.database.GamesDatabase;
 // Class that provides methods to manage bookmarks table
 class BookmarkRepository {
 
-    private BookmarkDao bookmarkDao;
-    private LiveData<List<Bookmark>> bookmarks;
+    private final BookmarkDao bookmarkDao;
+    private final LiveData<List<Bookmark>> bookmarks;
 
     BookmarkRepository(Application application) {
         GamesDatabase db = GamesDatabase.getDatabase(application);
@@ -34,7 +34,7 @@ class BookmarkRepository {
 
     private static class insertAsyncTask extends AsyncTask<Bookmark, Void, Void> {
 
-        private BookmarkDao asyncTaskDao;
+        private final BookmarkDao asyncTaskDao;
 
         private insertAsyncTask(BookmarkDao dao) {
             asyncTaskDao = dao;
@@ -49,7 +49,7 @@ class BookmarkRepository {
 
     private static class deleteAsyncTask extends AsyncTask<Bookmark, Void, Void> {
 
-        private BookmarkDao asyncTaskDao;
+        private final BookmarkDao asyncTaskDao;
 
         private deleteAsyncTask(BookmarkDao dao) {
             asyncTaskDao = dao;

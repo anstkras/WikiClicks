@@ -11,9 +11,9 @@ import androidx.lifecycle.LiveData;
 /** View model for a bookmark entity from the database. */
 public class BookmarkViewModel extends AndroidViewModel {
 
-    private BookmarkRepository repository;
+    private final BookmarkRepository repository;
 
-    private LiveData<List<Bookmark>> bookmarks;
+    private final LiveData<List<Bookmark>> bookmarks;
 
     /** Creates the BookmarkViewModel for an Application. */
     public BookmarkViewModel(@NonNull Application application) {

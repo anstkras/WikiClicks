@@ -11,10 +11,10 @@ import androidx.lifecycle.LiveData;
 /** View model for a game statistics entity from the database. */
 public class GameStatsViewModel extends AndroidViewModel {
 
-    private GameStatsRepository repository;
+    private final GameStatsRepository repository;
 
-    private LiveData<List<GameStats>> timeGames;
-    private LiveData<List<GameStats>> stepsGames;
+    private final LiveData<List<GameStats>> timeGames;
+    private final LiveData<List<GameStats>> stepsGames;
 
     /** Creates the GameStatsViewModel for an Application. */
     public GameStatsViewModel(@NonNull Application application) {

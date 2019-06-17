@@ -18,8 +18,8 @@ import ru.hse.wikiclicks.database.GameStats.GameStats;
 /** Class that represents an adapter for recycle view of games statistics */
 public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAdapter.ViewHolder> {
 
-    private List<GameStats> gameStats;
-    private LayoutInflater inflater;
+    private final List<GameStats> gameStats;
+    private final LayoutInflater inflater;
 
     public StatisticsListAdapter(Context context, List<GameStats> data) {
         this.inflater = LayoutInflater.from(context);
@@ -51,9 +51,9 @@ public class StatisticsListAdapter extends RecyclerView.Adapter<StatisticsListAd
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView fromTextView;
-        private TextView toTextView;
-        private TextView valueTextView;
+        private final TextView fromTextView;
+        private final TextView toTextView;
+        private final TextView valueTextView;
 
         private ViewHolder(View itemView) {
             super(itemView);

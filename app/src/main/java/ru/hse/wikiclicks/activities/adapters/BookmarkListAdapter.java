@@ -23,9 +23,9 @@ import ru.hse.wikiclicks.database.Bookmarks.BookmarkViewModel;
 /** Class that represents an adapter for recycle view of bookmarks */
 public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapter.ViewHolder> {
 
-    private List<Bookmark> bookmarks;
-    private LayoutInflater inflater;
-    private Context context;
+    private final List<Bookmark> bookmarks;
+    private final LayoutInflater inflater;
+    private final Context context;
     private final BookmarkViewModel bookmarkViewModel;
 
     public BookmarkListAdapter(Context context, BookmarkViewModel bookmarkViewModel, List<Bookmark> data) {
@@ -54,7 +54,7 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView bookmarkTextView;
+        private final TextView bookmarkTextView;
 
         private ViewHolder(View itemView) {
             super(itemView);

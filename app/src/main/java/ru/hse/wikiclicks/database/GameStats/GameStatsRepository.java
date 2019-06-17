@@ -11,9 +11,9 @@ import ru.hse.wikiclicks.database.GamesDatabase;
 // Class that provides methods to manage game stats table
 public class GameStatsRepository {
 
-    private GameStatsDao gameStatsDao;
-    private LiveData<List<GameStats>> timeGames;
-    private LiveData<List<GameStats>> stepsGames;
+    private final GameStatsDao gameStatsDao;
+    private final LiveData<List<GameStats>> timeGames;
+    private final LiveData<List<GameStats>> stepsGames;
 
 
     GameStatsRepository(Application application) {
@@ -37,7 +37,7 @@ public class GameStatsRepository {
 
     private static class insertAsyncTask extends AsyncTask<GameStats, Void, Void> {
 
-        private GameStatsDao asyncTaskDao;
+        private final GameStatsDao asyncTaskDao;
 
         insertAsyncTask(GameStatsDao dao) {
             asyncTaskDao = dao;
