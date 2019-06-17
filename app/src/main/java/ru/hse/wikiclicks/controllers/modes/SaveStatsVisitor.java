@@ -15,11 +15,15 @@ import ru.hse.wikiclicks.database.GameStats.GameStatsViewModel;
 public class SaveStatsVisitor implements GameModeVisitor<Void> {
     private final GameContext gameContext;
     private final GameStatsViewModel gameStatsViewModel;
+    private final String[] leaderBoards;
+    private static final int START_LEVEL = 0;
+    private static final int END_LEVEL = 9;
 
     /** Basic constructor that depends on the current game context. */
     public SaveStatsVisitor(GameContext gameContext) {
         this.gameContext = gameContext;
         this.gameStatsViewModel = ViewModelProviders.of(gameContext.getActivity()).get(GameStatsViewModel.class);
+        leaderBoards = gameContext.getActivity().getResources().getStringArray(R.array.leaderBoards);
     }
 
     /** Submits statistics for time game mode. */
@@ -51,38 +55,10 @@ public class SaveStatsVisitor implements GameModeVisitor<Void> {
         if (account == null) {
             return null;
         }
-        /*
-         * Всю эту пачку if'ов можно заменить на один for
-         */
-        if (levelGameMode.getLevel() == 0) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_0), account);
-        }
-        if (levelGameMode.getLevel() == 1) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_1), account);
-        }
-        if (levelGameMode.getLevel() == 2) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_2), account);
-        }
-        if (levelGameMode.getLevel() == 3) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_3), account);
-        }
-        if (levelGameMode.getLevel() == 4) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_4), account);
-        }
-        if (levelGameMode.getLevel() == 5) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_5), account);
-        }
-        if (levelGameMode.getLevel() == 6) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_6), account);
-        }
-        if (levelGameMode.getLevel() == 7) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_7), account);
-        }
-        if (levelGameMode.getLevel() == 8) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_8), account);
-        }
-        if (levelGameMode.getLevel() == 9) {
-            submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_9), account);
+        for (int i = START_LEVEL; i < END_LEVEL; i++) {
+            if (levelGameMode.getLevel() == i) {
+                submitScore(leaderBoards[i], account);
+            }
         }
 
         Toast toast = Toast.makeText(gameContext.getActivity(), "Your score was submitted to the leaderboard", Toast.LENGTH_SHORT);
