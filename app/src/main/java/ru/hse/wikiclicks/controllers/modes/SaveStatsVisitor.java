@@ -85,7 +85,8 @@ public class SaveStatsVisitor implements GameModeVisitor<Void> {
             submitScore(gameContext.getActivity().getString(R.string.leaderboard_level_9), account);
         }
 
-        Toast toast = Toast.makeText(gameContext.getActivity(), "Your score was submitted to the leaderboard", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(gameContext.getActivity(),
+                gameContext.getActivity().getResources().getString(R.string.score_submitted_message), Toast.LENGTH_SHORT);
         toast.show();
         return null;
     }

@@ -111,7 +111,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         if (gameDirectory == null) {
             return;
         } else if (!DownloadController.checkConfirmation(gameDirectory, levelNumber)) {
-            Toast toast = Toast.makeText(getApplicationContext(), "This offline game has not been downloaded.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.game_not_downloaded_message), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -131,7 +131,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
         if (downloadDirectory == null) {
             return;
         } else if (DownloadController.checkConfirmation(downloadDirectory, levelNumber)) {
-            Toast toast = Toast.makeText(getApplicationContext(),"This level has already been downloaded.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.game_already_downloaded_message), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -154,7 +154,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     private String getDownloadDirectory() {
         File downloadDirectory = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
         if (downloadDirectory == null) {
-            Toast toast = Toast.makeText(getApplicationContext(),"Error: WikiClicks can't reach external storage", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.external_storage_error_message), Toast.LENGTH_SHORT);
             toast.show();
             return null;
         }
@@ -182,8 +182,8 @@ public class OfflineLevelsActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_wikipedia)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent)
-                .setContentTitle("Downloading level " + levelNumber)
-                .setContentText("Download is in progress.")
+                .setContentTitle(getString(R.string.downloading_level_message, levelNumber))
+                .setContentText(getString(R.string.download_in_progress_message))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationManager.notify(NOTIFICATION_ID + levelNumber, startedDownload.build());
     }

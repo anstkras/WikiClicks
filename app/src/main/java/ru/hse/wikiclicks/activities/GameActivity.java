@@ -88,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (!WikiController.isCorrectWikipediaLink(url)) {
-                Toast toast = Toast.makeText(getApplicationContext(), "URL should lead to english wiki page", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.incorrect_url_message), Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
             }
@@ -129,12 +129,12 @@ public class GameActivity extends AppCompatActivity {
             }
             BanController urlController = new BanController(url);
             if (banCountriesEnabled() && urlController.isCountry()) {
-                Toast toast = Toast.makeText(getApplicationContext(), "URL should not lead to country", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.country_url_message), Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
             }
             if (banYearsEnabled() && urlController.isYear()) {
-                Toast toast = Toast.makeText(getApplicationContext(), "URL should not lead to year", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.year_url_message), Toast.LENGTH_SHORT);
                 toast.show();
                 return true;
             }
@@ -143,9 +143,9 @@ public class GameActivity extends AppCompatActivity {
 
         private AlertDialog getNewWinDialog() {
             final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-            return builder.setTitle("You win!")
-                    .setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            return builder.setTitle(getString(R.string.win_message))
+                    .setMessage(getWinMessage() + System.lineSeparator() + getString(R.string.new_game_question_message))
+                    .setPositiveButton(getString(R.string.yes_message), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent intent = new Intent(GameActivity.this, gameMode.accept(GetNewGameVisitor.getInstance()));
@@ -153,7 +153,7 @@ public class GameActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getString(R.string.no_message), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
@@ -192,7 +192,7 @@ public class GameActivity extends AppCompatActivity {
                 String title = WikiController.getPageTitleFromUrl(currentUrl);
                 ru.hse.wikiclicks.database.Bookmarks.Bookmark bookmark = new ru.hse.wikiclicks.database.Bookmarks.Bookmark(currentUrl, title);
                 bookmarkViewModel.insert(bookmark);
-                Toast toast = Toast.makeText(getApplicationContext(), "Bookmark for " + title + " added", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.bookmark_added_message, title), Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -200,8 +200,8 @@ public class GameActivity extends AppCompatActivity {
 
     private AlertDialog getNewExitDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        return builder.setTitle("Do you want to finish this game?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        return builder.setTitle(getString(R.string.game_finishing_message))
+                .setPositiveButton(getString(R.string.yes_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
@@ -209,7 +209,7 @@ public class GameActivity extends AppCompatActivity {
                         startActivity(mainMenuIntent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.no_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                     }
@@ -249,7 +249,7 @@ public class GameActivity extends AppCompatActivity {
         if (!enabled) {
             chronometer.setVisibility(View.GONE);
         }
-        chronometer.setFormat("Time: %s");
+        chronometer.setFormat(getString(R.string.time_format));
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
     }

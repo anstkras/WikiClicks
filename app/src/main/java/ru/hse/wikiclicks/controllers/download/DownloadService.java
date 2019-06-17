@@ -42,9 +42,9 @@ public class DownloadService extends JobIntentService {
         OfflineGameSelector game = new OfflineGameSelector(startTitle, finishTitle, levelSize);
         DownloadController.downloadTree(game, directory, levelNumber);
 
-        String resultText = "Download finished successfully!";
+        String resultText = getString(R.string.download_success_message);
         if (!DownloadController.checkConfirmation(directory, levelNumber)) { //download failed
-            resultText = "Downloading the level failed. Please try again.";
+            resultText = getString(R.string.download_failed_message);
         }
 
         notifyOfFinishedDownload(resultText, levelNumber);
@@ -62,7 +62,7 @@ public class DownloadService extends JobIntentService {
         String channelId = getString(R.string.channel_id);
         NotificationCompat.Builder finishedDownload = new NotificationCompat.Builder(getApplicationContext(), channelId)
                 .setSmallIcon(R.drawable.ic_wikipedia)
-                .setContentTitle("Download of level " + levelNumber + " complete")
+                .setContentTitle(getString(R.string.download_finished_message, levelNumber))
                 .setContentText(resultText)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

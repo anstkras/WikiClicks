@@ -146,12 +146,12 @@ public class ChallengesActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             completedTask.getResult(ApiException.class);
-            Toast toast = Toast.makeText(this, "sign in successful", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, getString(R.string.sign_in_successful_message), Toast.LENGTH_SHORT);
             toast.show();
             signInButton.setVisibility(View.GONE);
             signOutButton.setVisibility(View.VISIBLE);
         } catch (ApiException e) {
-            Toast toast = Toast.makeText(this, "Something went wrong. Error code: " + e.getStatusCode(), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, getString(R.string.sign_in_failed_message, e.getStatusCode()), Toast.LENGTH_SHORT);
             toast.show();
             signInButton.setVisibility(View.VISIBLE);
             signOutButton.setVisibility(View.GONE);
@@ -187,7 +187,7 @@ public class ChallengesActivity extends AppCompatActivity {
 
         if (startPage.getTitle() == null || startPage.getId() == null ||
                 finishPage.getTitle() == null || finishPage.getId() == null) {
-            Toast toast = Toast.makeText(this, "Loading the level failed", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, getString(R.string.load_level_failed_message), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
@@ -206,7 +206,7 @@ public class ChallengesActivity extends AppCompatActivity {
     private void showLeaderboard(String leaderBoardId) {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account == null) {
-            Toast toast = Toast.makeText(this, "You have to sign in", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(this, getString(R.string.sign_in_required_message), Toast.LENGTH_SHORT);
             toast.show();
             return;
         }

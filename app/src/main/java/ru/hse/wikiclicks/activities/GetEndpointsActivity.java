@@ -54,7 +54,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 if (startPage.getId() == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.choose_start_message), Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     createDialogFromPageExtract(startPage);
@@ -71,7 +71,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 finishHintButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 if (finishPage.getId() == null) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.choose_end_message), Toast.LENGTH_SHORT);
                     toast.show();
                 } else {
                     createDialogFromPageExtract(finishPage);
@@ -84,9 +84,9 @@ public class GetEndpointsActivity extends AppCompatActivity {
     private void createDialogFromPageExtract(WikiPage page) {
         String text = WikiController.getExtract(page.getId());
         final AlertDialog.Builder builder = new AlertDialog.Builder(GetEndpointsActivity.this);
-        builder.setTitle(page.getTitle() + " info")
+        builder.setTitle(getString(R.string.page_info_message, page.getTitle()))
                 .setMessage(text)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.ok_message), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -104,13 +104,13 @@ public class GetEndpointsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 if (startPage.getId() == null) { // start does not exist
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose starting page.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.choose_start_message), Toast.LENGTH_SHORT);
                     toast.show();
                 } else if (finishPage.getId() == null) { // finish does not exist
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose end page.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.choose_end_message), Toast.LENGTH_SHORT);
                     toast.show();
                 } else if (startPage.getId().equals(finishPage.getId())) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "Please choose differing start and end page.", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.same_start_and_end_message), Toast.LENGTH_SHORT);
                     toast.show();
                 } else { // game can be started
                     Intent startGame = new Intent(GetEndpointsActivity.this, GameActivity.class);
