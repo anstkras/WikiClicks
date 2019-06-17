@@ -150,8 +150,7 @@ public class ChallengesActivity extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            // переменная account не используется
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            completedTask.getResult(ApiException.class);
             Toast toast = Toast.makeText(this, "sign in successful", Toast.LENGTH_LONG);
             toast.show();
             signInButton.setVisibility(View.GONE);
