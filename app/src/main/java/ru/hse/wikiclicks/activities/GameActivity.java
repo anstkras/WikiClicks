@@ -143,25 +143,25 @@ public class GameActivity extends AppCompatActivity {
 
         private AlertDialog getNewWinDialog() {
             final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-            builder.setTitle("You win!");
-            builder.setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(GameActivity.this, gameMode.accept(GetNewGameVisitor.getInstance()));
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                    mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(mainMenuIntent);
-                }
-            });
-            return builder.create();
+            return builder.setTitle("You win!")
+                    .setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(GameActivity.this, gameMode.accept(GetNewGameVisitor.getInstance()));
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                            mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(mainMenuIntent);
+                        }
+                    })
+                    .create();
         }
     }
 
@@ -200,21 +200,21 @@ public class GameActivity extends AppCompatActivity {
 
     private AlertDialog getNewExitDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        builder.setTitle("Do you want to finish this game?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
-                mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainMenuIntent);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
-        return builder.create();
+        return builder.setTitle("Do you want to finish this game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent mainMenuIntent = new Intent(GameActivity.this, MainMenuActivity.class);
+                        mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainMenuIntent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .create();
     }
 
     private void readExtras() {

@@ -84,30 +84,28 @@ public class MainMenuActivity extends AppCompatActivity {
                 exitButton.setTextColor(getResources().getColor(R.color.colorUsed));
                 final AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
                 /*
-                 * Все сеттеры у этого builder'а возвращают его же, так что можно было бы сделать
-                 *   цепочку вызовов без повторения переменной builder
                  *
                  * Все эти строки стоит вынести в текстовые ресурсы
                  * 1. Так проще за ними следить и менять при необходимости
                  * 2. Это очень нужно для локализации приложения
                  * Это же относится ко всем остальным захаркоженным в проекте строкам
                  */
-                builder.setTitle("Exit");
-                builder.setMessage("Are you sure you want to exit?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.setTitle("Exit")
+                        .setMessage("Are you sure you want to exit?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
             }
         });
     }

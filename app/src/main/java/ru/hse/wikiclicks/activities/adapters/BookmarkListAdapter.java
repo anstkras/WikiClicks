@@ -76,22 +76,22 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
                 @Override
                 public void onClick(View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Are you sure you want to delete this bookmark?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Bookmark bookmark = bookmarks.remove(getAdapterPosition());
-                            notifyDataSetChanged();
-                            bookmarkViewModel.delete(bookmark);
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            return;
-                        }
-                    });
-                    builder.create().show();
+                    builder.setTitle("Are you sure you want to delete this bookmark?")
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    Bookmark bookmark = bookmarks.remove(getAdapterPosition());
+                                    notifyDataSetChanged();
+                                    bookmarkViewModel.delete(bookmark);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            })
+                            .create()
+                            .show();
                 }
             });
         }

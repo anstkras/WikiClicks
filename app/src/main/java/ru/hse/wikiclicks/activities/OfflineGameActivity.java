@@ -165,44 +165,44 @@ public class OfflineGameActivity extends AppCompatActivity {
 
     private AlertDialog getNewWinDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(OfflineGameActivity.this);
-        builder.setTitle("You win!");
-        builder.setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent getEndpointsIntent = new Intent(OfflineGameActivity.this, OfflineLevelsActivity.class);
-                getEndpointsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(getEndpointsIntent);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
-                mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainMenuIntent);
-            }
-        });
-        return builder.create();
+        return builder.setTitle("You win!")
+                .setMessage(getWinMessage() + System.lineSeparator() + "Do you want to start a new game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent getEndpointsIntent = new Intent(OfflineGameActivity.this, OfflineLevelsActivity.class);
+                        getEndpointsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(getEndpointsIntent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
+                        mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainMenuIntent);
+                    }
+                })
+                .create();
     }
 
     private AlertDialog getNewExitDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(OfflineGameActivity.this);
-        builder.setTitle("Do you want to finish this game?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
-                mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(mainMenuIntent);
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
-        return builder.create();
+        return builder.setTitle("Do you want to finish this game?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent mainMenuIntent = new Intent(OfflineGameActivity.this, MainMenuActivity.class);
+                        mainMenuIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(mainMenuIntent);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .create();
     }
 
     private void readExtras() {

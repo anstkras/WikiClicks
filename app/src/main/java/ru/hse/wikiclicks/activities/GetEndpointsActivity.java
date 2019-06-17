@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -82,16 +84,16 @@ public class GetEndpointsActivity extends AppCompatActivity {
     private void createDialogFromPageExtract(WikiPage page) {
         String text = WikiController.getExtract(page.getId());
         final AlertDialog.Builder builder = new AlertDialog.Builder(GetEndpointsActivity.this);
-        builder.setTitle(page.getTitle() + " info");
-        builder.setMessage(text);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.setTitle(page.getTitle() + " info")
+                .setMessage(text)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     /** Creates button that starts game if both start and finish are initialized. */
@@ -126,7 +128,8 @@ public class GetEndpointsActivity extends AppCompatActivity {
 
     /**
      * Creates button that sets a random start and end page and prints them to the given views.
-     * @param startView view that will show start page title.
+     *
+     * @param startView  view that will show start page title.
      * @param finishView view that will show end page title.
      */
     private void createRandomButton(final AutoCompleteTextView startView, final AutoCompleteTextView finishView) {
@@ -147,6 +150,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
 
     /**
      * Initializes a AutoCompleteTextView that searches for the chosen WikiPage.
+     *
      * @param pageSearch the AutoCompleteTextView that will search for Wikipedia pages.
      * @param chosenPage a WikiPage that will store the corresponding page for the current search result.
      */
@@ -207,7 +211,7 @@ public class GetEndpointsActivity extends AppCompatActivity {
         }
 
         /** Updates the search suggestion adapter. */
-        protected void onPostExecute(List <WikiPage> result) {
+        protected void onPostExecute(List<WikiPage> result) {
             adapter.clear();
             adapter.addAll(result);
         }
