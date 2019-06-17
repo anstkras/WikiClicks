@@ -20,9 +20,7 @@ import java.util.List;
 
 /** Class responsible for queries to the Wiki databases and interacting with their API. */
 public class WikiController {
-    /*
-     * У классов, которые содержат только статические методы, принято делать пустой приватный конструктор
-     */
+    private WikiController() {}
 
     private static final String WIKIPEDIA_ERROR = "Wikipedia parsing error";
     private static final String WIKIDATA_ERROR = "Wikidata parsing error";
