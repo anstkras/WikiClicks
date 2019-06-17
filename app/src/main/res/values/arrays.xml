@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="challenges">
+        <item>@array/challenge_0</item>
+        <item>@array/challenge_1</item>
+        <item>@array/challenge_2</item>
+        <item>@array/challenge_3</item>
+        <item>@array/challenge_4</item>
+        <item>@array/challenge_5</item>
+        <item>@array/challenge_6</item>
+        <item>@array/challenge_7</item>
+        <item>@array/challenge_8</item>
+        <item>@array/challenge_9</item>
+    </array>
+    <string-array name="challenge_0">
+        <item>Dog</item>
+        <item>Cat</item>
+    </string-array>
+    <string-array name="challenge_1">
+        <item>Women in Russia</item>
+        <item>Google</item>
+    </string-array>
+    <string-array name="challenge_2">
+        <item>Algorithm</item>
+        <item>Javascript</item>
+    </string-array>
+    <string-array name="challenge_3">
+        <item>Saint Petersburg Academic University</item>
+        <item>Higher School of Economics</item>
+    </string-array>
+    <string-array name="challenge_4">
+        <item>Terry Pratchett</item>
+        <item>Hamiltonian path</item>
+    </string-array>
+    <string-array name="challenge_5">
+        <item>War and Peace</item>
+        <item>Hamlet</item>
+    </string-array>
+    <string-array name="challenge_6">
+        <item>Devil</item>
+        <item>Invisible Pink Unicorn</item>
+    </string-array>
+    <string-array name="challenge_7">
+        <item>Black metal</item>
+        <item>Wombat</item>
+    </string-array>
+    <string-array name="challenge_8">
+        <item>Anne Hathaway (wife of Shakespeare)</item>
+        <item>Anne Hathaway</item>
+    </string-array>
+    <string-array name="challenge_9">
+        <item>Empty</item>
+        <item>Full</item>
+
+    </string-array>
+    <array name="offline_levels">
+        <item>@array/offline_level_0</item>
+        <item>@array/offline_level_1</item>
+        <item>@array/offline_level_2</item>
+        <item>@array/offline_level_3</item>
+        <item>@array/offline_level_4</item>
+        <item>@array/offline_level_5</item>
+        <item>@array/offline_level_6</item>
+        <item>@array/offline_level_7</item>
+        <item>@array/offline_level_8</item>
+        <item>@array/offline_level_9</item>
+    </array>
+    <string-array name="offline_level_0">
+        <item>Vanity Fair (novel)</item>
+        <item>Star Wars</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_1">
+        <item>Lock picking</item>
+        <item>Harry Potter</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_2">
+        <item>Coffeemaker</item>
+        <item>Hello, World</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_3">
+        <item>Moscow</item>
+        <item>Prada</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="offline_level_4">
+        <item>Invisible Pink Unicorn</item>
+        <item>Game of Thrones</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_5">
+        <item>Black swan</item>
+        <item>Ovid</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_6">
+        <item>Lady Justice</item>
+        <item>Seafood</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_7">
+        <item>Butte</item>
+        <item>Seven Wonders of the Ancient World</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="offline_level_8">
+        <item>Ritchie Blackmore</item>
+        <item>Hell Station</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="offline_level_9">
+        <item>Singin\' in the Rain</item>
+        <item>4\'33\"</item>
+        <item>3</item>
+    </string-array>
+</resources>

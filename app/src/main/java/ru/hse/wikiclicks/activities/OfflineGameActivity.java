@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +47,7 @@ public class OfflineGameActivity extends AppCompatActivity {
     private long milliseconds;
     private String currentUrl = "";
 
-    private ArrayList<String> titleTree = new ArrayList<>();
+    private List<String> titleTree = new ArrayList<>();
     private String directory;
     private boolean hasGameEnded;
 
