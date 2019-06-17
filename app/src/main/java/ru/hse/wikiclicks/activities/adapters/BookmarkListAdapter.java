@@ -53,9 +53,6 @@ public class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkListAdapte
         return bookmarks.size();
     }
 
-    /*
-     * Почему package-private модификатор видимости?
-     */
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView bookmarkTextView;
 
