@@ -86,5 +86,6 @@
     <string name="bookmark_added_message">Bookmark for %1$s added</string>
     <string name="win_message">You win!</string>
     <string name="new_game_question_message">Do you want to start a new game?</string>
+    <string name="back_press_banned_message">Back press is banned in this mode</string>
 
 </resources>
