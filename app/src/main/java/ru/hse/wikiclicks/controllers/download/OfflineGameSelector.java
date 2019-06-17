@@ -3,6 +3,7 @@ package ru.hse.wikiclicks.controllers.download;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import ru.hse.wikiclicks.controllers.wiki.WikiController;
@@ -46,9 +47,9 @@ class OfflineGameSelector {
 
     /** Method that was used to generate the levels locally. Provides a random end page for the normal link tree. */
     private String chooseRandomPossibleEndPage() {
-        ArrayList<String> edgePages = new ArrayList<>(pages);
+        List<String> edgePages = new ArrayList<>(pages);
         Collections.shuffle(edgePages);
-        ArrayList<String> finalLinks = WikiController.getLinksFromPage(edgePages.get(0));
+        List<String> finalLinks = WikiController.getLinksFromPage(edgePages.get(0));
         Collections.shuffle(finalLinks);
         String finalPage = finalLinks.get(finalLinks.size() - 1);
         for (int i = 0; i < finalLinks.size(); i++) {
@@ -69,7 +70,7 @@ class OfflineGameSelector {
      */
     private void getExtendedLinksTree() {
         Random random = new Random(PAGE_RANDOM_CONSTANT);
-        ArrayList<String> links = WikiController.getLinksFromPage(startPageName);
+        List<String> links = WikiController.getLinksFromPage(startPageName);
         if (links.size() > 0) { //check page exists
             pages.add(startPageName);
         }
@@ -93,7 +94,7 @@ class OfflineGameSelector {
         }
         pages.add(page);
         if (depth != 1) {
-            ArrayList<String> links = WikiController.getLinksFromPage(page);
+            List<String> links = WikiController.getLinksFromPage(page);
             for (String newPageTitle : links) {
                 getLinksTree(newPageTitle, depth - 1);
             }

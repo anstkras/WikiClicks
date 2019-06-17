@@ -25,7 +25,7 @@ public class WikiController {
     private static final String WIKIPEDIA_ERROR = "Wikipedia parsing error";
     private static final String WIKIDATA_ERROR = "Wikidata parsing error";
     private static final String JSOUP_ERROR = "Jsoup execution error";
-    private static final String URL_ERROR = "Uri parsing error";
+    private static final String URL_ERROR = "Url parsing error";
 
     /** Method that returns a random WikiPage or the Avatar (band) page if the request for a random page failed. */
     public static WikiPage getRandomPage() {
@@ -73,7 +73,7 @@ public class WikiController {
             JSONObject queryResult = getQueryResult("list=prefixsearch", "prop=info",
                     "origin=*", "pslimit=15", "pssearch=" + prefix);
             JSONArray results = queryResult.getJSONArray("prefixsearch");
-            ArrayList<WikiPage> suggestions = new ArrayList<>();
+            List<WikiPage> suggestions = new ArrayList<>();
             for (int i = 0; i < results.length(); i++) {
                 String page_id = results.getJSONObject(i).getString("pageid");
                 String title = results.getJSONObject(i).getString("title");
@@ -161,17 +161,10 @@ public class WikiController {
         return "https://en.m.wikipedia.org/wiki/" + encodeTitle(title);
     }
 
-    /** Method that returns an ArrayList of all links from the given Wikipedia page. */
-    /*
-     * Это важно, что возвращается именно ArrayList? Если нет, то возвращайте List
-     * То же замечание для последующих методов
-     */
-    public static ArrayList<String> getLinksFromPage(String title) {
+    /** Method that returns a List of all links from the given Wikipedia page. */
+    public static List<String> getLinksFromPage(String title) {
         title = encodeTitle(title);
-        /*
-         * При объявлении переменных указывайте наиболее общий тип (List<String>)
-         */
-        ArrayList<String> links = new ArrayList<>();
+        List<String> links = new ArrayList<>();
         String shouldContinue = null;
         try {
             do {
@@ -193,10 +186,10 @@ public class WikiController {
         return links;
     }
 
-     /** Method that returns an ArrayList of all links to the given Wikipedia page. */
-    public static ArrayList<String> getLinksToPage(String title) {
+     /** Method that returns a List of all links to the given Wikipedia page. */
+    public static List<String> getLinksToPage(String title) {
         title = encodeTitle(title);
-        ArrayList<String> links = new ArrayList<>();
+        List<String> links = new ArrayList<>();
         String shouldContinue = null;
         try {
             do {
