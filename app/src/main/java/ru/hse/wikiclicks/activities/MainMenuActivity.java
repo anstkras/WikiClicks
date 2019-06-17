@@ -53,7 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void setUpOfflineButton() {
         final Button offlineButton = findViewById(R.id.offline_button);
-        setUpListenerToActivity(offlineButton, OfflineGameActivity.class);
+        setUpListenerToActivity(offlineButton, OfflineLevelsActivity.class);
     }
 
     private void setUpStartGameButton() {
