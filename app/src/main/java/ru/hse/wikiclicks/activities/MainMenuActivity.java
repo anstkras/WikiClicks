@@ -38,74 +38,40 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void setUpBookmarksButton() {
         final Button bookmarksButton = findViewById(R.id.bookmarks_button);
-        bookmarksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*
-                 * Все эти listener'ы, кроме последнего, представляют из себя копипаст кода,
-                 *   который отличается лишь Class<?> той activity, на которую требуется перейти
-                 *   (если что, view, возвращаемая в event'е -- это как раз нажатая кнопка),
-                 *   поэтому простановку всех этих listener'ов можно было сделать в одну строку
-                 *
-                 * Также OnClickListener является функциональным интерфейсом, так что можно было
-                 *   использовать лямбду, вместо того, чтобы городить анонимный класс. Код с лямбдами
-                 *   гораздо приятнее читать. Возможно, анонимные классы вы выбрали из-за того, что
-                 *   старые версии Android живут на Java 6, и это я понять могу.
-                 *
-                 * Не очень понятно, зачем перекрашивать нажатую кнопку, это же не ссылки в браузере.
-                 *   Но, в целом, это дело вкуса.
-                 */
-                bookmarksButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent bookmarksIntent = new Intent(MainMenuActivity.this, BookmarkActivity.class);
-                startActivity(bookmarksIntent);
-            }
-        });
+        setUpListenerToActivity(bookmarksButton, BookmarkActivity.class);
     }
 
     private void setUpChallengesButton() {
         final Button challengesButton = findViewById(R.id.challenges_button);
-        challengesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                challengesButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent challengesIntent = new Intent(MainMenuActivity.this, ChallengesActivity.class);
-                startActivity(challengesIntent);
-            }
-        });
+        setUpListenerToActivity(challengesButton, ChallengesActivity.class);
     }
 
     private void setUpStatisticsButton() {
         final Button statisticsButton = findViewById(R.id.statistics_button);
-        statisticsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                statisticsButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent statisticsIntent = new Intent(MainMenuActivity.this, StatisticsActivity.class);
-                startActivity(statisticsIntent);
-            }
-        });
+        setUpListenerToActivity(statisticsButton, StatisticsActivity.class);
     }
 
     private void setUpOfflineButton() {
         final Button offlineButton = findViewById(R.id.offline_button);
-        offlineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                offlineButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent offlineGameIntent = new Intent(MainMenuActivity.this, OfflineLevelsActivity.class);
-                startActivity(offlineGameIntent);
-            }
-        });
+        setUpListenerToActivity(offlineButton, OfflineGameActivity.class);
     }
 
     private void setUpStartGameButton() {
         final Button startGameButton = findViewById(R.id.start_game_button);
-        startGameButton.setOnClickListener(new View.OnClickListener() {
+        setUpListenerToActivity(startGameButton, SelectModeActivity.class);
+    }
+
+    /*
+     * Sets onClickListener for specified button that starts specified activity and
+     * changes the button's color
+     */
+    private void setUpListenerToActivity(final Button button, final Class<?> activity) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startGameButton.setTextColor(getResources().getColor(R.color.colorUsed));
-                Intent startGame = new Intent(MainMenuActivity.this, SelectModeActivity.class);
-                startActivity(startGame);
+            public void onClick(View v) {
+                button.setTextColor(getResources().getColor(R.color.colorUsed));
+                Intent startActivity = new Intent(MainMenuActivity.this, activity);
+                startActivity(startActivity);
             }
         });
     }
