@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -36,13 +39,9 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     /** Key for passing the number of the level to download to the download service. */
     public static final String OFFLINE_LEVEL_NUMBER_KEY = "offline_level_number";
 
-    private final static String[] offlineLevelStartPages = {"Vanity Fair (novel)", "Lock picking", "Coffeemaker",
-            "Moscow", "Invisible Pink Unicorn", "Black swan",
-            "Lady Justice", "Butte",  "Ritchie Blackmore", "Singin' in the Rain"};
-    private final static String[] offlineLevelEndPages = {"Star Wars", "Harry Potter", "Hello, World",
-            "Prada", "Game of Thrones", "Ovid",
-            "Seafood", "Seven Wonders of the Ancient World",  "Hell Station",  "4'33\""};
-    private final static int[] offlineLevelTreeSizes = {2, 2, 2, 1, 2, 2, 2, 2, 3, 3};
+    private List<String> offlineLevelStartPages = new ArrayList<>();
+    private List<String> offlineLevelEndPages = new ArrayList<>();
+    private List<Integer> offlineLevelTreeSizes = new ArrayList<>();
 
     private final static int LEVEL0 = 0;
     private final static int LEVEL1 = 1;
@@ -60,6 +59,7 @@ public class OfflineLevelsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_levels);
+        initializePages();
 
         createButtonForLevel((Button)findViewById(R.id.level0), LEVEL0);
         createButtonForLevel((Button)findViewById(R.id.level1), LEVEL1);
@@ -118,8 +118,8 @@ public class OfflineLevelsActivity extends AppCompatActivity {
 
         Intent startGame = new Intent(OfflineLevelsActivity.this, OfflineGameActivity.class);
         Bundle pagesInfo = new Bundle();
-        pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
-        pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
+        pagesInfo.putString(GetEndpointsActivity.START_TITLE_KEY, offlineLevelStartPages.get(levelNumber));
+        pagesInfo.putString(GetEndpointsActivity.FINISH_TITLE_KEY, offlineLevelEndPages.get(levelNumber));
         pagesInfo.putString(OfflineLevelsActivity.OFFLINE_DIRECTORY_KEY, gameDirectory);
         startGame.putExtras(pagesInfo);
         startActivity(startGame);
@@ -138,10 +138,10 @@ public class OfflineLevelsActivity extends AppCompatActivity {
 
         Intent downloadIntent = new Intent();
         Bundle offlineLevelInfo = new Bundle();
-        offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages[levelNumber]);
-        offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, offlineLevelEndPages[levelNumber]);
+        offlineLevelInfo.putString(OFFLINE_START_TITLE_KEY, offlineLevelStartPages.get(levelNumber));
+        offlineLevelInfo.putString(OFFLINE_FINISH_TITLE_KEY, offlineLevelEndPages.get(levelNumber));
         offlineLevelInfo.putString(OFFLINE_DIRECTORY_KEY, downloadDirectory);
-        offlineLevelInfo.putInt(OFFLINE_STEPS_TREE_SIZE_KEY, offlineLevelTreeSizes[levelNumber]);
+        offlineLevelInfo.putInt(OFFLINE_STEPS_TREE_SIZE_KEY, offlineLevelTreeSizes.get(levelNumber));
         offlineLevelInfo.putInt(OFFLINE_LEVEL_NUMBER_KEY, levelNumber);
         downloadIntent.putExtras(offlineLevelInfo);
 
@@ -186,5 +186,19 @@ public class OfflineLevelsActivity extends AppCompatActivity {
                 .setContentText("Download is in progress.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         notificationManager.notify(NOTIFICATION_ID + levelNumber, startedDownload.build());
+    }
+
+    private void initializePages() {
+        TypedArray offlineLevels = getResources().obtainTypedArray(R.array.offline_levels);
+        for (int i = LEVEL0; i <= LEVEL9; i++) {
+            String[] currentLevel = getResources().getStringArray(offlineLevels.getResourceId(i, 0));
+            String startPageTitle = currentLevel[0];
+            String endPageTitle = currentLevel[1];
+            Integer pageTreeSize = Integer.parseInt(currentLevel[2]);
+            offlineLevelStartPages.add(startPageTitle);
+            offlineLevelEndPages.add(endPageTitle);
+            offlineLevelTreeSizes.add(pageTreeSize);
+        }
+        offlineLevels.recycle();
     }
 }

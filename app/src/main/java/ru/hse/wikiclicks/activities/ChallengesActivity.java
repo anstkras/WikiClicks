@@ -8,6 +8,7 @@ import ru.hse.wikiclicks.controllers.wiki.WikiPage;
 import ru.hse.wikiclicks.controllers.modes.LevelGameMode;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Activity for choosing a challenge level and viewing their leader boards. */
 public class ChallengesActivity extends AppCompatActivity {
     private final static int LEVEL0 = 0;
@@ -36,29 +40,20 @@ public class ChallengesActivity extends AppCompatActivity {
     private final static int LEVEL8 = 8;
     private final static int LEVEL9 = 9;
 
-    /*
-     * 1. Логичнее сгруппировать стартовые и конечные страницы в пары, т.к. поодиночке они
-     *   не имеют особого смысла (ну и можно добавить одну страницу и забыть добавить парную)
-     * 2. Все страницы для испытаний лучше вынести в ресурсы, чтобы можно было легко добавять
-     *   новые бе перекомпиляции всего приложения
-     */
-    private final static String[] startPages = {"Dog", "Women in Russia", "Algorithm",
-            "Saint Petersburg Academic University", "Terry Pratchett", "War and Peace", "Devil",
-            "Black metal",  "Anne Hathaway (wife of Shakespeare)", "Empty"};
-    private final static String[] endPages = {"Cat", "Google", "Javascript",
-            "Higher School of Economics", "Hamiltonian path", "Hamlet", "Invisible Pink Unicorn",
-            "Wombat",  "Anne Hathaway", "Full"};
-
     private Button signInButton;
     private Button signOutButton;
     private static final int RC_SIGN_IN = 1;
     private GoogleSignInClient googleSignInClient;
+
+    private List<String> startPages = new ArrayList<>();
+    private List<String> endPages = new ArrayList<>();
 
     /** Creates the activity, initializes the buttons for sign in, playing levels and viewing leaderboards. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenges);
+        initializePages();
 
         final GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -188,8 +183,8 @@ public class ChallengesActivity extends AppCompatActivity {
     }
 
     private void startGame(int level) {
-        WikiPage startPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(startPages[level]));
-        WikiPage finishPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(endPages[level]));
+        WikiPage startPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(startPages.get(level)));
+        WikiPage finishPage = WikiController.getPageFromUrl(WikiController.getUrlForTitle(endPages.get(level)));
 
         if (startPage.getTitle() == null || startPage.getId() == null ||
                 finishPage.getTitle() == null || finishPage.getId() == null) {
@@ -224,5 +219,17 @@ public class ChallengesActivity extends AppCompatActivity {
                         startActivityForResult(intent, RC_LEADERBOARD_UI);
                     }
                 });
+    }
+
+    private void initializePages() {
+        TypedArray challenges = getResources().obtainTypedArray(R.array.challenges);
+        for (int i = LEVEL0; i <= LEVEL9; i++) {
+            String[] currentChallenge = getResources().getStringArray(challenges.getResourceId(i, 0));
+            String startPageTitle = currentChallenge[0];
+            String endPageTitle = currentChallenge[1];
+            startPages.add(startPageTitle);
+            endPages.add(endPageTitle);
+        }
+        challenges.recycle();
     }
 }
